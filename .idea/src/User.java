@@ -1,30 +1,37 @@
+/**
+ * Base class for all users in the system.
+ */
 public abstract class User {
-    private String name;
-    private String password;
-    private String nick;
 
-    public User(){
+    protected String name;
+    protected String nick;
+    protected String password;
+    protected boolean blocked;
 
+    public User(String name, String nick, String password) {
+        if (password.length() < 8 || password.length() > 12) {
+            throw new IllegalArgumentException("La contraseña debe tener entre 8 y 12 caracteres");
+        }
+
+        this.name = name;
+        this.nick = nick;
+        this.password = password;
+        this.blocked = false;
     }
 
-    public void login(){
-
+    public String getNick() {
+        return nick;
     }
 
-    public void cancelAccount(){
-
+    public boolean isBlocked() {
+        return blocked;
     }
 
-    public void signIn(){
-
+    public void block() {
+        blocked = true;
     }
 
-    public void logOut(){
-
-    }
-
-
-    public void consultRanking(){
-
+    public void unblock() {
+        blocked = false;
     }
 }
