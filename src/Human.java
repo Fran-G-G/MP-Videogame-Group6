@@ -1,7 +1,7 @@
 /**
  * Human minion.
  */
-public class Human extends Minion {
+public class Human extends AbstractMinion {
 
     public enum Loyalty {
         HIGH, NORMAL, LOW

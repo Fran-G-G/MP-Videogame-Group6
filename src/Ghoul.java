@@ -1,7 +1,7 @@
 /**
  * Ghoul minion.
  */
-public class Ghoul extends Minion {
+public class Ghoul extends AbstractMinion {
 
     private int dependency; // Range: 1 - 5
 
