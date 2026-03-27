@@ -4,8 +4,8 @@
 public abstract class SpecialSkill {
 
     protected String name;
-    protected int attack;
-    protected int defense;
+    protected int attack; // Range: 1 - 3
+    protected int defense; // Range: 1 - 3
 
     public SpecialSkill(String name, int attack, int defense) {
         if (attack < 1 || attack > 3 || defense < 1 || defense > 3) {
