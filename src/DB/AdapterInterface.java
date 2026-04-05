@@ -1,5 +1,7 @@
 package DB;
 
 public interface AdapterInterface {
-    public void method();
+    public void writeData();
+    public void readData();
+    public void checkUser();
 }

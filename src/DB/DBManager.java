@@ -10,14 +10,20 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.io.IOException;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
 
 public class DBManager {
 
-    public void serviceMethod(){
+    private HashMap data;
 
+    public void serviceMethod(){
     }
 
-    public void writeToLog(String data){
+    public boolean checkUser(String user, String password){
+        return data.containsKey(user) && data.get(user) == password;
+    }
+
+    public void writeData(String data){
         Path path = Paths.get("./config/" + "data" + ".txt");
         if (!Files.exists(path)) {
             try {
@@ -40,7 +46,7 @@ public class DBManager {
         }
     }
 
-    public void readLog(String fileName) throws FileNotFoundException, IOException{
+    public void loadData(String fileName) throws FileNotFoundException, IOException{
         Reader in = new FileReader(fileName);
         BufferedReader buf = new BufferedReader(in);
         String data = buf.readLine();
@@ -48,11 +54,11 @@ public class DBManager {
         while (data != null){
             String [] fields = data.split(",");
             fields[0] = fields[0].replace("%", "");
-                    fields[1] = fields[1].replace("%", "");
+            fields[1] = fields[1].replace("%", "");
 
-                            String text = fields[0];
-            String translation = fields[1];
-//            dictionary.put(text, translation);
+            String user = fields[0];
+            String password = fields[1];
+            this.data.put(user, password);
 
             data = buf.readLine();
         }

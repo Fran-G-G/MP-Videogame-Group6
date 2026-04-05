@@ -4,13 +4,18 @@ public class Adapter implements AdapterInterface{
     private DBManager adapter;
 
     @Override
-    public void method() {
+    public void writeData() {
+    }
 
+    public void readData(){
+    }
+
+    public void checkUser(){
     }
 
     public void prueba(){
         adapter = new DBManager();
-        adapter.writeToLog("Patatas, prueba");
-        adapter.writeToLog("Segunda linea");
+        adapter.writeData("Menganito 12345678");
+        adapter.writeData("Fulanito 12345678");
     }
 }
