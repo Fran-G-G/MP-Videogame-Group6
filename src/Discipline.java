@@ -3,7 +3,7 @@
  */
 public class Discipline extends SpecialSkill {
 
-    private int bloodCost; // Range: 1 - 3
+    private final int bloodCost; // Range: 1 - 3
 
     public Discipline(String name, int attack, int defense, int bloodCost) {
         super(name, attack, defense);

@@ -4,23 +4,23 @@ import java.util.List;
 /**
  * Demon minion, can have other minions (recursive structure).
  */
-public class Demon extends Minion {
+public class Demon extends AbstractMinion {
 
     private String pact;
-    private List<Minion> minions;
+    private List<AbstractMinion> abstractMinions;
 
     public Demon(String name, int health, String pact) {
         super(name, health);
         this.pact = pact;
-        this.minions = new ArrayList<>();
+        this.abstractMinions = new ArrayList<>();
     }
 
-    public void addMinion(Minion minion) {
-        minions.add(minion);
+    public void addMinion(AbstractMinion abstractMinion) {
+        abstractMinions.add(abstractMinion);
     }
 
-    public List<Minion> getMinions() {
-        return minions;
+    public List<AbstractMinion> getMinions() {
+        return abstractMinions;
     }
 
     public String getPact() {

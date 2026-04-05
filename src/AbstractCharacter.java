@@ -15,7 +15,7 @@ public abstract class AbstractCharacter {
 
     protected List<Weapon> weapons;
     protected List<Armour> armours;
-    protected List<Minion> minions;
+    protected List<AbstractMinion> abstractMinions;
 
     protected List<Characteristic> strengths;
     protected List<Characteristic> weaknesses;
@@ -38,7 +38,7 @@ public abstract class AbstractCharacter {
 
         this.weapons = new ArrayList<>();
         this.armours = new ArrayList<>();
-        this.minions = new ArrayList<>();
+        this.abstractMinions = new ArrayList<>();
         this.strengths = new ArrayList<>();
         this.weaknesses = new ArrayList<>();
         this.activeWeapons = new ArrayList<>();
@@ -52,8 +52,8 @@ public abstract class AbstractCharacter {
         armours.add(armour);
     }
 
-    public void addMinion(Minion minion) {
-        minions.add(minion);
+    public void addMinion(AbstractMinion abstractMinion) {
+        abstractMinions.add(abstractMinion);
     }
 
     public void addStrength(Characteristic c) {
