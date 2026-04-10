@@ -35,8 +35,8 @@ public class GameStarter {
         System.out.println("\nDesafío aceptado. ¡Empieza el combate!\n");
 
         // Start combat
-        Combat combat = new Combat(p1, p2);
-        combat.start();
+        CombatHandler combatHandler = new CombatHandler(p1, p2);
+        combatHandler.start();
     }
 
     /**

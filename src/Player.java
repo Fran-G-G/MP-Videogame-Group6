@@ -41,6 +41,16 @@ public class Player extends User {
         return character;
     }
 
+    // 🔹 AÑADIR ESTE MÉTODO (solo si no lo heredas bien de User)
+    public String getNick() {
+        return super.getNick();
+    }
+
+    // 🔹 CLAVE PARA EL COMBATE
+    public boolean canUseSkill() {
+        return character != null && character.canUseSkill();
+    }
+
     public void addReceivedChallenge(Challenge c) {
         challengesReceived.add(c);
     }

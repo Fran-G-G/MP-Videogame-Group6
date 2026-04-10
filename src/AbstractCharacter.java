@@ -23,6 +23,9 @@ public abstract class AbstractCharacter {
     protected List<Weapon> activeWeapons;
     protected Armour activeArmour;
 
+    // 🔹 NUEVO: pool de vida de esbirros
+    protected int totalMinionHealth;
+
     public AbstractCharacter(String name, int health, int power) {
         if (health < 0 || health > 5) {
             throw new IllegalArgumentException("La salud debe estar entre 0 y 5");
@@ -44,61 +47,122 @@ public abstract class AbstractCharacter {
         this.activeWeapons = new ArrayList<>();
     }
 
-    public void addWeapon(Weapon weapon) {
-        weapons.add(weapon);
+    // ==============================
+    // ⚔️ COMBATE
+    // ==============================
+
+    public boolean isAlive() {
+        return health > 0;
     }
 
-    public void addArmour(Armour armour) {
-        armours.add(armour);
+    public boolean canUseSkill() {
+        return skill != null;
     }
 
-    public void addMinion(AbstractMinion abstractMinion) {
-        abstractMinions.add(abstractMinion);
-    }
-
-    public void addStrength(Characteristic c) {
-        strengths.add(c);
-    }
-
-    public void addWeakness(Characteristic c) {
-        weaknesses.add(c);
-    }
-
-    public int getTotalAttack() {
+    // 🔥 ATAQUE
+    public int getTotalAttack(boolean useSkill) {
         int total = power;
 
-        if (skill != null) {
-            total += skill.getAttack();
-        }
-
+        // armas
         for (Weapon w : activeWeapons) {
             total += w.getAttackModifier();
         }
 
+        // armadura que da ataque
+        if (activeArmour != null) {
+            total += activeArmour.getAttackModifier();
+        }
+
+        // skill solo si se usa
+        if (useSkill && skill != null) {
+            total += skill.getAttack();
+        }
+
+        // fortalezas - debilidades
+        total += getModifiers();
+
         return total;
     }
 
-    public int getTotalDefense() {
-        int total = 0;
+    // 🛡️ DEFENSA
+    public int getTotalDefense(boolean useSkill) {
+        int total = power;
 
-        if (skill != null) {
-            total += skill.getDefense();
-        }
-
+        // armadura
         if (activeArmour != null) {
             total += activeArmour.getDefenseModifier();
         }
 
+        // armas que dan defensa
+        for (Weapon w : activeWeapons) {
+            total += w.getDefenseModifier();
+        }
+
+        // skill
+        if (useSkill && skill != null) {
+            total += skill.getDefense();
+        }
+
+        total += getModifiers();
+
         return total;
     }
 
+    // 🔹 MODIFICADORES (simple)
+    private int getModifiers() {
+
+        int mod = 0;
+
+        for (Characteristic c : strengths) {
+            mod += c.getValue();
+        }
+
+        for (Characteristic c : weaknesses) {
+            mod -= c.getValue();
+        }
+
+        return mod;
+    }
+
+    // ==============================
+    // 👹 ESBIRROS (POOL)
+    // ==============================
+
+    public void calculateTotalMinionHealth() {
+        totalMinionHealth = 0;
+
+        for (AbstractMinion m : abstractMinions) {
+            totalMinionHealth += m.getHealth();
+        }
+    }
+
+    public int getMinionHealth() {
+        return totalMinionHealth;
+    }
+
+    public void setMinionHealth(int value) {
+        totalMinionHealth = Math.max(0, value);
+    }
+
+    // ==============================
+    // ❤️ VIDA
+    // ==============================
+
     public int getHealth() {
         return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = Math.max(0, health);
     }
 
     public void reduceHealth() {
         if (health > 0) {
             health--;
         }
+    }
+
+    public String getName() {
+        return name;
     }
 }
