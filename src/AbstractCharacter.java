@@ -52,7 +52,7 @@ public abstract class AbstractCharacter {
         armours.add(armour);
     }
 
-    public void addMinion(AbstractMinion abstractMinion) {
+    public void addMinions(AbstractMinion abstractMinion) {
         abstractMinions.add(abstractMinion);
     }
 

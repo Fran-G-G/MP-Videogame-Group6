@@ -94,7 +94,7 @@ public class GameStarter {
 
     private Werewolf createWerewolf(String name) {
         System.out.println("Creando hombre lobo...");
-        return new Werewolf(name, 5, 3);
+        return new Werewolf(name, 5, 3, 2, 95);
     }
 
     private Hunter createHunter(String name) {
