@@ -4,8 +4,8 @@
 public abstract class Equipment {
 
     protected String name;
-    protected int attackModifier; // Puede ser 0
-    protected int defenseModifier; // Puede ser 0
+    protected int attackModifier; // 0-3
+    protected int defenseModifier; // 0-3
 
     public Equipment(String name, int attackModifier, int defenseModifier) {
         this.name = name;
