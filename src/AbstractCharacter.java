@@ -44,6 +44,10 @@ public abstract class AbstractCharacter {
         this.activeWeapons = new ArrayList<>();
     }
 
+    public void setSkill(SpecialSkill skill) {
+        this.skill = skill;
+    }
+
     public void chooseActiveEquipment(ArrayList<Weapon> weapons, ArrayList<Armour> armours, ArrayList<Weapon> selectedWeapons, Armour selectedArmour) {
         this.weapons = weapons;
         this.armours = armours;

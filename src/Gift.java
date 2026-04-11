@@ -3,14 +3,14 @@
  */
 public class Gift extends SpecialSkill {
 
-    private final int minRage;
+    private final int rageCost;
 
-    public Gift(String name, int attack, int defense, int minRage) {
+    public Gift(String name, int attack, int defense, int rageCost) {
         super(name, attack, defense);
-        this.minRage = minRage;
+        this.rageCost = rageCost;
     }
 
-    public int getMinRage() {
-        return minRage;
+    public int getRageCost() {
+        return rageCost;
     }
 }

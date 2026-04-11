@@ -6,7 +6,30 @@ public abstract class CharacterFactory implements AbstractFactory {
     @Override
     public abstract void createProduct();
 
-    protected void manageEquipmentCreation(AbstractCharacter character) {
+    protected void createCharacterExtras(AbstractCharacter character) {
+
+        // Create and add the weaknesses to the character
+        manageWeaknessesCreation(character);
+
+        // Create and add the strengths to the character
+        manageStrengthsCreation(character);
+
+        // Create and activate the equipment for the character
+        manageEquipmentCreation(character);
+
+        // Creation of the minions for the character
+        manageMinionsCreation(character);
+    }
+
+    private void manageWeaknessesCreation(AbstractCharacter character) {
+
+    }
+
+    private void manageStrengthsCreation(AbstractCharacter character) {
+
+    }
+
+    private void manageEquipmentCreation(AbstractCharacter character) {
         Scanner scanner = new Scanner(System.in);
 
         EquipmentBuilder equipmentBuilder = new EquipmentBuilder();
@@ -54,7 +77,7 @@ public abstract class CharacterFactory implements AbstractFactory {
         character.chooseActiveEquipment(weapons, armours, selectedWeapons, selectedArmour);
     }
 
-    protected void manageMinionsCreation(AbstractCharacter character) {
+    private void manageMinionsCreation(AbstractCharacter character) {
         DemonFactory demonFactory = new DemonFactory();
         GhoulFactory ghoulFactory = new GhoulFactory();
         HumanFactory humanFactory = new HumanFactory();

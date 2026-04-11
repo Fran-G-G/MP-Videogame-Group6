@@ -1,10 +1,10 @@
 import java.util.Scanner;
+import java.util.Random;
 
 public class VampireFactory extends CharacterFactory {
 
     @Override
     public void createProduct() {
-
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Nombre del vampiro: ");
@@ -16,11 +16,26 @@ public class VampireFactory extends CharacterFactory {
         int power = 3; // Vampires are the weakest characters, with only 3 power.
         Vampire vampire = new Vampire(name, health, power, age);
 
-        // Create and activate the equipment for the character
-        super.manageEquipmentCreation(vampire);
+        // Create the special skill for the character
+        createDiscipline(vampire);
 
-        // Creation of the minions for the character
-        super.manageMinionsCreation(vampire);
+        super.createCharacterExtras(vampire);
+
+        scanner.close();
+    }
+
+    private void createDiscipline(Vampire vampire) {
+        Scanner scanner = new Scanner(System.in);
+        Random random = new Random();
+
+        System.out.print("Nombre de la disciplina del vampiro: ");
+        String name = scanner.nextLine();
+        int attack = random.nextInt(3) + 1;
+        int defense = random.nextInt(3) + 1;
+        int bloodCost = random.nextInt(3) + 1;
+
+        Discipline discipline = new Discipline(name, attack, defense, bloodCost);
+        vampire.setSkill(discipline);
 
         scanner.close();
     }
