@@ -1,4 +1,5 @@
-public class WerewolfFactory implements AbstractFactory {
+public class WerewolfFactory extends CharacterFactory {
+
     @Override
     public void createProduct() {
 

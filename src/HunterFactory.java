@@ -1,4 +1,5 @@
-public class HunterFactory implements AbstractFactory {
+public class HunterFactory extends CharacterFactory {
+
     @Override
     public void createProduct() {
 

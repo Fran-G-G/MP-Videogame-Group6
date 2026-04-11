@@ -1,4 +1,5 @@
-public class GhoulFactory implements AbstractFactory {
+public class GhoulFactory extends MinionFactory {
+
     @Override
     public void createProduct() {
 
