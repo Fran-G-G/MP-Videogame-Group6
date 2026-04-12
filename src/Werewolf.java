@@ -1,4 +1,3 @@
-import java.text.DecimalFormat;
 import java.util.Random;
 
 /**
@@ -47,5 +46,13 @@ public class Werewolf extends AbstractCharacter {
 
     public int getRage() {
         return rage;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWeight() {
+        return weight;
     }
 }

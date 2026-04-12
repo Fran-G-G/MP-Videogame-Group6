@@ -1,0 +1,5 @@
+Maestría en Armas, 4;
+Conocimiento Oculto, 2;
+Sigilo Táctico, 3;
+Voluntad Indomable, 1;
+Trampas de Alquimia, 5;

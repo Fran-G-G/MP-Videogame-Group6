@@ -1,0 +1,5 @@
+Fuerza Bruta, 4;
+Olfato Agudo, 1;
+Garras Desgarradoras, 3;
+Resistencia Física, 2;
+Potenciación de luna llena, 5;

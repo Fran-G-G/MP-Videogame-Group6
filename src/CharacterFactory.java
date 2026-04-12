@@ -1,10 +1,14 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
  * Base Factory for creating the common part of all types of characters.
  */
 public abstract class CharacterFactory implements AbstractFactory {
+
+    private int numWeakStrg = 2;
 
     @Override
     public abstract void createProduct();
@@ -26,10 +30,40 @@ public abstract class CharacterFactory implements AbstractFactory {
 
     private void manageWeaknessesCreation(AbstractCharacter character) {
 
+        ArrayList<Weakness> possibleWeaknesses = ConfigReader.loadAttributes(
+                character.getClass().getSimpleName(), // Returns "Vampire" or "Werewolf" or "Hunter" or ...
+                "weaknesses",
+                Weakness::new
+        );
+
+        System.out.println("Se elegirán dos debilidades al azar para tu personaje:");
+
+        Collections.shuffle(possibleWeaknesses);
+        for (int i = 0; i < numWeakStrg; i++) {
+            Weakness selectedWeakness = possibleWeaknesses.get(i);
+            System.out.println("Nombre de la debilidad: " + selectedWeakness.getName() + ". Sensibilidad: " + selectedWeakness.getValue());
+
+            character.addWeakness(selectedWeakness);
+        }
     }
 
     private void manageStrengthsCreation(AbstractCharacter character) {
 
+        ArrayList<Strength> possibleStrengths = ConfigReader.loadAttributes(
+                character.getClass().getSimpleName(), // Returns "Vampire" or "Werewolf" or "Hunter" or ...
+                "strengths",
+                Strength::new
+        );
+
+        System.out.println("Se elegirán dos fortalezas al azar para tu personaje:");
+
+        Collections.shuffle(possibleStrengths);
+        for (int i = 0; i < numWeakStrg; i++) {
+            Strength selectedStrength = possibleStrengths.get(i);
+            System.out.println("Nombre de la fortaleza: " + selectedStrength.getName() + ". Temple: " + selectedStrength.getValue());
+
+            character.addWeakness(selectedStrength);
+        }
     }
 
     private void manageEquipmentCreation(AbstractCharacter character) {

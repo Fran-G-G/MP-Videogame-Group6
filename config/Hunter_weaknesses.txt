@@ -1,0 +1,5 @@
+Fragilidad Humana, 4;
+Sentimientos y emociones, 2;
+Dependencia de Recursos, 5;
+Código de Honor, 1;
+Fatiga de Combate, 3;

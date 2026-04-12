@@ -6,8 +6,8 @@ import java.util.Scanner;
  */
 public class EquipmentBuilder implements Builder {
 
-    private ArrayList<Weapon> weapons;
-    private ArrayList<Armour> armours;
+    private final ArrayList<Weapon> weapons;
+    private final ArrayList<Armour> armours;
 
     public EquipmentBuilder(){
         this.weapons = new ArrayList<>();
