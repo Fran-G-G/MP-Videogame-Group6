@@ -17,12 +17,10 @@ public class HunterFactory extends CharacterFactory {
         int power = 3; // Hunters are the strongest characters, with 5 power.
         Hunter hunter = new Hunter(name, health, power);
 
-        // Create the special skill for the character
+        // Create the special skill for the hunter
         createTalent(hunter);
 
         super.createCharacterExtras(hunter);
-
-        scanner.close();
     }
 
     private void createTalent(Hunter hunter) {
@@ -36,7 +34,5 @@ public class HunterFactory extends CharacterFactory {
 
         Talent talent = new Talent(name, attack, defense);
         hunter.setSkill(talent);
-
-        scanner.close();
     }
 }

@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -8,7 +7,7 @@ import java.util.Scanner;
  */
 public abstract class CharacterFactory implements AbstractFactory {
 
-    private int numWeakStrg = 2;
+    private final int numWeakStrg = 2;
 
     @Override
     public abstract void createProduct();
@@ -62,7 +61,7 @@ public abstract class CharacterFactory implements AbstractFactory {
             Strength selectedStrength = possibleStrengths.get(i);
             System.out.println("Nombre de la fortaleza: " + selectedStrength.getName() + ". Temple: " + selectedStrength.getValue());
 
-            character.addWeakness(selectedStrength);
+            character.addStrength(selectedStrength);
         }
     }
 
@@ -115,9 +114,9 @@ public abstract class CharacterFactory implements AbstractFactory {
     }
 
     private void manageMinionsCreation(AbstractCharacter character) {
-        DemonFactory demonFactory = new DemonFactory();
-        GhoulFactory ghoulFactory = new GhoulFactory();
-        HumanFactory humanFactory = new HumanFactory();
+        GhoulFactory ghoulFactory = new GhoulFactory(character, null);
+        HumanFactory humanFactory = new HumanFactory(character, null);
+        DemonFactory demonFactory = new DemonFactory(character, null, ghoulFactory, humanFactory);
         boolean keepCreatingMinions = true;
 
         while (keepCreatingMinions) {
@@ -131,9 +130,18 @@ public abstract class CharacterFactory implements AbstractFactory {
             switch (option) {
                 case 1 -> demonFactory.createProduct();
                 case 2 -> ghoulFactory.createProduct();
-                case 3 -> humanFactory.createProduct();
+                case 3 -> confirmNotVampire(character, humanFactory);
                 default -> keepCreatingMinions = false;
             }
+        }
+    }
+
+    private void confirmNotVampire(AbstractCharacter character, HumanFactory humanFactory) {
+
+        if (character.getClass().getSimpleName().equals("Vampire")) {
+            System.out.println("Los personajes de tipo vampiro no pueden tener esbirros humanos.");
+        } else {
+            humanFactory.createProduct();
         }
     }
 
@@ -151,7 +159,6 @@ public abstract class CharacterFactory implements AbstractFactory {
                 value = Integer.parseInt(scanner.nextLine());
 
                 if (value >= min && value <= max) {
-                    scanner.close();
                     return value;
                 }
 

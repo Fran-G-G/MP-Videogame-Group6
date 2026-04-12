@@ -21,12 +21,10 @@ public class WerewolfFactory extends CharacterFactory {
         int power = 4; // Werewolves have 4 power.
         Werewolf werewolf = new Werewolf(name, health, power, height, weight);
 
-        // Create the special skill for the character
+        // Create the special skill for the werewolf
         createGift(werewolf);
 
         super.createCharacterExtras(werewolf);
-
-        scanner.close();
     }
 
     private void createGift(Werewolf werewolf) {
@@ -41,7 +39,5 @@ public class WerewolfFactory extends CharacterFactory {
 
         Gift gift = new Gift(name, attack, defense, rageCost);
         werewolf.setSkill(gift);
-
-        scanner.close();
     }
 }

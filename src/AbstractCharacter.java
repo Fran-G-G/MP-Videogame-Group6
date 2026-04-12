@@ -44,6 +44,10 @@ public abstract class AbstractCharacter {
         this.activeWeapons = new ArrayList<>();
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void setSkill(SpecialSkill skill) {
         this.skill = skill;
     }
@@ -64,8 +68,8 @@ public abstract class AbstractCharacter {
         armours.add(armour);
     }
 
-    public void addMinions(AbstractMinion abstractMinion) {
-        abstractMinions.add(abstractMinion);
+    public void addMinion(AbstractMinion minion) {
+        abstractMinions.add(minion);
     }
 
     public void addStrength(Characteristic c) {

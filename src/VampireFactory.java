@@ -20,12 +20,10 @@ public class VampireFactory extends CharacterFactory {
         int power = 3; // Vampires are the weakest characters, with only 3 power.
         Vampire vampire = new Vampire(name, health, power, age);
 
-        // Create the special skill for the character
+        // Create the special skill for the vampire
         createDiscipline(vampire);
 
         super.createCharacterExtras(vampire);
-
-        scanner.close();
     }
 
     private void createDiscipline(Vampire vampire) {
@@ -40,7 +38,5 @@ public class VampireFactory extends CharacterFactory {
 
         Discipline discipline = new Discipline(name, attack, defense, bloodCost);
         vampire.setSkill(discipline);
-
-        scanner.close();
     }
 }
