@@ -1,6 +1,9 @@
 import java.util.Scanner;
 import java.util.Random;
 
+/**
+ * Factory class that helps with the creation of vampire-type characters.
+ */
 public class VampireFactory extends CharacterFactory {
 
     @Override

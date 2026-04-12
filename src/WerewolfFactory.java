@@ -1,6 +1,9 @@
 import java.util.Random;
 import java.util.Scanner;
 
+/**
+ * Factory class that helps with the creation of werewolf-type characters.
+ */
 public class WerewolfFactory extends CharacterFactory {
 
     @Override

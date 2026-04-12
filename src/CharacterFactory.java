@@ -1,6 +1,9 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Base Factory for creating the common part of all types of characters.
+ */
 public abstract class CharacterFactory implements AbstractFactory {
 
     @Override

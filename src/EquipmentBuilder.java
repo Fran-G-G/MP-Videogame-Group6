@@ -1,6 +1,9 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Builder to help with the process of creating new equipment.
+ */
 public class EquipmentBuilder implements Builder {
 
     private ArrayList<Weapon> weapons;

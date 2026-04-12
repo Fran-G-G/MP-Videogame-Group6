@@ -10,8 +10,8 @@ public class Werewolf extends AbstractCharacter {
     private boolean transformed; // Human = false, Wolf = true
     private int height;
     private int weight;
-    private final int heightTransformationIncrement;
-    private final int weightTransformationIncrement;
+    private final int heightTransformationIncrement; // Random number that affects the height while transforming
+    private final int weightTransformationIncrement; // Random number that affects the weight while transforming
 
     public Werewolf(String name, int health, int power, int height, int weight) {
         super(name, health, power);
