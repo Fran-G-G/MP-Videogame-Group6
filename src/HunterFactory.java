@@ -1,5 +1,4 @@
 import java.util.Random;
-import java.util.Scanner;
 
 /**
  * Factory class that helps with the creation of hunter-type characters.
@@ -8,10 +7,7 @@ public class HunterFactory extends CharacterFactory {
 
     @Override
     public void createProduct() {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Nombre del cazador: ");
-        String name = scanner.nextLine();
+        String name = ConsoleInput.readString("Nombre del cazador: ");
 
         int health = 5; // Every character starts with 5 health.
         int power = 3; // Hunters are the strongest characters, with 5 power.
@@ -24,11 +20,9 @@ public class HunterFactory extends CharacterFactory {
     }
 
     private void createTalent(Hunter hunter) {
-        Scanner scanner = new Scanner(System.in);
         Random random = new Random();
 
-        System.out.print("Nombre del talento del cazador: ");
-        String name = scanner.nextLine();
+        String name = ConsoleInput.readString("Nombre del talento del cazador: ");
         int attack = random.nextInt(3) + 1;
         int defense = random.nextInt(3) + 1;
 

@@ -1,5 +1,4 @@
 import java.util.Random;
-import java.util.Scanner;
 
 /**
  * Factory class that helps with the creation of demon-type minions.
@@ -22,14 +21,11 @@ public class DemonFactory extends MinionFactory {
 
     @Override
     public void createProduct() {
-        Scanner scanner = new Scanner(System.in);
         Random random = new Random();
 
-        System.out.print("Ponle un nombre a tu esbirro demonio: ");
-        String name = scanner.nextLine();
-
+        String name = ConsoleInput.readString("Ponle un nombre a tu esbirro demonio: ");
         int health = random.nextInt(3) + 1;
-        String pact = ;
+        String pact = "Pacto a sacar al azar de un fichero de la BBDD";
 
         Demon demon = new Demon(name, health, pact);
 
@@ -41,7 +37,14 @@ public class DemonFactory extends MinionFactory {
             System.out.println(name + " añadido como esbirro del esbirro " + this.minionOwner.getName() + " con éxito.");
         }
 
-        manageMinionsCreation(demon);
+
+        int maxDepth = 2; // Number of levels of "depth" that the demon minions can have
+        // If we are already in maxDepth, this new demon won't have more minions.
+        if (depth < maxDepth) {
+            manageMinionsCreation(demon);
+        } else {
+            System.out.println("Este demonio ha alcanzado el nivel máximo de profundidad y no tendrá esbirros propios.");
+        }
     }
 
     public void setMinionOwner(Demon minion) {
@@ -50,58 +53,45 @@ public class DemonFactory extends MinionFactory {
 
     private void manageMinionsCreation(Demon demon) {
         boolean keepCreatingMinions = true;
+        int minionCount = 0; // Local counter for the limit of minions
 
+        // Save the previous demon state
+        Demon previousOwner = this.minionOwner;
+
+        // Configure the Factories for the new demon
         setMinionOwner(demon);
         ghoulFactory.setMinionOwner(demon);
         humanFactory.setMinionOwner(demon);
-
-        depth += 1;
+        depth += 1; // One extra level of depth
 
         System.out.println("------------------------------------------------");
-        System.out.println("Ahora vamos a crear los esbirros del demonio:");
+        System.out.println("Ahora vamos a crear los esbirros de " + demon.getName() + " (Máx 3):");
 
-        while (keepCreatingMinions) {
-            System.out.println("Elige el tipo de esbirro que quieras crear, o pulsa 4 para terminar:");
-            System.out.println("1. Demonio");
-            System.out.println("2. Ghoul");
-            System.out.println("3. Humano");
-            System.out.println("4. Salir");
-            int option = readInt(1, 4);
+        // Condition to stop at three minions
+        while (keepCreatingMinions && minionCount < 3) {
+            System.out.println("Esbirros actuales: " + minionCount + "/3");
+            System.out.println("1. Demonio | 2. Ghoul | 3. Humano | 4. Salir");
+            int option = ConsoleInput.readInt(1, 4);
 
             switch (option) {
-                case 1 -> this.createProduct();
-                case 2 -> ghoulFactory.createProduct();
-                case 3 -> humanFactory.createProduct();
+                case 1 -> { createProduct(); minionCount++; }
+                case 2 -> { ghoulFactory.createProduct(); minionCount++; }
+                case 3 -> { humanFactory.createProduct(); minionCount++; }
                 default -> keepCreatingMinions = false;
             }
         }
 
-        depth -= 1;
-
-        System.out.println("Terminamos de crear los esbirros del demonio.");
-        System.out.println("------------------------------------------------");
-    }
-
-    /**
-     * Reads integer safely.
-     */
-    private int readInt(int min, int max) {
-        Scanner scanner = new Scanner(System.in);
-
-        int value;
-
-        while (true) {
-            try {
-                System.out.print("Opción: ");
-                value = Integer.parseInt(scanner.nextLine());
-
-                if (value >= min && value <= max) {
-                    return value;
-                }
-
-            } catch (Exception ignored) {}
-
-            System.out.println("Valor inválido. Intenta de nuevo.");
+        if (minionCount == 3) {
+            System.out.println("Se ha alcanzado el límite de 3 esbirros para " + demon.getName() + ".");
         }
+
+        System.out.println("Terminamos de crear los esbirros de " + demon.getName() + ".");
+        System.out.println("------------------------------------------------");
+
+        // Restore the previous state, so the father can continue
+        setMinionOwner(previousOwner);
+        ghoulFactory.setMinionOwner(previousOwner);
+        humanFactory.setMinionOwner(previousOwner);
+        depth -= 1; // Lose the level of depth
     }
 }

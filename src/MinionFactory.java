@@ -1,4 +1,3 @@
-
 /**
  * Base Factory for creating the common part of all types of minions.
  */

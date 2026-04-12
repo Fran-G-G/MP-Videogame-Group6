@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Scanner;
 
 /**
  * Base Factory for creating the common part of all types of characters.
@@ -66,37 +65,18 @@ public abstract class CharacterFactory implements AbstractFactory {
     }
 
     private void manageEquipmentCreation(AbstractCharacter character) {
-        Scanner scanner = new Scanner(System.in);
-
         EquipmentBuilder equipmentBuilder = new EquipmentBuilder();
         ArrayList<Weapon> weapons = equipmentBuilder.buildWeapons();
         ArrayList<Armour> armours = equipmentBuilder.buildArmours();
 
-        int selectedWeaponIndex;
-        Weapon selectedWeapon1;
-        Weapon selectedWeapon2;
         ArrayList<Weapon> selectedWeapons = new ArrayList<>();
+
         System.out.print("De las armas que has creado, elige una como activa:");
-        for (int i = 0; i < weapons.size(); i++) {
-            Weapon w = weapons.get(i); // Index access
-            System.out.print( i + ". " + w.getName() + ": " + w.getHands() + " manos");
-        }
-        System.out.print("Opción: ");
-        selectedWeaponIndex = Integer.parseInt(scanner.nextLine());
-        selectedWeapon1 = weapons.get(selectedWeaponIndex);
-        selectedWeapons.add(selectedWeapon1);
+        showAndSelectWeapon(weapons, selectedWeapons);
 
-        if (selectedWeapon1.getHands() == 1) {
-
+        if (selectedWeapons.getFirst().getHands() == 1) {
             System.out.print("Como has elegido un arma de una sola mano, puedes activar otra arma diferente de 1 mano:");
-            for (int i = 0; i < weapons.size(); i++) {
-                Weapon w = weapons.get(i); // Index access
-                System.out.print( i + ". " + w.getName() + ": " + w.getHands() + " manos");
-            }
-            System.out.print("Opción: ");
-            selectedWeaponIndex = Integer.parseInt(scanner.nextLine());
-            selectedWeapon2 = weapons.get(selectedWeaponIndex);
-            selectedWeapons.add(selectedWeapon2);
+            showAndSelectWeapon(weapons, selectedWeapons);
         }
 
         int selectedArmourIndex;
@@ -104,13 +84,26 @@ public abstract class CharacterFactory implements AbstractFactory {
         System.out.print("De las armaduras que has creado, elige una como activa:");
         for (int i = 0; i < armours.size(); i++) {
             Armour a = armours.get(i); // Index access
-            System.out.print( i + ". " + a.getName() );
+            System.out.print( i+1 + ". " + a.getName() );
         }
         System.out.print("Opción: ");
-        selectedArmourIndex = Integer.parseInt(scanner.nextLine());
+        selectedArmourIndex = ConsoleInput.readInt(0, armours.size()-1);
         selectedArmour = armours.get(selectedArmourIndex);
 
         character.chooseActiveEquipment(weapons, armours, selectedWeapons, selectedArmour);
+    }
+
+    private void showAndSelectWeapon(ArrayList<Weapon> weapons, ArrayList<Weapon> selectedWeapons) {
+        for (int i = 0; i < weapons.size(); i++) {
+            Weapon w = weapons.get(i); // Index access
+            System.out.print( i+1 + ". " + w.getName() + ": " + w.getHands() + " manos");
+        }
+
+        System.out.print("Opción: ");
+        int selectedWeaponIndex = ConsoleInput.readInt(0, weapons.size()-1);
+
+        Weapon selectedWeapon = weapons.get(selectedWeaponIndex);
+        selectedWeapons.add(selectedWeapon);
     }
 
     private void manageMinionsCreation(AbstractCharacter character) {
@@ -121,11 +114,8 @@ public abstract class CharacterFactory implements AbstractFactory {
 
         while (keepCreatingMinions) {
             System.out.println("Elige el tipo de esbirro que quieras crear, o pulsa 4 para terminar:");
-            System.out.println("1. Demonio");
-            System.out.println("2. Ghoul");
-            System.out.println("3. Humano");
-            System.out.println("4. Salir");
-            int option = readInt(1, 4);
+            System.out.println("1. Demonio | 2. Ghoul | 3. Humano | 4. Salir");
+            int option = ConsoleInput.readInt(1, 4);
 
             switch (option) {
                 case 1 -> demonFactory.createProduct();
@@ -142,29 +132,6 @@ public abstract class CharacterFactory implements AbstractFactory {
             System.out.println("Los personajes de tipo vampiro no pueden tener esbirros humanos.");
         } else {
             humanFactory.createProduct();
-        }
-    }
-
-    /**
-     * Reads integer safely.
-     */
-    private int readInt(int min, int max) {
-        Scanner scanner = new Scanner(System.in);
-
-        int value;
-
-        while (true) {
-            try {
-                System.out.print("Opción: ");
-                value = Integer.parseInt(scanner.nextLine());
-
-                if (value >= min && value <= max) {
-                    return value;
-                }
-
-            } catch (Exception ignored) {}
-
-            System.out.println("Valor inválido. Intenta de nuevo.");
         }
     }
 }

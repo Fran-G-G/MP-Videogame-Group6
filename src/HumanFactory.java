@@ -1,5 +1,4 @@
 import java.util.Random;
-import java.util.Scanner;
 
 /**
  * Factory class that helps with the creation of human-type minions.
@@ -16,11 +15,9 @@ public class HumanFactory extends MinionFactory {
 
     @Override
     public void createProduct() {
-        Scanner scanner = new Scanner(System.in);
         Random random = new Random();
 
-        System.out.print("Ponle un nombre a tu esbirro humano: ");
-        String name = scanner.nextLine();
+        String name = ConsoleInput.readString("Ponle un nombre a tu esbirro humano: ");
 
         int health = random.nextInt(3) + 1;
         Human.Loyalty loyalty = Human.Loyalty.LOW;

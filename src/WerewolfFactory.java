@@ -1,5 +1,4 @@
 import java.util.Random;
-import java.util.Scanner;
 
 /**
  * Factory class that helps with the creation of werewolf-type characters.
@@ -8,14 +7,11 @@ public class WerewolfFactory extends CharacterFactory {
 
     @Override
     public void createProduct() {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Nombre del hombre lobo: ");
-        String name = scanner.nextLine();
+        String name = "Nombre del hombre lobo: ";
         System.out.print("Altura del hombre lobo en su forma humana (en metros): ");
-        int height = Integer.parseInt(scanner.nextLine());
+        double height = ConsoleInput.readDouble(1, 3);
         System.out.print("Peso del hombre lobo en su forma humana (en kilogramos): ");
-        int weight = Integer.parseInt(scanner.nextLine());
+        double weight = ConsoleInput.readDouble(20, 150);
 
         int health = 5; // Every character starts with 5 health.
         int power = 4; // Werewolves have 4 power.
@@ -28,11 +24,9 @@ public class WerewolfFactory extends CharacterFactory {
     }
 
     private void createGift(Werewolf werewolf) {
-        Scanner scanner = new Scanner(System.in);
         Random random = new Random();
 
-        System.out.print("Nombre del don del hombre lobo: ");
-        String name = scanner.nextLine();
+        String name = ConsoleInput.readString("Nombre del don del hombre lobo: ");
         int attack = random.nextInt(3) + 1;
         int defense = random.nextInt(3) + 1;
         int rageCost = random.nextInt(3) + 1;

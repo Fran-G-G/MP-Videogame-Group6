@@ -7,17 +7,17 @@ public class Werewolf extends AbstractCharacter {
 
     private int rage; // Range: 0 - 3
     private boolean transformed; // Human = false, Wolf = true
-    private int height;
-    private int weight;
+    private double height;
+    private double weight;
     private final int heightTransformationIncrement; // Random number that affects the height while transforming
     private final int weightTransformationIncrement; // Random number that affects the weight while transforming
 
-    public Werewolf(String name, int health, int power, int height, int weight) {
+    public Werewolf(String name, int health, int power, double height, double weight) {
         super(name, health, power);
         this.rage = 0;
         this.transformed = false;
-        this.height = height;
-        this.weight = weight;
+        this.height = Math.round(height * 100.0) / 100.0;
+        this.weight = Math.round(weight * 100.0) / 100.0;
 
         Random random = new Random();
         double num = random.nextDouble() * 2.0;
@@ -48,11 +48,11 @@ public class Werewolf extends AbstractCharacter {
         return rage;
     }
 
-    public int getHeight() {
+    public double getHeight() {
         return height;
     }
 
-    public int getWeight() {
+    public double getWeight() {
         return weight;
     }
 }

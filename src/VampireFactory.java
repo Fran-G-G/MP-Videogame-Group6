@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.Random;
 
 /**
@@ -9,12 +8,9 @@ public class VampireFactory extends CharacterFactory {
 
     @Override
     public void createProduct() {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Nombre del vampiro: ");
-        String name = scanner.nextLine();
+        String name = ConsoleInput.readString("Nombre del vampiro: ");
         System.out.print("Edad del vampiro: ");
-        int age = Integer.parseInt(scanner.nextLine());
+        int age = ConsoleInput.readInt(1, 3000);
 
         int health = 5; // Every character starts with 5 health.
         int power = 3; // Vampires are the weakest characters, with only 3 power.
@@ -27,11 +23,9 @@ public class VampireFactory extends CharacterFactory {
     }
 
     private void createDiscipline(Vampire vampire) {
-        Scanner scanner = new Scanner(System.in);
         Random random = new Random();
 
-        System.out.print("Nombre de la disciplina del vampiro: ");
-        String name = scanner.nextLine();
+        String name = ConsoleInput.readString("Nombre de la disciplina del vampiro: ");
         int attack = random.nextInt(3) + 1;
         int defense = random.nextInt(3) + 1;
         int bloodCost = random.nextInt(3) + 1;
