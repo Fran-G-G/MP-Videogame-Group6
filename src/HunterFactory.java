@@ -15,14 +15,14 @@ public class HunterFactory extends CharacterFactory {
         Hunter hunter = new Hunter(name, health, power);
 
         // Create the special skill for the character
-        createDiscipline(hunter);
+        createTalent(hunter);
 
         super.createCharacterExtras(hunter);
 
         scanner.close();
     }
 
-    private void createDiscipline(Hunter hunter) {
+    private void createTalent(Hunter hunter) {
         Scanner scanner = new Scanner(System.in);
         Random random = new Random();
 

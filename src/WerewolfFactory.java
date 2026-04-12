@@ -9,9 +9,9 @@ public class WerewolfFactory extends CharacterFactory {
 
         System.out.print("Nombre del hombre lobo: ");
         String name = scanner.nextLine();
-        System.out.print("Altura del hombre lobo: ");
+        System.out.print("Altura del hombre lobo en su forma humana (en metros): ");
         int height = Integer.parseInt(scanner.nextLine());
-        System.out.print("Peso del hombre lobo: ");
+        System.out.print("Peso del hombre lobo en su forma humana (en kilogramos): ");
         int weight = Integer.parseInt(scanner.nextLine());
 
         int health = 5; // Every character starts with 5 health.
