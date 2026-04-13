@@ -20,11 +20,12 @@ public abstract class SpecialSkill {
         return name;
     }
 
-    public int getAttack() {
+    public int getAttackValue() {
         return attack;
     }
 
     public int getDefense() {
         return defense;
     }
+
 }
