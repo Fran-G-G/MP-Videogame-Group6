@@ -3,7 +3,7 @@
  */
 public class Ghoul extends AbstractMinion {
 
-    private int dependency; // Range: 1 - 5
+    private final int dependency; // Range: 1 - 5
 
     public Ghoul(String name, int health, int dependency) {
         super(name, health);

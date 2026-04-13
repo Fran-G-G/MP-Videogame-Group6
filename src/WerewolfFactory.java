@@ -1,6 +1,37 @@
-public class WerewolfFactory implements AbstractFactory {
+import java.util.Random;
+
+/**
+ * Factory class that helps with the creation of werewolf-type characters.
+ */
+public class WerewolfFactory extends CharacterFactory {
+
     @Override
     public void createProduct() {
+        String name = "Nombre del hombre lobo: ";
+        System.out.print("Altura del hombre lobo en su forma humana (en metros): ");
+        double height = ConsoleInput.readDouble(1, 3);
+        System.out.print("Peso del hombre lobo en su forma humana (en kilogramos): ");
+        double weight = ConsoleInput.readDouble(20, 150);
 
+        int health = 5; // Every character starts with 5 health.
+        int power = 4; // Werewolves have 4 power.
+        Werewolf werewolf = new Werewolf(name, health, power, height, weight);
+
+        // Create the special skill for the werewolf
+        createGift(werewolf);
+
+        super.createCharacterExtras(werewolf);
+    }
+
+    private void createGift(Werewolf werewolf) {
+        Random random = new Random();
+
+        String name = ConsoleInput.readString("Nombre del don del hombre lobo: ");
+        int attack = random.nextInt(3) + 1;
+        int defense = random.nextInt(3) + 1;
+        int rageCost = random.nextInt(3) + 1;
+
+        Gift gift = new Gift(name, attack, defense, rageCost);
+        werewolf.setSkill(gift);
     }
 }

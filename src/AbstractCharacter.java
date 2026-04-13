@@ -44,6 +44,22 @@ public abstract class AbstractCharacter {
         this.activeWeapons = new ArrayList<>();
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setSkill(SpecialSkill skill) {
+        this.skill = skill;
+    }
+
+    public void chooseActiveEquipment(ArrayList<Weapon> weapons, ArrayList<Armour> armours, ArrayList<Weapon> selectedWeapons, Armour selectedArmour) {
+        this.weapons = weapons;
+        this.armours = armours;
+
+        this.activeWeapons = selectedWeapons;
+        this.activeArmour = selectedArmour;
+    }
+
     public void addWeapon(Weapon weapon) {
         weapons.add(weapon);
     }
@@ -52,8 +68,8 @@ public abstract class AbstractCharacter {
         armours.add(armour);
     }
 
-    public void addMinion(AbstractMinion abstractMinion) {
-        abstractMinions.add(abstractMinion);
+    public void addMinion(AbstractMinion minion) {
+        abstractMinions.add(minion);
     }
 
     public void addStrength(Characteristic c) {

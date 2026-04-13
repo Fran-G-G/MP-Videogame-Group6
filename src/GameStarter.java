@@ -1,15 +1,7 @@
-import java.util.Scanner;
-
 /**
  * Initializes and runs the game in terminal mode.
  */
 public class GameStarter {
-
-    private Scanner scanner;
-
-    public GameStarter() {
-        scanner = new Scanner(System.in);
-    }
 
     public void run() {
 
@@ -51,14 +43,11 @@ public class GameStarter {
 
         System.out.println("Jugador " + number);
 
-        System.out.print("Nombre: ");
-        String name = scanner.nextLine();
+        String name = ConsoleInput.readString("Nombre: ");
 
-        System.out.print("Nick: ");
-        String nick = scanner.nextLine();
+        String nick = ConsoleInput.readString("Nick: ");
 
-        System.out.print("Password (8-12 chars): ");
-        String pass = scanner.nextLine();
+        String pass = ConsoleInput.readString("Password (8-12 chars): ");
 
         return new Player(name, nick, pass);
     }
@@ -69,14 +58,10 @@ public class GameStarter {
     private AbstractCharacter createCharacter(Player player) {
 
         System.out.println("\n" + player.getNick() + ", elige tu tipo:");
-        System.out.println("1. Vampiro");
-        System.out.println("2. Hombre lobo");
-        System.out.println("3. Cazador");
+        System.out.println("1. Vampiro | 2. Hombre lobo | 3. Cazador");
+        int option = ConsoleInput.readInt(1, 3);
 
-        int option = readInt(1, 3);
-
-        System.out.print("Nombre del personaje: ");
-        String name = scanner.nextLine();
+        String name = ConsoleInput.readString("Nombre del personaje: ");
 
         AbstractCharacter character;
 
@@ -99,7 +84,7 @@ public class GameStarter {
 
     private Werewolf createWerewolf(String name) {
         System.out.println("Creando hombre lobo...");
-        return new Werewolf(name, 5, 3);
+        return new Werewolf(name, 5, 3, 2, 95);
     }
 
     private Hunter createHunter(String name) {
@@ -117,26 +102,5 @@ public class GameStarter {
             case 2 -> new Gift("Claws", 2, 1, 1);
             default -> new Talent("Aim", 2, 1);
         };
-    }
-
-    /**
-     * Reads integer safely.
-     */
-    private int readInt(int min, int max) {
-        int value;
-
-        while (true) {
-            try {
-                System.out.print("Opción: ");
-                value = Integer.parseInt(scanner.nextLine());
-
-                if (value >= min && value <= max) {
-                    return value;
-                }
-
-            } catch (Exception ignored) {}
-
-            System.out.println("Valor inválido. Intenta de nuevo.");
-        }
     }
 }
