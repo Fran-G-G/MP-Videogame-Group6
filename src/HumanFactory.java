@@ -14,7 +14,7 @@ public class HumanFactory extends MinionFactory {
     }
 
     @Override
-    public void createProduct() {
+    public Human createProduct() {
         Random random = new Random();
 
         String name = ConsoleInput.readString("Ponle un nombre a tu esbirro humano: ");
@@ -31,6 +31,8 @@ public class HumanFactory extends MinionFactory {
             this.minionOwner.addMinion(human);
             System.out.println(name + " añadido como esbirro del esbirro " + this.minionOwner.getName() + " con éxito.");
         }
+
+        return human;
     }
 
     public void setMinionOwner(Demon minion) {

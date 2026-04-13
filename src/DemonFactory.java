@@ -20,7 +20,7 @@ public class DemonFactory extends MinionFactory {
     }
 
     @Override
-    public void createProduct() {
+    public Demon createProduct() {
         Random random = new Random();
 
         String name = ConsoleInput.readString("Ponle un nombre a tu esbirro demonio: ");
@@ -45,6 +45,8 @@ public class DemonFactory extends MinionFactory {
         } else {
             System.out.println("Este demonio ha alcanzado el nivel máximo de profundidad y no tendrá esbirros propios.");
         }
+
+        return demon;
     }
 
     public void setMinionOwner(Demon minion) {

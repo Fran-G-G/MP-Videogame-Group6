@@ -61,18 +61,15 @@ public class GameStarter {
         System.out.println("1. Vampiro | 2. Hombre lobo | 3. Cazador");
         int option = ConsoleInput.readInt(1, 3);
 
-        String name = ConsoleInput.readString("Nombre del personaje: ");
-
+        CharacterFactory characterFactory;
         AbstractCharacter character;
-
         switch (option) {
-            case 1 -> character = createVampire(name);
-            case 2 -> character = createWerewolf(name);
-            default -> character = createHunter(name);
+            case 1 -> { characterFactory = new VampireFactory(); character = characterFactory.createProduct(); }
+            case 2 -> { characterFactory = new WerewolfFactory(); character = characterFactory.createProduct(); }
+            default -> { characterFactory = new HunterFactory(); character = characterFactory.createProduct(); }
         }
 
-        // Assign basic skill
-        character.skill = createBasicSkill(option);
+        System.out.println("\nFin del proceso de creación del personaje\n");
 
         return character;
     }

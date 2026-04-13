@@ -7,7 +7,7 @@ import java.util.Random;
 public class VampireFactory extends CharacterFactory {
 
     @Override
-    public void createProduct() {
+    public Vampire createProduct() {
         String name = ConsoleInput.readString("Nombre del vampiro: ");
         System.out.print("Edad del vampiro: ");
         int age = ConsoleInput.readInt(1, 3000);
@@ -20,6 +20,8 @@ public class VampireFactory extends CharacterFactory {
         createDiscipline(vampire);
 
         super.createCharacterExtras(vampire);
+
+        return vampire;
     }
 
     private void createDiscipline(Vampire vampire) {

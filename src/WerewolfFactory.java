@@ -6,7 +6,7 @@ import java.util.Random;
 public class WerewolfFactory extends CharacterFactory {
 
     @Override
-    public void createProduct() {
+    public Werewolf createProduct() {
         String name = "Nombre del hombre lobo: ";
         System.out.print("Altura del hombre lobo en su forma humana (en metros): ");
         double height = ConsoleInput.readDouble(1, 3);
@@ -21,6 +21,8 @@ public class WerewolfFactory extends CharacterFactory {
         createGift(werewolf);
 
         super.createCharacterExtras(werewolf);
+
+        return  werewolf;
     }
 
     private void createGift(Werewolf werewolf) {

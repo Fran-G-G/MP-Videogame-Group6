@@ -6,7 +6,7 @@ import java.util.Random;
 public class HunterFactory extends CharacterFactory {
 
     @Override
-    public void createProduct() {
+    public Hunter createProduct() {
         String name = ConsoleInput.readString("Nombre del cazador: ");
 
         int health = 5; // Every character starts with 5 health.
@@ -17,6 +17,8 @@ public class HunterFactory extends CharacterFactory {
         createTalent(hunter);
 
         super.createCharacterExtras(hunter);
+
+        return hunter;
     }
 
     private void createTalent(Hunter hunter) {

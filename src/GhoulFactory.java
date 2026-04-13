@@ -14,7 +14,7 @@ public class GhoulFactory extends MinionFactory {
     }
 
     @Override
-    public void createProduct() {
+    public Ghoul createProduct() {
         Random random = new Random();
 
         String name = ConsoleInput.readString("Ponle un nombre a tu esbirro ghoul: ");
@@ -31,6 +31,8 @@ public class GhoulFactory extends MinionFactory {
             this.minionOwner.addMinion(ghoul);
             System.out.println(name + " añadido como esbirro del esbirro " + this.minionOwner.getName() + " con éxito.");
         }
+
+        return ghoul;
     }
 
     public void setMinionOwner(Demon minion) {
