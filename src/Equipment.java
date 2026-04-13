@@ -24,5 +24,6 @@ public abstract class Equipment {
     public int getDefenseModifier() {
         return defenseModifier;
     }
+
 }
 

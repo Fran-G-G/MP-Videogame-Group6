@@ -20,22 +20,24 @@ public class Calculator {
 
         // Equipo activo
         if (character.getActiveWeapons() != null) {
-            base += character.getActiveWeapons()
-                    .stream()
-                    .mapToInt(w -> w.getAttackMod())
-                    .sum();
+            base += character.getActiveWeapons().stream().mapToInt(w -> w.getAttackModifier()).sum();
         }
         if (character.getActiveArmour() != null) {
-            base += character.getActiveArmour().getAttackMod();
+            base += character.getActiveArmour().getAttackModifier();
         }
 
-        // Recursos específicos (sangre, rabia, voluntad)
-        base += getResourceAttackBonus(character);
+        base = getBase(character, base);
 
         // Fortalezas / debilidades presentes
         base += getCharacteristicsModifier(character);
 
         return Math.max(base, 0);
+    }
+
+    private static int getBase(AbstractCharacter character, int base) {
+        // Recursos específicos (sangre, rabia, voluntad)
+        base += getResourceAttackBonus(character);
+        return base;
     }
 
     private static int getResourceAttackBonus(AbstractCharacter character) {

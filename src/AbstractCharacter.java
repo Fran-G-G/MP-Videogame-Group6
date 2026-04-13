@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -84,7 +85,7 @@ public abstract class AbstractCharacter {
         int total = power;
 
         if (skill != null) {
-            total += skill.getAttack();
+            total += skill.getAttackValue();
         }
 
         for (Weapon w : activeWeapons) {
@@ -116,5 +117,17 @@ public abstract class AbstractCharacter {
         if (health > 0) {
             health--;
         }
+    }
+
+    public int getPower() {
+    }
+
+    public SpecialSkill getSpecialSkill() {
+    }
+
+    public Arrays getActiveWeapons() {
+    }
+
+    public Armour getActiveArmour() {
     }
 }

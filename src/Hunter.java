@@ -16,7 +16,7 @@ public class Hunter extends AbstractCharacter {
         }
     }
 
-    public int getWillpower() {
+    public int getWill() {
         return willpower;
     }
 }

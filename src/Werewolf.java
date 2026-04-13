@@ -55,4 +55,7 @@ public class Werewolf extends AbstractCharacter {
     public double getWeight() {
         return weight;
     }
+
+    public int getFury() {
+    }
 }
