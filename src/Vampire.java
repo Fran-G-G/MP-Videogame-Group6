@@ -28,5 +28,7 @@ public class Vampire extends AbstractCharacter {
     }
 
     public int getBloodPoints() {
+        return blood;
     }
+
 }

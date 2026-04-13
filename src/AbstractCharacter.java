@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -120,14 +119,18 @@ public abstract class AbstractCharacter {
     }
 
     public int getPower() {
+        return power;
     }
 
     public SpecialSkill getSpecialSkill() {
+        return skill;
     }
 
-    public Arrays getActiveWeapons() {
+    public ArrayList<Weapon> getActiveWeapons() {
+        return (ArrayList<Weapon>) activeWeapons;
     }
 
     public Armour getActiveArmour() {
+        return activeArmour;
     }
 }

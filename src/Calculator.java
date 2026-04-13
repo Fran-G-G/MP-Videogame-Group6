@@ -45,7 +45,7 @@ public class Calculator {
             return (v.getBloodPoints() >= 5) ? 2 : 0;
         }
         if (character instanceof Werewolf w) {
-            return w.getFury(); // rabia actual
+            return w.getRage(); // rabia actual
         }
         if (character instanceof Hunter h) {
             return h.getWill(); // voluntad actual
