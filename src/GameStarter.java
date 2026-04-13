@@ -26,11 +26,16 @@ public class GameStarter {
         p2.setCharacter(createCharacter(p2));
 
         // Create and validate challenge
-        Challenge challenge = new Challenge(p1, p2, 50);
+        ChallengeHandler challengeHandler = new ChallengeHandler() {
+            @Override
+            public void handle(ChallengeHandler challenge) {
+
+            }
+        };
         Admin admin = new Admin("Admin", "admin", "12345678");
 
-        admin.validateChallenge(challenge);
-        challenge.accept();
+        admin.validateChallenge(challengeHandler);
+
 
         System.out.println("\nDesafío aceptado. ¡Empieza el combate!\n");
 
