@@ -14,13 +14,21 @@ import java.util.HashMap;
 
 public class DBManager {
 
-    private HashMap data;
+    private HashMap<String, String> data = new HashMap<>();
+
+    public DBManager(){
+        try {
+            loadData("");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public void serviceMethod(){
     }
 
     public boolean checkUser(String user, String password){
-        return data.containsKey(user) && data.get(user) == password;
+        return data.containsKey(user) && data.get(user).equals(password);
     }
 
     public void writeData(String data){

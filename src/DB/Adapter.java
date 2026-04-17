@@ -10,7 +10,8 @@ public class Adapter implements AdapterInterface{
     public void readData(){
     }
 
-    public void checkUser(){
+    public boolean checkUser(String user, String password){
+        return adapter.checkUser(user, password);
     }
 
     public void prueba(){

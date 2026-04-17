@@ -1,20 +1,14 @@
 package DB;
 
 public class Singleton {
-    private final Singleton instance;
-    private final Adapter adapter;
+    private static final Singleton instance = new Singleton();
+    private final Adapter adapter = new Adapter();
 
-    public Singleton(){
-        this.instance = this;
-        this.adapter = new Adapter();
-    }
-    public Singleton(Singleton instance){
-        this.instance = instance;
-        this.adapter = new Adapter();
+    private Singleton(){
     }
 
-    public Singleton getInstance(){
-        return this.instance;
+    public static Singleton getInstance(){
+        return instance;
     }
 
     public void prueba(){
