@@ -17,8 +17,8 @@ public abstract class AbstractCharacter {
     protected List<Armour> armours;
     protected List<AbstractMinion> abstractMinions;
 
-    protected List<Characteristic> strengths;
-    protected List<Characteristic> weaknesses;
+    protected List<Strength> strengths;
+    protected List<Weakness> weaknesses;
 
     protected List<Weapon> activeWeapons;
     protected Armour activeArmour;
@@ -103,14 +103,14 @@ public abstract class AbstractCharacter {
     /**
      * @param strength add a strength to the character.
      */
-    public void addStrength(Characteristic strength) {
+    public void addStrength(Strength strength) {
         strengths.add(strength);
     }
 
     /**
      * @param weakness add a weakness to the character.
      */
-    public void addWeakness(Characteristic weakness) {
+    public void addWeakness(Weakness weakness) {
         weaknesses.add(weakness);
     }
 
@@ -173,6 +173,30 @@ public abstract class AbstractCharacter {
      */
     public SpecialSkill getSpecialSkill() {
         return skill;
+    }
+
+    /**
+     * @return total value of the strength modifiers of the character.
+     */
+    public int getStrengthsTotalModifier() {
+        int total = 0;
+        for (Strength strength : strengths) {
+            total += strength.getValue();
+        }
+
+        return total;
+    }
+
+    /**
+     * @return total value of the weakness modifiers of the character.
+     */
+    public int getWeaknessesTotalModifier() {
+        int total = 0;
+        for (int i=0; i < weaknesses.toArray().length; i++) {
+            total += weaknesses.get(i).getValue();
+        }
+
+        return total;
     }
 
     /**
