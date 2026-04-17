@@ -4,7 +4,8 @@ public class Adapter implements AdapterInterface{
     private DBManager adapter;
 
     @Override
-    public void writeData() {
+    public void registerUser(String user, String password) {
+        adapter.registerUser(user, password);
     }
 
     public void readData(){

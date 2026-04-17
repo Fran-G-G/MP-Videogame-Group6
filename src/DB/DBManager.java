@@ -31,6 +31,10 @@ public class DBManager {
         return data.containsKey(user) && data.get(user).equals(password);
     }
 
+    public void registerUser(String user, String password){
+        writeData(user + " " + password);
+    }
+
     public void writeData(String data){
         Path path = Paths.get("./config/" + "data" + ".txt");
         if (!Files.exists(path)) {
