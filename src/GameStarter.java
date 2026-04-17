@@ -6,6 +6,38 @@ public class GameStarter {
     public void run() {
 
         System.out.println("Bienvenido al juego.\n");
+        int option;
+
+        System.out.println("1. Registrarse | 2. Iniciar Sesión");
+        option = ConsoleInput.readInt(1, 2);
+
+        switch (option) {
+            case 1 -> signIn(); // Registrarse
+            case 2 -> logIn(); // Iniciar Sesión
+        }
+
+        boolean play = true;
+        Player p = createPlayer(0); // Habrá que quitarlo, es solo para que no salten errores.
+
+        while (play) {
+            System.out.println("================================================================================\n");
+            System.out.println("MENU PRINCIPAL");
+            System.out.println("1. Cerrar Sesión | 2. Cancelar Cuenta | 3. Crear nuevo personaje | 4. Editar personaje | 5. Desafiar | 6. Consultar ranking");
+            option = ConsoleInput.readInt(1, 6);
+
+            switch (option) {
+                case 1 -> play = logOut();
+                case 2 -> signOut();
+                case 3 -> createCharacter(p);
+                case 4 -> editCharacter();
+                case 5 -> challenge();
+                case 6 -> seeRanking();
+            }
+        }
+
+        System.out.println("\nHasta pronto\n");
+
+
 
         // Create players
         Player p1 = createPlayer(1);
@@ -52,15 +84,34 @@ public class GameStarter {
         return new Player(name, nick, pass);
     }
 
+    private void signIn() {
+
+    }
+
+    private void logIn() {
+
+    }
+
+    private boolean logOut() {
+        System.out.println("Cerrando sesión...");
+        return false;
+    }
+
+    private void signOut() {
+
+    }
+
     /**
      * Creates a character for a player.
      */
     private AbstractCharacter createCharacter(Player player) {
 
+        // Choose the character type between the given options.
         System.out.println("\n" + player.getNick() + ", elige tu tipo:");
         System.out.println("1. Vampiro | 2. Hombre lobo | 3. Cazador");
         int option = ConsoleInput.readInt(1, 3);
 
+        // Start the process of creating a new character.
         CharacterFactory characterFactory;
         AbstractCharacter character;
         switch (option) {
@@ -74,30 +125,15 @@ public class GameStarter {
         return character;
     }
 
-    private Vampire createVampire(String name) {
-        System.out.println("Creando vampiro...");
-        return new Vampire(name, 5, 3, 200);
+    private void editCharacter() {
+
     }
 
-    private Werewolf createWerewolf(String name) {
-        System.out.println("Creando hombre lobo...");
-        return new Werewolf(name, 5, 3, 2, 95);
+    private void challenge() {
+
     }
 
-    private Hunter createHunter(String name) {
-        System.out.println("Creando cazador...");
-        return new Hunter(name, 5, 3);
-    }
+    private void seeRanking() {
 
-    /**
-     * Creates a simple skill depending on type.
-     */
-    private SpecialSkill createBasicSkill(int type) {
-
-        return switch (type) {
-            case 1 -> new Discipline("Bite", 2, 1, 1);
-            case 2 -> new Gift("Claws", 2, 1, 1);
-            default -> new Talent("Aim", 2, 1);
-        };
     }
 }

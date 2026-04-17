@@ -23,6 +23,12 @@ public abstract class AbstractCharacter {
     protected List<Weapon> activeWeapons;
     protected Armour activeArmour;
 
+    /**
+     * Constructor.
+     * @param name for the character
+     * @param health of the character
+     * @param power of the character
+     */
     public AbstractCharacter(String name, int health, int power) {
         if (health < 0 || health > 5) {
             throw new IllegalArgumentException("La salud debe estar entre 0 y 5");
@@ -44,14 +50,27 @@ public abstract class AbstractCharacter {
         this.activeWeapons = new ArrayList<>();
     }
 
+    /**
+     * @return the character's name.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * @param skill of the character.
+     */
     public void setSkill(SpecialSkill skill) {
         this.skill = skill;
     }
 
+    /**
+     *
+     * @param weapons the character has.
+     * @param armours the character has.
+     * @param selectedWeapons actual active weapon/s.
+     * @param selectedArmour actual active armour.
+     */
     public void chooseActiveEquipment(ArrayList<Weapon> weapons, ArrayList<Armour> armours, ArrayList<Weapon> selectedWeapons, Armour selectedArmour) {
         this.weapons = weapons;
         this.armours = armours;
@@ -60,26 +79,44 @@ public abstract class AbstractCharacter {
         this.activeArmour = selectedArmour;
     }
 
+    /**
+     * @param weapon the user wants to add.
+     */
     public void addWeapon(Weapon weapon) {
         weapons.add(weapon);
     }
 
+    /**
+     * @param armour the user wants to add.
+     */
     public void addArmour(Armour armour) {
         armours.add(armour);
     }
 
+    /**
+     * @param minion the user wants to add.
+     */
     public void addMinion(AbstractMinion minion) {
         abstractMinions.add(minion);
     }
 
-    public void addStrength(Characteristic c) {
-        strengths.add(c);
+    /**
+     * @param strength add a strength to the character.
+     */
+    public void addStrength(Characteristic strength) {
+        strengths.add(strength);
     }
 
-    public void addWeakness(Characteristic c) {
-        weaknesses.add(c);
+    /**
+     * @param weakness add a weakness to the character.
+     */
+    public void addWeakness(Characteristic weakness) {
+        weaknesses.add(weakness);
     }
 
+    /**
+     * @return the attack of the character.
+     */
     public int getTotalAttack() {
         int total = power;
 
@@ -94,6 +131,9 @@ public abstract class AbstractCharacter {
         return total;
     }
 
+    /**
+     * @return the defense of the character.
+     */
     public int getTotalDefense() {
         int total = 0;
 
@@ -112,24 +152,39 @@ public abstract class AbstractCharacter {
         return health;
     }
 
+    /**
+     * Reduce the character's health.
+     */
     public void reduceHealth() {
         if (health > 0) {
             health--;
         }
     }
 
+    /**
+     * @return the character's power.
+     */
     public int getPower() {
         return power;
     }
 
+    /**
+     * @return the character's special skill.
+     */
     public SpecialSkill getSpecialSkill() {
         return skill;
     }
 
+    /**
+     * @return the character's active weapons.
+     */
     public ArrayList<Weapon> getActiveWeapons() {
         return (ArrayList<Weapon>) activeWeapons;
     }
 
+    /**
+     * @return the character's active armour.
+     */
     public Armour getActiveArmour() {
         return activeArmour;
     }
