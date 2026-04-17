@@ -35,7 +35,7 @@ public class GameStarter {
             }
         }
 
-        System.out.println("\nHasta pronto\n");
+        System.out.println("\nHasta pronto :)\n");
 
 
 
