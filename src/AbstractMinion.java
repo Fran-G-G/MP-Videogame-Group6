@@ -8,7 +8,7 @@ public abstract class AbstractMinion {
 
     public AbstractMinion(String name, int health) {
         if (health < 1 || health > 3) {
-            throw new IllegalArgumentException("La salud debe estar entre 1 y 3");
+            throw new IllegalArgumentException("Health must be between 1 and 3");
         }
         this.name = name;
         this.health = health;
@@ -18,7 +18,17 @@ public abstract class AbstractMinion {
         return health;
     }
 
+    public void setHealth(int health) {
+        this.health = Math.max(0, health);
+    }
+
     public String getName() {
         return name;
     }
+
+    /**
+     * Creates a deep copy of this minion.
+     * @return a new instance with the same attributes.
+     */
+    public abstract AbstractMinion copy();
 }

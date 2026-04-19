@@ -9,8 +9,8 @@ public class Werewolf extends AbstractCharacter {
     private boolean transformed; // Human = false, Wolf = true
     private double height;
     private double weight;
-    private final int heightTransformationIncrement; // Random number that affects the height while transforming
-    private final int weightTransformationIncrement; // Random number that affects the weight while transforming
+    private final double heightTransformationIncrement;
+    private final double weightTransformationIncrement;
 
     public Werewolf(String name, int health, int power, double height, double weight) {
         super(name, health, power);
@@ -20,15 +20,15 @@ public class Werewolf extends AbstractCharacter {
         this.weight = Math.round(weight * 100.0) / 100.0;
 
         Random random = new Random();
-        double num = random.nextDouble() * 2.0;
-        double aux = Double.parseDouble( String.format("%.2f", num) );
-        this.heightTransformationIncrement = (int) Math.round( height + (0.5 + 0.5 * (aux / 2) ) );
-        this.weightTransformationIncrement = (int) Math.round( weight + (90 + 10 * aux) );
+        double factor = random.nextDouble() * 2.0; // Range [0.0, 2.0)
+
+        // Calculate transformation increments directly without string parsing
+        this.heightTransformationIncrement = 0.5 + 0.5 * (factor / 2.0);
+        this.weightTransformationIncrement = 90.0 + 10.0 * factor;
     }
 
     public void transform() {
         transformed = !transformed;
-
         if (transformed) {
             height += heightTransformationIncrement;
             weight += weightTransformationIncrement;
@@ -38,10 +38,23 @@ public class Werewolf extends AbstractCharacter {
         }
     }
 
-    public void increaseRage() {
+    /**
+     * Increases rage by 1 (max 3) when the werewolf takes damage.
+     */
+    public void increaseRageOnDamage() {
         if (rage < 3) {
             rage++;
         }
+    }
+
+    /**
+     * Checks if the werewolf has enough rage to use its gift.
+     */
+    public boolean canUseGift() {
+        if (skill instanceof Gift g) {
+            return rage >= g.getRageCost();
+        }
+        return false;
     }
 
     public int getRage() {
@@ -56,4 +69,51 @@ public class Werewolf extends AbstractCharacter {
         return weight;
     }
 
+    @Override
+    public int getAttackPotential(boolean useSkill) {
+        int potential = power;
+
+        if (useSkill && skill instanceof Gift g) {
+            if (rage >= g.getRageCost()) {
+                potential += g.getAttackValue();
+            }
+        }
+
+        for (Weapon w : activeWeapons) {
+            potential += w.getAttackModifier();
+        }
+        if (activeArmour != null) {
+            potential += activeArmour.getAttackModifier();
+        }
+
+        potential += rage; // current rage bonus
+
+        potential += getStrengthsTotalModifier();
+        potential -= getWeaknessesTotalModifier();
+
+        return Math.max(potential, 0);
+    }
+
+    @Override
+    public int getDefensePotential(boolean useSkill) {
+        int potential = 0;
+
+        if (useSkill && skill instanceof Gift g) {
+            if (rage >= g.getRageCost()) {
+                potential += g.getDefense();
+            }
+        }
+
+        if (activeArmour != null) {
+            potential += activeArmour.getDefenseModifier();
+        }
+        for (Weapon w : activeWeapons) {
+            potential += w.getDefenseModifier();
+        }
+
+        potential += getStrengthsTotalModifier();
+        potential -= getWeaknessesTotalModifier();
+
+        return Math.max(potential, 0);
+    }
 }

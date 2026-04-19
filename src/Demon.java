@@ -26,4 +26,13 @@ public class Demon extends AbstractMinion {
     public String getPact() {
         return pact;
     }
+
+    @Override
+    public AbstractMinion copy() {
+        Demon copy = new Demon(name, health, pact);
+        for (AbstractMinion sub : demonsMinions) {
+            copy.addMinion(sub.copy());
+        }
+        return copy;
+    }
 }

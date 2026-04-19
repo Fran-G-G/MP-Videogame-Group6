@@ -7,15 +7,18 @@ public class Ghoul extends AbstractMinion {
 
     public Ghoul(String name, int health, int dependency) {
         super(name, health);
-
         if (dependency < 1 || dependency > 5) {
-            throw new IllegalArgumentException("La dependencia debe estar entre 1 y 5");
+            throw new IllegalArgumentException("Dependency must be between 1 and 5");
         }
-
         this.dependency = dependency;
     }
 
     public int getDependency() {
         return dependency;
+    }
+
+    @Override
+    public AbstractMinion copy() {
+        return new Ghoul(name, health, dependency);
     }
 }

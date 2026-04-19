@@ -4,7 +4,12 @@
 public class GameStarter {
 
     public void run() {
+        // TEMPORARILY COMMENTED OUT - Full menu flow not yet implemented
+        // The combat test is executed directly from Main.java
+        System.out.println("GameStarter.run() is currently disabled for combat testing.");
+        System.out.println("Please run Main.java to see the combat test.");
 
+        /*
         System.out.println("Bienvenido al juego.\n");
         int option;
 
@@ -12,12 +17,12 @@ public class GameStarter {
         option = ConsoleInput.readInt(1, 2);
 
         switch (option) {
-            case 1 -> signIn(); // Registrarse
-            case 2 -> logIn(); // Iniciar Sesión
+            case 1 -> signIn();
+            case 2 -> logIn();
         }
 
         boolean play = true;
-        Player p = createPlayer(0); // Habrá que quitarlo, es solo para que no salten errores.
+        Player p = createPlayer(0);
 
         while (play) {
             System.out.println("================================================================================\n");
@@ -37,8 +42,6 @@ public class GameStarter {
 
         System.out.println("\nHasta pronto :)\n");
 
-
-
         // Create players
         Player p1 = createPlayer(1);
         Player p2 = createPlayer(2);
@@ -53,43 +56,36 @@ public class GameStarter {
         ChallengeHandler challengeHandler = new ChallengeHandler() {
             @Override
             public void handle(ChallengeHandler challenge) {
-
             }
         };
         Admin admin = new Admin("Admin", "admin", "12345678");
-
         admin.validateChallenge(challengeHandler);
-
 
         System.out.println("\nDesafío aceptado. ¡Empieza el combate!\n");
 
         // Start combat
         CombatHandler combatHandler = new CombatHandler(p1, p2);
-        combatHandler.start();
+        combatHandler.handle(null);
+        */
     }
 
     /**
      * Creates a player via terminal input.
      */
     private Player createPlayer(int number) {
-
         System.out.println("Jugador " + number);
-
         String name = ConsoleInput.readString("Nombre: ");
-
         String nick = ConsoleInput.readString("Nick: ");
-
         String pass = ConsoleInput.readString("Password (8-12 chars): ");
-
         return new Player(name, nick, pass);
     }
 
     private void signIn() {
-
+        // Not implemented yet
     }
 
     private void logIn() {
-
+        // Not implemented yet
     }
 
     private boolean logOut() {
@@ -98,20 +94,17 @@ public class GameStarter {
     }
 
     private void signOut() {
-
+        // Not implemented yet
     }
 
     /**
      * Creates a character for a player.
      */
     private AbstractCharacter createCharacter(Player player) {
-
-        // Choose the character type between the given options.
         System.out.println("\n" + player.getNick() + ", elige tu tipo:");
         System.out.println("1. Vampiro | 2. Hombre lobo | 3. Cazador");
         int option = ConsoleInput.readInt(1, 3);
 
-        // Start the process of creating a new character.
         CharacterFactory characterFactory;
         AbstractCharacter character;
         switch (option) {
@@ -121,19 +114,18 @@ public class GameStarter {
         }
 
         System.out.println("\nFin del proceso de creación del personaje\n");
-
         return character;
     }
 
     private void editCharacter() {
-
+        // Not implemented yet
     }
 
     private void challenge() {
-
+        // Not implemented yet
     }
 
     private void seeRanking() {
-
+        // Not implemented yet
     }
 }

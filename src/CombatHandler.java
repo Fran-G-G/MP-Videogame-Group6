@@ -1,44 +1,28 @@
-public class CombatHandler extends Handler {
+/**
+ * Handles the combat phase of a challenge.
+ * This is the final handler in the chain.
+ */
+public class CombatHandler extends ChallengeHandler {
+
+    public CombatHandler(Player challenger, Player challenged) {
+        this.player1 = challenger;
+        this.player2 = challenged;
+    }
 
     @Override
-    public void handle(Request request) {
+    public void handle(ChallengeHandler challenge) {
+        System.out.println("\n--- Fase de Combate ---");
 
-        Player p1 = request.getChallenger();
-        Player p2 = request.getChallenged();
-
-        System.out.println("\n==============================");
-        System.out.println("     ⚔️  COMBATE INICIADO ⚔️");
-        System.out.println("==============================\n");
-
-        // 🔹 MEMENTO
-        Originator originator = new Originator(p1, p2);
-        Memento memento = originator.save();
-
-        // 🔹 MEDIATOR
-        CombatMediator mediator = new CombatMediator(p1, p2);
-
-        mediator.coinFlipAnimation();
-
-        Player current = mediator.selectFirst();
-
-        int round = 1;
-
-        while (p1.getCharacter().isAlive() && p2.getCharacter().isAlive()) {
-
-            System.out.println("\n========== RONDA " + round + " ==========");
-
-            mediator.printStatus();
-
-            mediator.notify(current);
-
-            current = mediator.getOpponent(current);
-
-            round++;
+        // Ensure both players have characters with active equipment
+        if (player1.getCharacter() == null || player2.getCharacter() == null) {
+            System.out.println("Error: Ambos jugadores deben tener un personaje con equipo activo para luchar.");
+            return;
         }
 
-        mediator.printWinner();
+        // Create and start the combat mediator
+        CombatMediator mediator = new CombatMediator(player1, player2);
+        mediator.start();
 
-        // 🔹 RESTORE
-        originator.restore(memento);
+        // No next handler; combat is the end of the chain
     }
 }

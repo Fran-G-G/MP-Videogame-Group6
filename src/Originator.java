@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class Originator {
 
     private Player p1;
@@ -9,22 +11,27 @@ public class Originator {
     }
 
     public Memento save() {
+        AbstractCharacter c1 = p1.getCharacter();
+        AbstractCharacter c2 = p2.getCharacter();
+
         return new ConcreteMemento(
-                p1.getCharacter().getHealth(),
-                p2.getCharacter().getHealth(),
-                p1.getCharacter().getMinionHealth(),
-                p2.getCharacter().getMinionHealth()
+                c1.getHealth(),
+                c2.getHealth(),
+                c1.getMinionsCopy(),
+                c2.getMinionsCopy()
         );
     }
 
     public void restore(Memento m) {
-
         ConcreteMemento cm = (ConcreteMemento) m;
 
-        p1.getCharacter().setHealth(cm.getP1Health());
-        p2.getCharacter().setHealth(cm.getP2Health());
+        AbstractCharacter c1 = p1.getCharacter();
+        AbstractCharacter c2 = p2.getCharacter();
 
-        p1.getCharacter().setMinionHealth(cm.getP1Minions());
-        p2.getCharacter().setMinionHealth(cm.getP2Minions());
+        c1.setHealth(cm.getP1Health());
+        c2.setHealth(cm.getP2Health());
+
+        c1.restoreMinions(cm.getP1Minions());
+        c2.restoreMinions(cm.getP2Minions());
     }
 }
