@@ -29,7 +29,8 @@ public class Calculator {
         base = getBase(character, base);
 
         // Fortalezas / debilidades presentes
-        base += getCharacteristicsModifier(character);
+        base += character.getStrengthsTotalModifier();
+        base -= character.getWeaknessesTotalModifier();
 
         return Math.max(base, 0);
     }

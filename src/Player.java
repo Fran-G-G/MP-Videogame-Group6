@@ -10,8 +10,8 @@ public class Player extends User {
     private String registrationNumber;
     private AbstractCharacter character;
 
-    private List<Challenge> challengesReceived;
-    private List<Challenge> challengesSent;
+    private List<ChallengeHandler> challengesReceived;
+    private List<ChallengeHandler> challengesSent;
 
     public Player(String name, String nick, String password) {
         super(name, nick, password);
@@ -41,25 +41,15 @@ public class Player extends User {
         return character;
     }
 
-    // 🔹 AÑADIR ESTE MÉTODO (solo si no lo heredas bien de User)
-    public String getNick() {
-        return super.getNick();
-    }
-
-    // 🔹 CLAVE PARA EL COMBATE
-    public boolean canUseSkill() {
-        return character != null && character.canUseSkill();
-    }
-
-    public void addReceivedChallenge(Challenge c) {
+    public void addReceivedChallenge(ChallengeHandler c) {
         challengesReceived.add(c);
     }
 
-    public void addSentChallenge(Challenge c) {
+    public void addSentChallenge(ChallengeHandler c) {
         challengesSent.add(c);
     }
 
-    public List<Challenge> getChallengesReceived() {
+    public List<ChallengeHandler> getChallengesReceived() {
         return challengesReceived;
     }
 }

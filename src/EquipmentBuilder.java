@@ -22,7 +22,7 @@ public class EquipmentBuilder implements Builder {
             System.out.println("Valor de ataque  del arma: ");
             int attackModifier = ConsoleInput.readInt(1, 3);
             System.out.println("Valor de defensa del arma: ");
-            int defenseModifier = ConsoleInput.readInt(1, 3);
+            int defenseModifier = ConsoleInput.readInt(0, 3);
             System.out.println("Manos necesarias para utilizar el arma: ");
             int hands = ConsoleInput.readInt(1, 2);
             Weapon newWeapon = new Weapon(name, attackModifier, defenseModifier, hands);
@@ -42,7 +42,7 @@ public class EquipmentBuilder implements Builder {
         while (createArmours) {
             String name = ConsoleInput.readString("Nombre para la armadura: ");
             System.out.println("Valor de ataque  de la armadura: ");
-            int attackModifier = ConsoleInput.readInt(1, 3);
+            int attackModifier = ConsoleInput.readInt(0, 3);
             System.out.println("Valor de defensa de la armadura: ");
             int defenseModifier = ConsoleInput.readInt(1, 3);
             Armour newArmour = new Armour(name, attackModifier, defenseModifier);

@@ -71,24 +71,24 @@ public abstract class CharacterFactory implements AbstractFactory<AbstractCharac
 
         ArrayList<Weapon> selectedWeapons = new ArrayList<>();
 
-        System.out.print("De las armas que has creado, elige una como activa:");
+        System.out.print("De las armas que has creado, elige una como activa:\n");
         showAndSelectWeapon(weapons, selectedWeapons);
 
         if (selectedWeapons.getFirst().getHands() == 1) {
-            System.out.print("Como has elegido un arma de una sola mano, puedes activar otra arma diferente de 1 mano:");
+            System.out.print("Como has elegido un arma de una sola mano, puedes activar otra arma diferente de 1 mano:\n");
             showAndSelectWeapon(weapons, selectedWeapons);
         }
 
         int selectedArmourIndex;
         Armour selectedArmour;
-        System.out.print("De las armaduras que has creado, elige una como activa:");
+        System.out.print("De las armaduras que has creado, elige una como activa:\n");
         for (int i = 0; i < armours.size(); i++) {
             Armour a = armours.get(i); // Index access
-            System.out.print( i+1 + ". " + a.getName() );
+            System.out.print("\t" + (i+1) + ". " + a.getName() + "\n");
         }
-        System.out.print("Opción: ");
-        selectedArmourIndex = ConsoleInput.readInt(0, armours.size()-1);
-        selectedArmour = armours.get(selectedArmourIndex);
+
+        selectedArmourIndex = ConsoleInput.readInt(1, armours.size());
+        selectedArmour = armours.get(selectedArmourIndex-1);
 
         character.chooseActiveEquipment(weapons, armours, selectedWeapons, selectedArmour);
     }
@@ -96,13 +96,12 @@ public abstract class CharacterFactory implements AbstractFactory<AbstractCharac
     private void showAndSelectWeapon(ArrayList<Weapon> weapons, ArrayList<Weapon> selectedWeapons) {
         for (int i = 0; i < weapons.size(); i++) {
             Weapon w = weapons.get(i); // Index access
-            System.out.print( i+1 + ". " + w.getName() + ": " + w.getHands() + " manos");
+            System.out.print("\t" + (i+1) + ". " + w.getName() + ": " + w.getHands() + " mano/s\n");
         }
 
-        System.out.print("Opción: ");
-        int selectedWeaponIndex = ConsoleInput.readInt(0, weapons.size()-1);
+        int selectedWeaponIndex = ConsoleInput.readInt(1, weapons.size());
 
-        Weapon selectedWeapon = weapons.get(selectedWeaponIndex);
+        Weapon selectedWeapon = weapons.get(selectedWeaponIndex-1);
         selectedWeapons.add(selectedWeapon);
     }
 
