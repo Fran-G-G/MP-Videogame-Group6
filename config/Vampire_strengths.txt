@@ -1,0 +1,5 @@
+Inmortalidad, 5;
+Velocidad Sobrenatural, 4;
+Visión Nocturna, 1;
+Regeneración Sangrienta, 2;
+Hipnosis, 3;

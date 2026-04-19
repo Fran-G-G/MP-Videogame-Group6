@@ -4,8 +4,8 @@
 public abstract class Equipment {
 
     protected String name;
-    protected int attackModifier;
-    protected int defenseModifier;
+    protected int attackModifier; // 0-3
+    protected int defenseModifier; // 0-3
 
     public Equipment(String name, int attackModifier, int defenseModifier) {
         this.name = name;
@@ -24,5 +24,5 @@ public abstract class Equipment {
     public int getDefenseModifier() {
         return defenseModifier;
     }
-}
 
+}

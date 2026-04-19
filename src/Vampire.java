@@ -26,4 +26,9 @@ public class Vampire extends AbstractCharacter {
     public void recoverBlood() {
         blood = Math.min(10, blood + 4);
     }
+
+    public int getBloodPoints() {
+        return blood;
+    }
+
 }

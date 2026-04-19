@@ -7,7 +7,7 @@ public class Human extends AbstractMinion {
         HIGH, NORMAL, LOW
     }
 
-    private Loyalty loyalty;
+    private final Loyalty loyalty;
 
     public Human(String name, int health, Loyalty loyalty) {
         super(name, health);

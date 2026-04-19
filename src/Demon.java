@@ -6,21 +6,21 @@ import java.util.List;
  */
 public class Demon extends AbstractMinion {
 
-    private String pact;
-    private List<AbstractMinion> abstractMinions;
+    private final String pact;
+    private final List<AbstractMinion> demonsMinions;
 
     public Demon(String name, int health, String pact) {
         super(name, health);
         this.pact = pact;
-        this.abstractMinions = new ArrayList<>();
+        this.demonsMinions = new ArrayList<>();
     }
 
-    public void addMinion(AbstractMinion abstractMinion) {
-        abstractMinions.add(abstractMinion);
+    public void addMinion(AbstractMinion minion) {
+        demonsMinions.add(minion);
     }
 
     public List<AbstractMinion> getMinions() {
-        return abstractMinions;
+        return demonsMinions;
     }
 
     public String getPact() {

@@ -1,3 +1,3 @@
-public interface AbstractFactory {
-    public void createProduct();
+public interface AbstractFactory<T> {
+    T createProduct();
 }

@@ -47,122 +47,61 @@ public abstract class AbstractCharacter {
         this.activeWeapons = new ArrayList<>();
     }
 
-    // ==============================
-    // ⚔️ COMBATE
-    // ==============================
-
-    public boolean isAlive() {
-        return health > 0;
+    public void addWeapon(Weapon weapon) {
+        weapons.add(weapon);
     }
 
-    public boolean canUseSkill() {
-        return skill != null;
+    public void addArmour(Armour armour) {
+        armours.add(armour);
     }
 
-    // 🔥 ATAQUE
-    public int getTotalAttack(boolean useSkill) {
+    public void addMinion(AbstractMinion abstractMinion) {
+        abstractMinions.add(abstractMinion);
+    }
+
+    public void addStrength(Characteristic c) {
+        strengths.add(c);
+    }
+
+    public void addWeakness(Characteristic c) {
+        weaknesses.add(c);
+    }
+
+    public int getTotalAttack() {
         int total = power;
 
-        // armas
+        if (skill != null) {
+            total += skill.getAttack();
+        }
+
         for (Weapon w : activeWeapons) {
             total += w.getAttackModifier();
         }
 
-        // armadura que da ataque
-        if (activeArmour != null) {
-            total += activeArmour.getAttackModifier();
-        }
-
-        // skill solo si se usa
-        if (useSkill && skill != null) {
-            total += skill.getAttack();
-        }
-
-        // fortalezas - debilidades
-        total += getModifiers();
-
         return total;
     }
 
-    // 🛡️ DEFENSA
-    public int getTotalDefense(boolean useSkill) {
-        int total = power;
+    public int getTotalDefense() {
+        int total = 0;
 
-        // armadura
+        if (skill != null) {
+            total += skill.getDefense();
+        }
+
         if (activeArmour != null) {
             total += activeArmour.getDefenseModifier();
         }
 
-        // armas que dan defensa
-        for (Weapon w : activeWeapons) {
-            total += w.getDefenseModifier();
-        }
-
-        // skill
-        if (useSkill && skill != null) {
-            total += skill.getDefense();
-        }
-
-        total += getModifiers();
-
         return total;
     }
 
-    // 🔹 MODIFICADORES (simple)
-    private int getModifiers() {
-
-        int mod = 0;
-
-        for (Characteristic c : strengths) {
-            mod += c.getValue();
-        }
-
-        for (Characteristic c : weaknesses) {
-            mod -= c.getValue();
-        }
-
-        return mod;
-    }
-
-    // ==============================
-    // 👹 ESBIRROS (POOL)
-    // ==============================
-
-    public void calculateTotalMinionHealth() {
-        totalMinionHealth = 0;
-
-        for (AbstractMinion m : abstractMinions) {
-            totalMinionHealth += m.getHealth();
-        }
-    }
-
-    public int getMinionHealth() {
-        return totalMinionHealth;
-    }
-
-    public void setMinionHealth(int value) {
-        totalMinionHealth = Math.max(0, value);
-    }
-
-    // ==============================
-    // ❤️ VIDA
-    // ==============================
-
     public int getHealth() {
         return health;
-    }
-
-    public void setHealth(int health) {
-        this.health = Math.max(0, health);
     }
 
     public void reduceHealth() {
         if (health > 0) {
             health--;
         }
-    }
-
-    public String getName() {
-        return name;
     }
 }
