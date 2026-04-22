@@ -17,4 +17,9 @@ public class Human extends AbstractMinion {
     public Loyalty getLoyalty() {
         return loyalty;
     }
+
+    @Override
+    public AbstractMinion copy() {
+        return new Human(name, health, loyalty);
+    }
 }

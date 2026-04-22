@@ -4,6 +4,10 @@
 public class GameStarter {
 
     public void run() {
+        // TEMPORARILY COMMENTED OUT - Full menu flow not yet implemented
+        // The combat test is executed directly from Main.java
+        System.out.println("GameStarter.run() is currently disabled for combat testing.");
+        System.out.println("Please run Main.java to see the combat test.");
 
         System.out.println("Bienvenido al juego.\n");
         int option;
@@ -64,8 +68,10 @@ public class GameStarter {
         System.out.println("\nDesafío aceptado. ¡Empieza el combate!\n");
 
         // Start combat
-        Combat combat = new Combat(p1, p2);
-        combat.start();
+        /*
+        CombatHandler combatHandler = new CombatHandler(p1, p2);
+        combatHandler.handle(null);
+        */
     }
 
     /**
