@@ -15,15 +15,15 @@ public class EquipmentBuilder implements Builder {
 
     @Override
     public ArrayList<Weapon> buildWeapons() {
-        boolean createWeapons = ConsoleInput.readBoolean("¿Quieres crear armas?");
+        boolean createWeapons = ConsoleInput.readBoolean("¿Quieres crear un arma?");
 
         while (createWeapons) {
-            String name = ConsoleInput.readString("Nombre para el arma: ");
-            System.out.println("Valor de ataque  del arma: ");
+            String name = ConsoleInput.readString("\t Nombre para el arma: ");
+            System.out.println("\t Valor de ataque  del arma: ");
             int attackModifier = ConsoleInput.readInt(1, 3);
-            System.out.println("Valor de defensa del arma: ");
+            System.out.println("\t Valor de defensa del arma: ");
             int defenseModifier = ConsoleInput.readInt(0, 3);
-            System.out.println("Manos necesarias para utilizar el arma: ");
+            System.out.println("\t Manos necesarias para utilizar el arma: ");
             int hands = ConsoleInput.readInt(1, 2);
             Weapon newWeapon = new Weapon(name, attackModifier, defenseModifier, hands);
 
@@ -37,7 +37,7 @@ public class EquipmentBuilder implements Builder {
 
     @Override
     public ArrayList<Armour> buildArmours() {
-        boolean createArmours = ConsoleInput.readBoolean("¿Quieres crear armaduras?");
+        boolean createArmours = ConsoleInput.readBoolean("¿Quieres crear una armadura?");
 
         while (createArmours) {
             String name = ConsoleInput.readString("Nombre para la armadura: ");

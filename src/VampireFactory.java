@@ -9,7 +9,7 @@ public class VampireFactory extends CharacterFactory {
     @Override
     public Vampire createProduct() {
         String name = ConsoleInput.readString("Nombre del vampiro: ");
-        System.out.print("Edad de " + name + ": ");
+        System.out.println("Edad de " + name + ": ");
         int age = ConsoleInput.readInt(1, 3000);
 
         int health = 5; // Every character starts with 5 health.

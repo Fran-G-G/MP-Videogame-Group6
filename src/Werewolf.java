@@ -21,9 +21,8 @@ public class Werewolf extends AbstractCharacter {
 
         Random random = new Random();
         double num = random.nextDouble() * 2.0;
-        double aux = Double.parseDouble( String.format("%.2f", num) );
-        this.heightTransformationIncrement = (int) Math.round( height + (0.5 + 0.5 * (aux / 2) ) );
-        this.weightTransformationIncrement = (int) Math.round( weight + (90 + 10 * aux) );
+        this.heightTransformationIncrement = (int) Math.round( height + (0.5 + 0.5 * (num / 2) ) );
+        this.weightTransformationIncrement = (int) Math.round( weight + (90 + 10 * num) );
     }
 
     public void transform() {

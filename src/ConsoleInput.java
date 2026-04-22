@@ -17,6 +17,8 @@ public class ConsoleInput {
                 value = Integer.parseInt(SCANNER.nextLine());
 
                 if (value >= min && value <= max) {
+                    System.out.println();
+
                     return value;
                 }
 
@@ -42,6 +44,8 @@ public class ConsoleInput {
                 value = Double.parseDouble(input);
 
                 if (value >= min && value <= max) {
+                    System.out.println();
+
                     return value;
                 }
 
@@ -64,6 +68,8 @@ public class ConsoleInput {
             input = SCANNER.nextLine().trim();
 
             if (!input.isEmpty()) {
+                System.out.println();
+
                 return input;
             }
 
@@ -80,9 +86,13 @@ public class ConsoleInput {
             String input = SCANNER.nextLine().trim().toLowerCase();
 
             if (input.equals("s") || input.equals("si") || input.equals("sí")) {
+                System.out.println();
+
                 return true;
             }
             if (input.equals("n") || input.equals("no")) {
+                System.out.println();
+
                 return false;
             }
 

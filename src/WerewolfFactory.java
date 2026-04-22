@@ -8,9 +8,9 @@ public class WerewolfFactory extends CharacterFactory {
     @Override
     public Werewolf createProduct() {
         String name = ConsoleInput.readString("Nombre del hombre lobo: ");
-        System.out.print("Altura de " + name + " en su forma humana (en metros): ");
+        System.out.println("Altura de " + name + " en su forma humana (en metros): ");
         double height = ConsoleInput.readDouble(1, 3);
-        System.out.print("Peso de " + name + " en su forma humana (en kilogramos): ");
+        System.out.println("Peso de " + name + " en su forma humana (en kilogramos): ");
         double weight = ConsoleInput.readDouble(20, 150);
 
         int health = 5; // Every character starts with 5 health.

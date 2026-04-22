@@ -22,7 +22,7 @@ public class GameStarter {
         while (play) {
             System.out.println("================================================================================\n");
             System.out.println("MENU PRINCIPAL");
-            System.out.println("1. Cerrar Sesión | 2. Cancelar Cuenta | 3. Crear nuevo personaje | 4. Editar personaje | 5. Desafiar | 6. Consultar ranking");
+            System.out.println("1. Cerrar Sesión | 2. Cancelar Cuenta | 3. Crear nuevo personaje | 4. Editar personaje | 5. Desafiar | 6. Consultar ranking \n");
             option = ConsoleInput.readInt(1, 6);
 
             switch (option) {
@@ -106,8 +106,11 @@ public class GameStarter {
      */
     private AbstractCharacter createCharacter(Player player) {
 
+        System.out.println("================================================================================");
+        System.out.println("Comenzamos con la creación del personaje \n");
+
         // Choose the character type between the given options.
-        System.out.println("\n" + player.getNick() + ", elige tu tipo:");
+        System.out.println(player.getNick() + ", elige el tipo de personaje que quieras crear:");
         System.out.println("1. Vampiro | 2. Hombre lobo | 3. Cazador");
         int option = ConsoleInput.readInt(1, 3);
 

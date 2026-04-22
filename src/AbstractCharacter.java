@@ -75,8 +75,13 @@ public abstract class AbstractCharacter {
         this.weapons = weapons;
         this.armours = armours;
 
-        this.activeWeapons = selectedWeapons;
-        this.activeArmour = selectedArmour;
+        if (!selectedWeapons.isEmpty()) {
+            this.activeWeapons = selectedWeapons;
+        }
+
+        if (selectedArmour != null) {
+            this.activeArmour = selectedArmour;
+        }
     }
 
     /**

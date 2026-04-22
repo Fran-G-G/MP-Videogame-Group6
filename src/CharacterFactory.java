@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 
 /**
  * Base Factory for creating the common part of all types of characters.
@@ -13,14 +14,17 @@ public abstract class CharacterFactory implements AbstractFactory<AbstractCharac
 
     protected void createCharacterExtras(AbstractCharacter character) {
 
+        System.out.println("-----------------------------------------------------------------------------\n");
         // Create and add the weaknesses to the character
         manageWeaknessesCreation(character);
 
         // Create and add the strengths to the character
         manageStrengthsCreation(character);
+        System.out.println("-----------------------------------------------------------------------------\n");
 
         // Create and activate the equipment for the character
         manageEquipmentCreation(character);
+        System.out.println("-----------------------------------------------------------------------------\n");
 
         // Creation of the minions for the character
         manageMinionsCreation(character);
@@ -39,10 +43,12 @@ public abstract class CharacterFactory implements AbstractFactory<AbstractCharac
         Collections.shuffle(possibleWeaknesses);
         for (int i = 0; i < numWeakStrg; i++) {
             Weakness selectedWeakness = possibleWeaknesses.get(i);
-            System.out.println("Nombre de la debilidad: " + selectedWeakness.getName() + ". Sensibilidad: " + selectedWeakness.getValue());
+            System.out.println("\t Nombre de la debilidad: " + selectedWeakness.getName() + ". Sensibilidad: " + selectedWeakness.getValue());
 
             character.addWeakness(selectedWeakness);
         }
+
+        System.out.println();
     }
 
     private void manageStrengthsCreation(AbstractCharacter character) {
@@ -58,10 +64,12 @@ public abstract class CharacterFactory implements AbstractFactory<AbstractCharac
         Collections.shuffle(possibleStrengths);
         for (int i = 0; i < numWeakStrg; i++) {
             Strength selectedStrength = possibleStrengths.get(i);
-            System.out.println("Nombre de la fortaleza: " + selectedStrength.getName() + ". Temple: " + selectedStrength.getValue());
+            System.out.println("\t Nombre de la fortaleza: " + selectedStrength.getName() + ". Temple: " + selectedStrength.getValue());
 
             character.addStrength(selectedStrength);
         }
+
+        System.out.println();
     }
 
     private void manageEquipmentCreation(AbstractCharacter character) {
@@ -70,38 +78,72 @@ public abstract class CharacterFactory implements AbstractFactory<AbstractCharac
         ArrayList<Armour> armours = equipmentBuilder.buildArmours();
 
         ArrayList<Weapon> selectedWeapons = new ArrayList<>();
+        if (weapons.size() == 1) {
+            System.out.println("Como tu personaje únicamente tiene un arma, es la que tendrá activa.\n");
 
-        System.out.print("De las armas que has creado, elige una como activa:\n");
-        showAndSelectWeapon(weapons, selectedWeapons);
+            selectedWeapons.add(weapons.getFirst());
+        } else if (!weapons.isEmpty()) {
+            System.out.print("De las armas que has creado, elige una como activa:\n");
+            showAndSelectWeapon(weapons, selectedWeapons, false);
 
-        if (selectedWeapons.getFirst().getHands() == 1) {
-            System.out.print("Como has elegido un arma de una sola mano, puedes activar otra arma diferente de 1 mano:\n");
-            showAndSelectWeapon(weapons, selectedWeapons);
+            if (selectedWeapons.getFirst().getHands() == 1) {
+                System.out.print("Como has elegido un arma de una sola mano, puedes activar otra arma diferente de 1 mano:\n");
+                showAndSelectWeapon(weapons, selectedWeapons, true);
+            }
+        } else {
+            System.out.println("Tu personaje no tiene armas de entre las que poder elegir.\n");
         }
 
-        int selectedArmourIndex;
-        Armour selectedArmour;
-        System.out.print("De las armaduras que has creado, elige una como activa:\n");
-        for (int i = 0; i < armours.size(); i++) {
-            Armour a = armours.get(i); // Index access
-            System.out.print("\t" + (i+1) + ". " + a.getName() + "\n");
-        }
+        Armour selectedArmour = null;
+        if (armours.size() == 1) {
+            System.out.println("Como tu personaje únicamente tiene una armadura, es la que tendrá activa.\n");
 
-        selectedArmourIndex = ConsoleInput.readInt(1, armours.size());
-        selectedArmour = armours.get(selectedArmourIndex-1);
+            selectedArmour = armours.getFirst();
+        } else if (!armours.isEmpty()) {
+            int selectedArmourIndex;
+
+            System.out.print("De las armaduras que has creado, elige una como activa:\n");
+            for (int i = 0; i < armours.size(); i++) {
+                Armour a = armours.get(i); // Index access
+                System.out.print("\t" + (i + 1) + ". " + a.getName() + "\n");
+            }
+
+            selectedArmourIndex = ConsoleInput.readInt(1, armours.size());
+            selectedArmour = armours.get(selectedArmourIndex - 1);
+        } else {
+            System.out.println("Tu personaje no tiene armaduras de entre las que poder elegir.\n");
+        }
 
         character.chooseActiveEquipment(weapons, armours, selectedWeapons, selectedArmour);
     }
 
-    private void showAndSelectWeapon(ArrayList<Weapon> weapons, ArrayList<Weapon> selectedWeapons) {
+    private void showAndSelectWeapon(ArrayList<Weapon> weapons, ArrayList<Weapon> selectedWeapons, boolean secondWeapon) {
+        ArrayList<Weapon> auxWeaponsArray = new ArrayList<>();
+
         for (int i = 0; i < weapons.size(); i++) {
             Weapon w = weapons.get(i); // Index access
-            System.out.print("\t" + (i+1) + ". " + w.getName() + ": " + w.getHands() + " mano/s\n");
+
+            if (secondWeapon && (w.getHands() != 2) && (!Objects.equals(w.getName(), selectedWeapons.getFirst().getName()))) {
+                System.out.print("\t" + (auxWeaponsArray.size() + 1) + ". " + w.getName() + "\n");
+                auxWeaponsArray.add(w);
+            } else if (!secondWeapon) {
+                System.out.print("\t" + (i + 1) + ". " + w.getName() + ": " + w.getHands() + " mano/s\n");
+
+            }
         }
 
-        int selectedWeaponIndex = ConsoleInput.readInt(1, weapons.size());
+        int selectedWeaponIndex;
+        Weapon selectedWeapon;
+        if (!secondWeapon) {
+            selectedWeaponIndex = ConsoleInput.readInt(1, weapons.size());
 
-        Weapon selectedWeapon = weapons.get(selectedWeaponIndex-1);
+            selectedWeapon = weapons.get(selectedWeaponIndex-1);
+        } else {
+            selectedWeaponIndex = ConsoleInput.readInt(1, auxWeaponsArray.size());
+
+            selectedWeapon = auxWeaponsArray.get(selectedWeaponIndex-1);
+        }
+
         selectedWeapons.add(selectedWeapon);
     }
 
