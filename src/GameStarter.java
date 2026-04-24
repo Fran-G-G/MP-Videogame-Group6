@@ -4,12 +4,6 @@
 public class GameStarter {
 
     public void run() {
-        // TEMPORARILY COMMENTED OUT - Full menu flow not yet implemented
-        // The combat test is executed directly from Main.java
-        System.out.println("GameStarter.run() is currently disabled for combat testing.");
-        System.out.println("Please run Main.java to see the combat test.");
-
-        System.out.println("Bienvenido al juego.\n");
         int option;
 
         System.out.println("1. Registrarse | 2. Iniciar Sesión");
@@ -33,45 +27,13 @@ public class GameStarter {
                 case 1 -> play = logOut();
                 case 2 -> signOut();
                 case 3 -> createCharacter(p);
-                case 4 -> editCharacter();
+                //case 4 -> editCharacter();
                 case 5 -> challenge();
                 case 6 -> seeRanking();
             }
         }
 
         System.out.println("\nHasta pronto :)\n");
-
-
-
-        // Create players
-        Player p1 = createPlayer(1);
-        Player p2 = createPlayer(2);
-
-        // Create characters
-        System.out.println("\nCreación de personajes...\n");
-
-        p1.setCharacter(createCharacter(p1));
-        p2.setCharacter(createCharacter(p2));
-
-        // Create and validate challenge
-        ChallengeHandler challengeHandler = new ChallengeHandler() {
-            @Override
-            public void handle(ChallengeHandler challenge) {
-
-            }
-        };
-        Admin admin = new Admin("Admin", "admin", "12345678");
-
-        admin.validateChallenge(challengeHandler);
-
-
-        System.out.println("\nDesafío aceptado. ¡Empieza el combate!\n");
-
-        // Start combat
-        /*
-        CombatHandler combatHandler = new CombatHandler(p1, p2);
-        combatHandler.handle(null);
-        */
     }
 
     /**
@@ -110,7 +72,7 @@ public class GameStarter {
     /**
      * Creates a character for a player.
      */
-    private AbstractCharacter createCharacter(Player player) {
+    private void createCharacter(Player player) {
 
         System.out.println("================================================================================");
         System.out.println("Comenzamos con la creación del personaje \n");
@@ -126,20 +88,52 @@ public class GameStarter {
         switch (option) {
             case 1 -> { characterFactory = new VampireFactory(); character = characterFactory.createProduct(); }
             case 2 -> { characterFactory = new WerewolfFactory(); character = characterFactory.createProduct(); }
-            default -> { characterFactory = new HunterFactory(); character = characterFactory.createProduct(); }
+            case 3 -> { characterFactory = new HunterFactory(); character = characterFactory.createProduct(); }
         }
 
         System.out.println("\nFin del proceso de creación del personaje\n");
-
-        return character;
     }
 
-    private void editCharacter() {
+    private void editCharacter(AbstractCharacter character) {
+        System.out.println("================================================================================");
+        System.out.println("¿Qué quieres editar de tu personaje? \n");
 
+        System.out.println("1. Nombre | 2. Armas o armaduras | 3. Esbirros");
+        int option = ConsoleInput.readInt(1, 3);
+
+        // Start the process of editing a character characteristic.
+        switch (option) {
+          case 1 -> {
+              String newName = ConsoleInput.readString("Introduzca el nuevo nombre");
+              character.setName(newName);
+          }
+          //case 2 -> character.
+          //case 3 -> character.
+        }
+
+        System.out.println("\nFin del proceso de creación del personaje\n");
     }
 
     private void challenge() {
+        // Create and validate challenge
+        ChallengeHandler challengeHandler = new ChallengeHandler() {
+            @Override
+            public void handle(ChallengeHandler challenge) {
 
+            }
+        };
+        Admin admin = new Admin("Admin", "admin", "12345678");
+
+        admin.validateChallenge(challengeHandler);
+
+
+        System.out.println("\nDesafío aceptado. ¡Empieza el combate!\n");
+
+        // Start combat
+        /*
+        CombatHandler combatHandler = new CombatHandler(p1, p2);
+        combatHandler.handle(null);
+        */
     }
 
     private void seeRanking() {

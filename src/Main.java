@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) {
         System.out.println("=================================");
-        System.out.println("  🧛‍♂️ JUEGO DE CRIATURAS 🐺");
+        System.out.println("  🧛‍♂️ PELEAS EN ULLEWAND 🐺");
         System.out.println("=================================\n");
 
         System.out.println("\n>>> INICIANDO COMBATE DE PRUEBA <<<\n");
