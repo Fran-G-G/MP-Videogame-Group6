@@ -16,6 +16,7 @@ public class GameStarter {
 
         boolean play = true;
         Player p = createPlayer(0); // Habrá que quitarlo, es solo para que no salten errores.
+        AbstractCharacter character = null; // Si el jugador ya hizo el personaje anteriromente habrá que usar ese
 
         while (play) {
             System.out.println("================================================================================\n");
@@ -26,8 +27,12 @@ public class GameStarter {
             switch (option) {
                 case 1 -> play = logOut();
                 case 2 -> signOut();
-                case 3 -> createCharacter(p);
-                //case 4 -> editCharacter();
+                case 3 -> character = createCharacter(p);
+                case 4 -> {
+                    if (character != null) {
+                        editCharacter(character);
+                    }
+                }
                 case 5 -> challenge();
                 case 6 -> seeRanking();
             }
@@ -72,7 +77,7 @@ public class GameStarter {
     /**
      * Creates a character for a player.
      */
-    private void createCharacter(Player player) {
+    private AbstractCharacter createCharacter(Player player) {
 
         System.out.println("================================================================================");
         System.out.println("Comenzamos con la creación del personaje \n");
@@ -84,7 +89,7 @@ public class GameStarter {
 
         // Start the process of creating a new character.
         CharacterFactory characterFactory;
-        AbstractCharacter character;
+        AbstractCharacter character = null;
         switch (option) {
             case 1 -> { characterFactory = new VampireFactory(); character = characterFactory.createProduct(); }
             case 2 -> { characterFactory = new WerewolfFactory(); character = characterFactory.createProduct(); }
@@ -92,6 +97,8 @@ public class GameStarter {
         }
 
         System.out.println("\nFin del proceso de creación del personaje\n");
+
+        return character;
     }
 
     private void editCharacter(AbstractCharacter character) {
@@ -104,7 +111,7 @@ public class GameStarter {
         // Start the process of editing a character characteristic.
         switch (option) {
           case 1 -> {
-              String newName = ConsoleInput.readString("Introduzca el nuevo nombre");
+              String newName = ConsoleInput.readString("Introduzca el nuevo nombre: ");
               character.setName(newName);
           }
           //case 2 -> character.
@@ -137,6 +144,7 @@ public class GameStarter {
     }
 
     private void seeRanking() {
-
+        Ranking ranking = new Ranking();
+        ranking.showRanking();
     }
 }
