@@ -33,6 +33,10 @@ public class Player extends User {
                 (char) ('A' + r.nextInt(26));
     }
 
+    public String getRegistrationNumber(){
+        return this.registrationNumber;
+    }
+
     public void setCharacter(AbstractCharacter character) {
         this.character = character;
     }
