@@ -343,7 +343,7 @@ public class CombatMediator implements Mediator {
 
     // =================================================================
     //                INTRO WITH CROSSED SWORDS
-    // =================================================================
+    // =================================================================.
 
     private void printIntro() {
         System.out.println();
