@@ -33,6 +33,11 @@ public class Main {
         werewolf.addMinion(demon); // Total minion health: 2 (demon) + 1 (human) = 3
         player2.setCharacter(werewolf);
 
+
+
+
+
+
         CombatMediator mediator = new CombatMediator(player1, player2);
         mediator.start();
 
