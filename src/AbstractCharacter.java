@@ -61,6 +61,10 @@ public abstract class AbstractCharacter {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     /**
      * @param skill of the character.
      */
