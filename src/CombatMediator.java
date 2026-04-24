@@ -344,7 +344,7 @@ public class CombatMediator implements Mediator {
     // =================================================================
     //                INTRO WITH CROSSED SWORDS
     // =================================================================
-
+c
     private void printIntro() {
         System.out.println();
         String[] introArt = {
