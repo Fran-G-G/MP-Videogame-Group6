@@ -1,3 +1,4 @@
+import DB.Singleton;
 /**
  * Initializes and runs the game in terminal mode.
  */
@@ -9,14 +10,15 @@ public class GameStarter {
         System.out.println("1. Registrarse | 2. Iniciar Sesión");
         option = ConsoleInput.readInt(1, 2);
 
+        Player p = null;
         switch (option) {
-            case 1 -> signIn(); // Registrarse
-            case 2 -> logIn(); // Iniciar Sesión
+            case 1 -> p = signIn(); // Registrarse
+            case 2 -> p = logIn(); // Iniciar Sesión
         }
 
         boolean play = true;
-        Player p = createPlayer(0); // Habrá que quitarlo, es solo para que no salten errores.
-        AbstractCharacter character = null; // Si el jugador ya hizo el personaje anteriromente habrá que usar ese
+//        Player p = createPlayer(0); // Habrá que quitarlo, es solo para que no salten errores.
+        AbstractCharacter character = null;
 
         while (play) {
             System.out.println("================================================================================\n");
@@ -27,7 +29,7 @@ public class GameStarter {
             switch (option) {
                 case 1 -> play = logOut();
                 case 2 -> signOut();
-                case 3 -> character = createCharacter(p);
+                case 3 -> createCharacter(p);
                 case 4 -> {
                     if (character != null) {
                         editCharacter(character);
@@ -44,25 +46,31 @@ public class GameStarter {
     /**
      * Creates a player via terminal input.
      */
-    private Player createPlayer(int number) {
+//    private Player createPlayer(int number) {
+//        return new Player("0", "0", "0");
+//    }
 
-        System.out.println("Jugador " + number);
+    private Player signIn() {
+        Singleton singleton = Singleton.getInstance();
 
+        System.out.println("Nuevo Jugador: ");
         String name = ConsoleInput.readString("Nombre: ");
-
         String nick = ConsoleInput.readString("Nick: ");
-
         String pass = ConsoleInput.readString("Password (8-12 chars): ");
 
-        return new Player(name, nick, pass);
+        Player player = new Player(name, nick, pass);
+        singleton.registerUser(name, nick, pass, player.getRegistrationNumber());
+        return player;
     }
 
-    private void signIn() {
+    private Player logIn() {
+        System.out.println("Nuevo Jugador: ");
+        String name = ConsoleInput.readString("Nombre: ");
+        String nick = ConsoleInput.readString("Nick: ");
+        String pass = ConsoleInput.readString("Password (8-12 chars): ");
 
-    }
-
-    private void logIn() {
-
+        Player player = new Player(name, nick, pass);
+        return player;
     }
 
     private boolean logOut() {
@@ -73,6 +81,7 @@ public class GameStarter {
     private void signOut() {
 
     }
+
 
     /**
      * Creates a character for a player.
