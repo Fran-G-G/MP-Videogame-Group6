@@ -29,7 +29,7 @@ public class GameStarter {
             switch (option) {
                 case 1 -> play = logOut();
                 case 2 -> signOut();
-                case 3 -> createCharacter(p);
+                case 3 -> character = createCharacter(p);
                 case 4 -> {
                     if (character != null) {
                         editCharacter(character);
