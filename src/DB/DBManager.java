@@ -14,11 +14,11 @@ import java.util.HashMap;
 
 public class DBManager {
 
-    private HashMap<String, String> data = new HashMap<>();
+    private HashMap<String, String[]> data = new HashMap<>();
 
     public DBManager(){
         try {
-            loadData("");
+            loadData("./config/" + "data" + ".txt");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -28,11 +28,11 @@ public class DBManager {
     }
 
     public boolean checkUser(String user, String password){
-        return data.containsKey(user) && data.get(user).equals(password);
+        return data.containsKey(user) && data.get(user)[1].equals(password);
     }
 
-    public void registerUser(String user, String password){
-        writeData(user + " " + password);
+    public void registerUser(String name, String nick, String password, String registrationNumber){
+        writeData(name + " " + nick + " " + password + " " + registrationNumber);
     }
 
     public void writeData(String data){
@@ -49,7 +49,6 @@ public class DBManager {
         try {
             out = new FileWriter("./config/" + "data" + ".txt", true);
             BufferedWriter buf = new BufferedWriter(out);
-            String dataToWrite = data;
             buf.write(data);
             buf.newLine();
             buf.close();
@@ -67,10 +66,16 @@ public class DBManager {
             String [] fields = data.split(",");
             fields[0] = fields[0].replace("%", "");
             fields[1] = fields[1].replace("%", "");
+            fields[2] = fields[2].replace("%", "");
+            fields[3] = fields[3].replace("%", "");
 
-            String user = fields[0];
-            String password = fields[1];
-            this.data.put(user, password);
+            String name = fields[0];
+            String nick = fields[1];
+            String password = fields[2];
+            String registrationNumber = fields[3];
+            String[] userData = {name, password, registrationNumber};
+
+            this.data.put(nick, userData);
 
             data = buf.readLine();
         }

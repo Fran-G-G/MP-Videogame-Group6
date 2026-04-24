@@ -11,8 +11,8 @@ public class Singleton {
         return instance;
     }
 
-    public void registerUser(String user, String password){
-        adapter.registerUser(user, password);
+    public void registerUser(String name, String nick, String password, String registrationNumber){
+        adapter.registerUser(name, nick, password, registrationNumber);
     }
 
     public boolean checkUser(String user, String password){
