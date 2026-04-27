@@ -131,8 +131,9 @@ public class GameStarter {
         // Start the process of editing a character characteristic.
         switch (option) {
           case 1 -> {
-              String newName = ConsoleInput.readString("Introduzca el nuevo nombre: ");
+              String newName = ConsoleInput.readString("Introduzca el nuevo nombre para " + character.getName() + ": ");
               character.setName(newName);
+              System.out.println("Nuevo nombre del personaje modificado correctamente.");
           }
           case 2 -> {
               EquipmentManager eqManager = new EquipmentManager();
@@ -141,7 +142,7 @@ public class GameStarter {
           //case 3 -> character.
         }
 
-        System.out.println("\nFin del proceso de creación del personaje\n");
+        System.out.println("\nFin del proceso de edición del personaje\n");
     }
 
     private void challenge() {
