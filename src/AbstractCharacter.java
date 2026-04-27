@@ -79,7 +79,7 @@ public abstract class AbstractCharacter {
      * @param selectedWeapons actual active weapon/s.
      * @param selectedArmour actual active armour.
      */
-    public void chooseActiveEquipment(ArrayList<Weapon> weapons, ArrayList<Armour> armours, ArrayList<Weapon> selectedWeapons, Armour selectedArmour) {
+    public void chooseActiveEquipment(List<Weapon> weapons, List<Armour> armours, List<Weapon> selectedWeapons, Armour selectedArmour) {
         this.weapons = weapons;
         this.armours = armours;
 
@@ -177,8 +177,16 @@ public abstract class AbstractCharacter {
         return total;
     }
 
+    public List<Weapon> getWeapons() {
+        return weapons;
+    }
+
     public List<Weapon> getActiveWeapons() {
         return activeWeapons;
+    }
+
+    public List<Armour> getArmours() {
+        return armours;
     }
 
     /**

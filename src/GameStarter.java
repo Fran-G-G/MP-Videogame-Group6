@@ -137,7 +137,10 @@ public class GameStarter {
               String newName = ConsoleInput.readString("Introduzca el nuevo nombre: ");
               character.setName(newName);
           }
-          //case 2 -> character.
+          case 2 -> {
+              EquipmentManager eqManager = new EquipmentManager();
+              eqManager.manageEquipment(character);
+          }
           //case 3 -> character.
         }
 
