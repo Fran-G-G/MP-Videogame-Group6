@@ -1,16 +1,11 @@
 package DB;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.Reader;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.Writer;
+
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.io.IOException;
-import java.io.FileNotFoundException;
 import java.util.HashMap;
+import Game.AbstractCharacter;
 
 public class DBManager {
 
@@ -24,19 +19,58 @@ public class DBManager {
         }
     }
 
-    public void serviceMethod(){
+    public void registerUser(String name, String nick, String password, String registrationNumber){
+        writeData(name + " " + nick + " " + password + " " + registrationNumber);
     }
 
     public boolean checkUser(String user, String password){
         return data.containsKey(user) && data.get(user)[1].equals(password);
     }
 
-    public void registerUser(String name, String nick, String password, String registrationNumber){
-        writeData(name + " " + nick + " " + password + " " + registrationNumber);
+    public void registerCharacter(AbstractCharacter character){
+        ObjectOutputStream oos = null;
+        try {
+            oos = new ObjectOutputStream(
+                    new FileOutputStream("./config/character.dat")
+            );
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            oos.writeObject(character);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            oos.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public void registerCharacter(){
-
+    public AbstractCharacter loadCharacter(){
+        ObjectInputStream ois = null;
+        try {
+            ois = new ObjectInputStream(
+                    new FileInputStream("character.dat")
+            );
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        AbstractCharacter character = null;
+        try {
+            character = (AbstractCharacter) ois.readObject();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            ois.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return character;
     }
 
     public void writeData(String data){
