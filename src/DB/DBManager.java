@@ -35,6 +35,10 @@ public class DBManager {
         writeData(name + " " + nick + " " + password + " " + registrationNumber);
     }
 
+    public void registerCharacter(){
+
+    }
+
     public void writeData(String data){
         Path path = Paths.get("./config/" + "data" + ".txt");
         if (!Files.exists(path)) {
@@ -63,7 +67,7 @@ public class DBManager {
         String data = buf.readLine();
 
         while (data != null){
-            String [] fields = data.split(",");
+            String [] fields = data.split(" ");
             fields[0] = fields[0].replace("%", "");
             fields[1] = fields[1].replace("%", "");
             fields[2] = fields[2].replace("%", "");

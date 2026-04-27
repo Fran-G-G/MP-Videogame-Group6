@@ -19,7 +19,4 @@ public class Singleton {
         return adapter.checkUser(user, password);
     }
 
-    public void prueba(){
-        adapter.prueba();
-    }
 }

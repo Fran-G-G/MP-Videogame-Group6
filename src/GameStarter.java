@@ -7,13 +7,15 @@ public class GameStarter {
     public void run() {
         int option;
 
-        System.out.println("1. Registrarse | 2. Iniciar Sesión");
-        option = ConsoleInput.readInt(1, 2);
-
         Player p = null;
-        switch (option) {
-            case 1 -> p = signIn(); // Registrarse
-            case 2 -> p = logIn(); // Iniciar Sesión
+        while (p == null) {
+            System.out.println("1. Registrarse | 2. Iniciar Sesión");
+            option = ConsoleInput.readInt(1, 2);
+
+            switch (option) {
+                case 1 -> p = signIn(); // Registrarse
+                case 2 -> p = logIn(); // Iniciar Sesión
+            }
         }
 
         boolean play = true;
@@ -64,12 +66,24 @@ public class GameStarter {
     }
 
     private Player logIn() {
-        System.out.println("Nuevo Jugador: ");
-        String name = ConsoleInput.readString("Nombre: ");
-        String nick = ConsoleInput.readString("Nick: ");
-        String pass = ConsoleInput.readString("Password (8-12 chars): ");
+        Singleton singleton = Singleton.getInstance();
+        boolean cancel = false;
 
-        Player player = new Player(name, nick, pass);
+        Player player = null;
+        while (player == null && !cancel) {
+            System.out.println("Introduce tus datos: ");
+            String nick = ConsoleInput.readString("Nick: ");
+            String pass = ConsoleInput.readString("Password (8-12 chars): ");
+            if (singleton.checkUser(nick, pass)) {
+                player = new Player("name", nick, pass);
+                System.out.println("Funciona ");
+            } else {
+                System.out.println("Error en el nick o contraseña");
+                System.out.println("1. Reintentar | 2. Cancelar");
+                cancel = (ConsoleInput.readInt(1, 2) == 2);
+            }
+        }
+
         return player;
     }
 
