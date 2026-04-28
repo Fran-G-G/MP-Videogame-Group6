@@ -1,6 +1,7 @@
 package DB;
 
 import Game.AbstractCharacter;
+import Game.Player;
 
 public class Adapter implements AdapterInterface{
     private DBManager adapter;
@@ -18,16 +19,15 @@ public class Adapter implements AdapterInterface{
         adapter.registerCharacter(character);
     }
 
-    public void readData(){
-    }
-
     public boolean checkUser(String user, String password){
         return adapter.checkUser(user, password);
     }
 
-    public void prueba(){
-        adapter = new DBManager();
-        adapter.writeData("Menganito 12345678");
-        adapter.writeData("Fulanito 12345678");
+    public Player loadPlayer(String nick, String password){
+        return adapter.loadPlayer(nick, password);
+    }
+
+    public Player findPlayerByNick(String nick){
+        return adapter.findPlayerByNick(nick);
     }
 }

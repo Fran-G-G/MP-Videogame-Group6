@@ -1,5 +1,6 @@
 package Game;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -7,18 +8,24 @@ import java.util.Random;
 /**
  * Player user.
  */
-public class Player extends User {
-
+public class Player extends User implements Serializable {
 
     private String registrationNumber;
     private AbstractCharacter character;
 
-    private List<ChallengeHandler> challengesReceived;
-    private List<ChallengeHandler> challengesSent;
+    private List<Challenge> challengesReceived;
+    private List<Challenge> challengesSent;
 
     public Player(String name, String nick, String password) {
         super(name, nick, password);
         this.registrationNumber = generateRegistration();
+        this.challengesReceived = new ArrayList<>();
+        this.challengesSent = new ArrayList<>();
+    }
+
+    public Player(String name, String nick, String password, String registrationNumber) {
+        super(name, nick, password);
+        this.registrationNumber = registrationNumber;
         this.challengesReceived = new ArrayList<>();
         this.challengesSent = new ArrayList<>();
     }
@@ -48,15 +55,15 @@ public class Player extends User {
         return character;
     }
 
-    public void addReceivedChallenge(ChallengeHandler c) {
+    public void addReceivedChallenge(Challenge c) {
         challengesReceived.add(c);
     }
 
-    public void addSentChallenge(ChallengeHandler c) {
+    public void addSentChallenge(Challenge c) {
         challengesSent.add(c);
     }
 
-    public List<ChallengeHandler> getChallengesReceived() {
+    public List<Challenge> getChallengesReceived() {
         return challengesReceived;
     }
 }

@@ -69,10 +69,8 @@ public class GameStarter {
             System.out.println("Introduce tus datos: ");
             String nick = ConsoleInput.readString("Nick: ");
             String pass = ConsoleInput.readString("Password (8-12 chars): ");
-            if (singleton.checkUser(nick, pass)) {
-                player = new Player("name", nick, pass);
-                System.out.println("Funciona ");
-            } else {
+            player = singleton.loadPlayer(nick, pass);
+            if (player == null) {
                 System.out.println("Error en el nick o contraseña");
                 System.out.println("1. Reintentar | 2. Cancelar");
                 cancel = (ConsoleInput.readInt(1, 2) == 2);
@@ -149,7 +147,7 @@ public class GameStarter {
         // 1. Pedir nick del jugador objetivo
         String nick = ConsoleInput.readString("¿A qué jugador quieres desafiar?");
 
-        Player challenged = Singleton.findPlayerByNick(nick);
+        Player challenged = Singleton.getInstance().findPlayerByNick(nick);
 
         if (challenged == null) {
             System.out.println("Ese jugador no existe.");
@@ -171,7 +169,7 @@ public class GameStarter {
         }
 
         // 3. Obtener admin disponible
-        Admin admin = Singleton.getInstance().getAvailableAdmin();
+        Admin admin = new Admin("", "", ""); //Singleton.getInstance().getAvailableAdmin();
         if (admin == null) {
             System.out.println("No hay administradores disponibles.");
             return;

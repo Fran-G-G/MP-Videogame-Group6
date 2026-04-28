@@ -1,5 +1,8 @@
+package Game;
 
-public class Challenge {
+import java.io.Serializable;
+
+public class Challenge implements Serializable {
     private Player challenger;
     private Player challenged;
     private int goldBet;

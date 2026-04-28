@@ -6,14 +6,22 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import Game.AbstractCharacter;
+import Game.Admin;
+import Game.Player;
 
 public class DBManager {
 
     private HashMap<String, String[]> data = new HashMap<>();
+    private HashMap<String, Player> playerData = new HashMap<>();
+    private HashMap<String, Admin> adminData = new HashMap<>();
+    private HashMap<String, AbstractCharacter> characterData  = new HashMap<>();
 
     public DBManager(){
         try {
             loadData("./config/" + "data" + ".txt");
+            loadPlayers();
+//            loadAdmins();
+            loadCharacters();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -23,15 +31,113 @@ public class DBManager {
         writeData(name + " " + nick + " " + password + " " + registrationNumber);
     }
 
+    public void registerPlayer(Player player){
+        playerData.put(player.getNick(), player);
+
+        ObjectOutputStream oos = null;
+        try {
+            oos = new ObjectOutputStream(
+                    new FileOutputStream("./config/players.dat")
+            );
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            oos.writeObject(player);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            oos.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void registerAdmin(Admin admin){
+        adminData.put(admin.getNick(), admin);
+
+        ObjectOutputStream oos = null;
+        try {
+            oos = new ObjectOutputStream(
+                    new FileOutputStream("./config/admins.dat")
+            );
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            oos.writeObject(admin);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            oos.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public boolean checkUser(String user, String password){
         return data.containsKey(user) && data.get(user)[1].equals(password);
+    }
+
+    public Player loadPlayer(String nick, String password) {
+        if (playerData.containsKey(nick) && playerData.get(nick).getPassword().equals(password)){
+            return playerData.get(nick);
+        }else {
+            return null;
+        }
+    }
+
+    public Admin loadAdmin(String nick, String password){
+        if (adminData.containsKey(nick) && adminData.get(nick).getPassword().equals(password)){
+            return adminData.get(nick);
+        }else {
+            return null;
+        }
+    }
+
+    public void loadPlayers(){
+        Player player;
+
+        try (ObjectInputStream ois = new ObjectInputStream(
+                new FileInputStream("./config/players.dat"))) {
+            while (true) {
+                try {
+                    player = (Player) ois.readObject();
+                    playerData.put(player.getNick(), player);
+                } catch (EOFException e) {
+                    break;
+                }
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void loadAdmins(){
+        Admin admin;
+
+        try (ObjectInputStream ois = new ObjectInputStream(
+                new FileInputStream("./config/admins.dat"))) {
+            while (true) {
+                try {
+                    admin = (Admin) ois.readObject();
+                    adminData.put(admin.getNick(), admin);
+                } catch (EOFException e) {
+                    break;
+                }
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void registerCharacter(AbstractCharacter character){
         ObjectOutputStream oos = null;
         try {
             oos = new ObjectOutputStream(
-                    new FileOutputStream("./config/character.dat")
+                    new FileOutputStream("./config/characters.dat")
             );
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -52,7 +158,7 @@ public class DBManager {
         ObjectInputStream ois = null;
         try {
             ois = new ObjectInputStream(
-                    new FileInputStream("character.dat")
+                    new FileInputStream("./config/characters.dat")
             );
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -71,6 +177,32 @@ public class DBManager {
             throw new RuntimeException(e);
         }
         return character;
+    }
+
+    public void loadCharacters(){
+        AbstractCharacter character;
+
+        try (ObjectInputStream ois = new ObjectInputStream(
+                new FileInputStream("./config/characters.dat"))) {
+            while (true) {
+                try {
+                    character = (AbstractCharacter) ois.readObject();
+                    characterData.put("1", character);
+                } catch (EOFException e) {
+                    break;
+                }
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Player findPlayerByNick(String nick){
+        if (playerData.containsKey(nick)){
+            return playerData.get(nick);
+        }else {
+            return null;
+        }
     }
 
     public void writeData(String data){

@@ -1,9 +1,11 @@
 package Game;
 
+import java.io.Serializable;
+
 /**
  * Base class for all users in the system.
  */
-public abstract class User {
+public abstract class User implements Serializable {
 
     protected String name;
     protected String nick;
@@ -26,6 +28,10 @@ public abstract class User {
 
     public String getNick() {
         return nick;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public boolean isBlocked() {
