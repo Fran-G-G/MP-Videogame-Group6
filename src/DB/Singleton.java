@@ -1,5 +1,7 @@
 package DB;
 
+import Game.AbstractCharacter;
+
 public class Singleton {
     private static final Singleton instance = new Singleton();
     private final Adapter adapter = new Adapter();
@@ -15,11 +17,12 @@ public class Singleton {
         adapter.registerUser(name, nick, password, registrationNumber);
     }
 
+    public void registerCharacter(AbstractCharacter character) {
+        adapter.registerCharacter(character);
+    }
+
     public boolean checkUser(String user, String password){
         return adapter.checkUser(user, password);
     }
 
-    public void prueba(){
-        adapter.prueba();
-    }
 }

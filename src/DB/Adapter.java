@@ -1,5 +1,7 @@
 package DB;
 
+import Game.AbstractCharacter;
+
 public class Adapter implements AdapterInterface{
     private DBManager adapter;
 
@@ -10,6 +12,10 @@ public class Adapter implements AdapterInterface{
     @Override
     public void registerUser(String name, String nick, String password, String registrationNumber) {
         adapter.registerUser(name, nick, password, registrationNumber);
+    }
+
+    public void registerCharacter(AbstractCharacter character) {
+        adapter.registerCharacter(character);
     }
 
     public void readData(){
