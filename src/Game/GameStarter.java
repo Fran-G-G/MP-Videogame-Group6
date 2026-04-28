@@ -39,7 +39,7 @@ public class GameStarter {
                         editCharacter(character);
                     }
                 }
-                case 5 -> challenge();
+                case 5 -> challenge(p);
                 case 6 -> seeRanking();
             }
         }
@@ -145,26 +145,50 @@ public class GameStarter {
         System.out.println("\nFin del proceso de edición del personaje\n");
     }
 
-    private void challenge() {
-        // Create and validate challenge
-        ChallengeHandler challengeHandler = new ChallengeHandler() {
-            @Override
-            public void handle(ChallengeHandler challenge) {
+    private void challenge(Player challenger) {
+        // 1. Pedir nick del jugador objetivo
+        String nick = ConsoleInput.readString("¿A qué jugador quieres desafiar?");
 
-            }
-        };
-        Admin admin = new Admin("Admin", "admin", "12345678");
+        Player challenged = Singleton.findPlayerByNick(nick);
 
-        admin.validateChallenge(challengeHandler);
+        if (challenged == null) {
+            System.out.println("Ese jugador no existe.");
+            return;
+        }
 
+        if (challenged.equals(challenger)) {
+            System.out.println("No puedes desafiarte a ti mismo.");
+            return;
+        }
 
-        System.out.println("\nDesafío aceptado. ¡Empieza el combate!\n");
+        // 2. Pedir apuesta
+        System.out.println("¿Cuánto oro quieres apostar?");
+        int bet = ConsoleInput.readInt(0,challenger.getCharacter().getGold());
 
-        // Start combat
-        /*
-        CombatHandler combatHandler = new CombatHandler(p1, p2);
-        combatHandler.handle(null);
-        */
+        if (bet <= 0 || bet > challenger.getCharacter().getGold()) {
+            System.out.println("Apuesta inválida.");
+            return;
+        }
+
+        // 3. Obtener admin disponible
+        Admin admin = Singleton.getInstance().getAvailableAdmin();
+        if (admin == null) {
+            System.out.println("No hay administradores disponibles.");
+            return;
+        }
+        // 4. Comprobar que ambos tienen personaje
+        if (challenger.getCharacter() == null || challenged.getCharacter() == null) {
+            System.out.println("Ambos jugadores deben tener un personaje para desafiar.");
+            return;
+        }
+
+        // 5. Comprobar que ambos tienen equipo activo
+        if (!challenger.getCharacter().hasActiveEquipment() ||
+                !challenged.getCharacter().hasActiveEquipment()) {
+            System.out.println("Ambos jugadores deben tener armas y armadura activas.");
+            return;
+        }
+
     }
 
     private void seeRanking() {
