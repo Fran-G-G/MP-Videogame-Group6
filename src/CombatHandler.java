@@ -2,18 +2,20 @@
  * Handles the combat phase of a challenge.
  * This is the final handler in the chain.
  */
-public class CombatHandler extends ChallengeHandler {
+public class CombatHandler {
+    protected Player player1;
+    protected Player player2;
 
-    public CombatHandler(Player challenger, Player challenged) {
-        this.player1 = challenger;
-        this.player2 = challenged;
-    }
 
-    @Override
-    public void handle(ChallengeHandler challenge) {
+
+    public void handle(Challenge challenge) {
+
+        player1= challenge.getChallenger();
+        player2= challenge.getChallenged();
+
         System.out.println("\n--- Fase de Combate ---");
 
-        // Ensure both players have characters with active equipment
+        // Ensure both players have characters with active equipment X2
         if (player1.getCharacter() == null || player2.getCharacter() == null) {
             System.out.println("Error: Ambos jugadores deben tener un personaje con equipo activo para luchar.");
             return;

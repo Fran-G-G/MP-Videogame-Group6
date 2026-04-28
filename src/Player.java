@@ -7,6 +7,7 @@ import java.util.Random;
  */
 public class Player extends User {
 
+
     private String registrationNumber;
     private AbstractCharacter character;
 

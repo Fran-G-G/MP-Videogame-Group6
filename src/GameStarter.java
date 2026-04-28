@@ -1,4 +1,6 @@
 import DB.Singleton;
+import com.sun.nio.sctp.NotificationHandler;
+
 /**
  * Initializes and runs the game in terminal mode.
  */
@@ -17,7 +19,7 @@ public class GameStarter {
         }
 
         boolean play = true;
-//        Player p = createPlayer(0); // Habrá que quitarlo, es solo para que no salten errores.
+
         AbstractCharacter character = null;
 
         while (play) {
@@ -35,7 +37,7 @@ public class GameStarter {
                         editCharacter(character);
                     }
                 }
-                case 5 -> challenge();
+                case 5 -> challenge(p);
                 case 6 -> seeRanking();
             }
         }
@@ -64,7 +66,7 @@ public class GameStarter {
     }
 
     private Player logIn() {
-        System.out.println("Nuevo Jugador: ");
+        System.out.println("Jugador: ");
         String name = ConsoleInput.readString("Nombre: ");
         String nick = ConsoleInput.readString("Nick: ");
         String pass = ConsoleInput.readString("Password (8-12 chars): ");
@@ -130,26 +132,11 @@ public class GameStarter {
         System.out.println("\nFin del proceso de creación del personaje\n");
     }
 
-    private void challenge() {
-        // Create and validate challenge
-        ChallengeHandler challengeHandler = new ChallengeHandler() {
-            @Override
-            public void handle(ChallengeHandler challenge) {
+    private void challenge(Player challenger) {
+        ChallengeHandler challengerHandler = new ChallengeHandler();
 
-            }
-        };
-        Admin admin = new Admin("Admin", "admin", "12345678");
+        challengerHandler.handler(challenger);
 
-        admin.validateChallenge(challengeHandler);
-
-
-        System.out.println("\nDesafío aceptado. ¡Empieza el combate!\n");
-
-        // Start combat
-        /*
-        CombatHandler combatHandler = new CombatHandler(p1, p2);
-        combatHandler.handle(null);
-        */
     }
 
     private void seeRanking() {

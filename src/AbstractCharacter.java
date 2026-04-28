@@ -277,4 +277,8 @@ public abstract class AbstractCharacter {
         this.gold += amount;
         if (this.gold < 0) this.gold = 0;
     }
+
+    public boolean hasActiveEquipment() {
+        return activeWeapons != null && activeArmour !=null;
+    }
 }

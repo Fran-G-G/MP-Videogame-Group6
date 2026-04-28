@@ -10,8 +10,5 @@ public class Admin extends User {
     /**
      * Validates a challenge (simplified version)
      */
-    public void validateChallenge(ChallengeHandler challengeHandler) {
-        challengeHandler.setValidated(true);
-    }
 
 }

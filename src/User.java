@@ -15,6 +15,9 @@ public abstract class User {
 
         this.name = name;
         this.nick = nick;
+        /**
+         * Aqui deberia de haber una comprobación de la contraseña
+         */
         this.password = password;
         this.blocked = false;
     }
