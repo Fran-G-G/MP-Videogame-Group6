@@ -1,9 +1,11 @@
 package Game;
 
+import java.io.Serializable;
+
 /**
  * Base class for all special skills.
  */
-public abstract class SpecialSkill {
+public abstract class SpecialSkill implements Serializable {
 
     protected String name;
     protected int attack; // Range: 1 - 3

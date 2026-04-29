@@ -1,9 +1,11 @@
 package Game;
 
+import java.io.Serializable;
+
 /**
  * Represents a strength or weakness of a character.
  */
-public abstract class Characteristic {
+public abstract class Characteristic implements Serializable {
 
     private final String name;
     private final int value; // Range: 1 - 5

@@ -18,13 +18,17 @@ public class Singleton {
         adapter.registerUser(name, nick, password, registrationNumber);
     }
 
+    public void registerPlayer(Player player){
+        adapter.registerPlayer(player);
+    }
+
     public void registerCharacter(AbstractCharacter character) {
         adapter.registerCharacter(character);
     }
 
-    public boolean checkUser(String user, String password){
-        return adapter.checkUser(user, password);
-    }
+//    public boolean checkUser(String user, String password){
+//        return adapter.checkUser(user, password);
+//    }
 
     public Player loadPlayer(String nick, String password){
         return adapter.loadPlayer(nick, password);
@@ -34,4 +38,7 @@ public class Singleton {
         return adapter.findPlayerByNick(nick);
     }
 
+    public void updatePlayersDB(){
+        adapter.updatePlayersDB();
+    }
 }

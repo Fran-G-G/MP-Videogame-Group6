@@ -56,7 +56,7 @@ public class GameStarter {
         String pass = ConsoleInput.readString("Password (8-12 chars): ");
 
         Player player = new Player(name, nick, pass);
-        singleton.registerUser(name, nick, pass, player.getRegistrationNumber());
+        singleton.registerPlayer(player);
         return player;
     }
 
@@ -94,29 +94,43 @@ public class GameStarter {
      * Creates a character for a player.
      */
     private AbstractCharacter createCharacter(Player player) {
+        if (player.getCharacter() != null){
+            System.out.println("Ya hay un personaje creado \n");
+            return player.getCharacter();
+        }else {
+            System.out.println("================================================================================");
+            System.out.println("Comenzamos con la creación del personaje \n");
 
-        System.out.println("================================================================================");
-        System.out.println("Comenzamos con la creación del personaje \n");
+            // Choose the character type between the given options.
+            System.out.println(player.getNick() + ", elige el tipo de personaje que quieras crear:");
+            System.out.println("1. Vampiro | 2. Hombre lobo | 3. Cazador");
+            int option = ConsoleInput.readInt(1, 3);
 
-        // Choose the character type between the given options.
-        System.out.println(player.getNick() + ", elige el tipo de personaje que quieras crear:");
-        System.out.println("1. Vampiro | 2. Hombre lobo | 3. Cazador");
-        int option = ConsoleInput.readInt(1, 3);
+            // Start the process of creating a new character.
+            CharacterFactory characterFactory;
+            AbstractCharacter character = null;
+            switch (option) {
+                case 1 -> {
+                    characterFactory = new VampireFactory();
+                    character = characterFactory.createProduct();
+                }
+                case 2 -> {
+                    characterFactory = new WerewolfFactory();
+                    character = characterFactory.createProduct();
+                }
+                case 3 -> {
+                    characterFactory = new HunterFactory();
+                    character = characterFactory.createProduct();
+                }
+            }
 
-        // Start the process of creating a new character.
-        CharacterFactory characterFactory;
-        AbstractCharacter character = null;
-        switch (option) {
-            case 1 -> { characterFactory = new VampireFactory(); character = characterFactory.createProduct(); }
-            case 2 -> { characterFactory = new WerewolfFactory(); character = characterFactory.createProduct(); }
-            case 3 -> { characterFactory = new HunterFactory(); character = characterFactory.createProduct(); }
+            player.setCharacter(character);
+            System.out.println("\nFin del proceso de creación del personaje\n");
+
+            Singleton singleton = Singleton.getInstance();
+            singleton.updatePlayersDB();
+            return character;
         }
-
-        System.out.println("\nFin del proceso de creación del personaje\n");
-
-        Singleton singleton = Singleton.getInstance();
-        singleton.registerCharacter(character);
-        return character;
     }
 
     private void editCharacter(AbstractCharacter character) {
