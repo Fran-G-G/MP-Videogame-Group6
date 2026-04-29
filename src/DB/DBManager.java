@@ -112,6 +112,9 @@ public class DBManager {
         File file = new File("./config/admins.dat");
         if (!file.exists() || file.length() == 0) {
             adminsData = new HashMap<>();
+            Admin admin = new Admin("Admin", "Admin1", "12345678");
+            adminsData.put("Admin1", admin);
+            updateAdminsDB();
             return;
         }
 
