@@ -2,11 +2,12 @@ package DB;
 
 import Game.Player;
 
+import java.util.ArrayList;
+
 public interface AdapterInterface {
-    public void registerUser(String user, String nick, String password, String registrationNumber);
     public void registerPlayer(Player player);
-//    public boolean checkUser(String user, String password);
     public Player findPlayerByNick(String nick);
     public Player loadPlayer(String nick, String password);
     public void updatePlayersDB();
+    public ArrayList<Player> updateRanking();
 }

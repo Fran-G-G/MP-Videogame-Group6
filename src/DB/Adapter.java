@@ -3,6 +3,8 @@ package DB;
 import Game.AbstractCharacter;
 import Game.Player;
 
+import java.util.ArrayList;
+
 public class Adapter implements AdapterInterface{
     private DBManager adapter;
 
@@ -10,22 +12,9 @@ public class Adapter implements AdapterInterface{
         this.adapter = new DBManager();
     }
 
-    @Override
-    public void registerUser(String name, String nick, String password, String registrationNumber) {
-//        adapter.registerUser(name, nick, password, registrationNumber);
-    }
-
     public void registerPlayer(Player player){
         adapter.registerPlayer(player);
     }
-
-    public void registerCharacter(AbstractCharacter character) {
-        adapter.registerCharacter(character);
-    }
-
-//    public boolean checkUser(String user, String password){
-//        return adapter.checkUser(user, password);
-//    }
 
     public Player loadPlayer(String nick, String password){
         return adapter.loadPlayer(nick, password);
@@ -37,5 +26,9 @@ public class Adapter implements AdapterInterface{
 
     public void updatePlayersDB(){
         adapter.updatePlayersDB();
+    }
+
+    public ArrayList<Player> updateRanking(){
+        return adapter.updateRanking();
     }
 }
