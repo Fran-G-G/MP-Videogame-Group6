@@ -58,8 +58,13 @@ public class GameStarter {
         String pass = ConsoleInput.readString("Password (8-12 chars): ");
 
         Player player = new Player(name, nick, pass);
-        singleton.registerPlayer(player);
-        return player;
+        if (singleton.findPlayerByNick(nick) == null){
+            singleton.registerPlayer(player);
+            return player;
+        }else {
+            System.out.println("Ese jugador ya existe, elige otro nick o inicia sesión");
+            return null;
+        }
     }
 
     private Player logIn() {

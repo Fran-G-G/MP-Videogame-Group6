@@ -1,117 +1,159 @@
 package DB;
 
-import Game.AbstractCharacter;
 import Game.Admin;
 import Game.Player;
 import Game.Vampire;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class DBManagerTest {
 
-    @org.junit.jupiter.api.Test
-    void registerUser() {
+    private String testPlayersFile = "./config/testPlayers.dat";
+    private String testAdminsFile = "./config/testAdmins.dat";
+
+    @org.junit.jupiter.api.BeforeAll
+    static void cleanFiles(){
+        try {
+            Files.deleteIfExists(Path.of("./config/testPlayers.dat"));
+            Files.deleteIfExists(Path.of("./config/testAdmins.dat"));
+        } catch (Exception e) {
+            System.err.println("No se pudieron borrar los archivos: " + e.getMessage());
+        }
     }
 
     @org.junit.jupiter.api.Test
-    void checkUser() {
+    void registerAndLoadPlayer() {
+        DBManager testDB = new DBManager(testPlayersFile, testAdminsFile);
+
+        Player player = new Player("Prueba", "Prueba1", "12345678");
+        testDB.registerPlayer(player);
+        Player loaded = testDB.loadPlayer("Prueba1", "12345678");
+
+        assertNotNull(loaded);
+        assertEquals(player.getNick(), loaded.getNick());
+        assertEquals(player.getPassword(), loaded.getPassword());
     }
 
     @org.junit.jupiter.api.Test
-    void registerCharacter() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void loadPlayer() {
-        DBManager db = new DBManager();
+    void registerAndLoadPlayerWithCharacter() {
+        DBManager testDB = new DBManager(testPlayersFile, testAdminsFile);
 
         Player player = new Player("Fulano", "Fulano1", "12345678");
         Vampire vampire = new Vampire("Pepe", 2, 2, 300);
         player.setCharacter(vampire);
+        testDB.registerPlayer(player);
 
-        db.registerPlayer(player);
-        Player cargado = db.loadPlayer(player.getNick(), player.getPassword());
+        Player loaded = testDB.loadPlayer(player.getNick(), player.getPassword());
 
-        assertNotNull(cargado);
-        assertEquals(player.getPassword(), cargado.getPassword());
-        assertEquals(player.getNick(), cargado.getNick());
-        assertNotNull(cargado.getCharacter());
-        assertEquals(player.getCharacter().getName(), cargado.getCharacter().getName());
-        assertEquals(player.getCharacter().getHealth(), cargado.getCharacter().getHealth());
+        assertNotNull(loaded);
+        assertEquals(player.getNick(), loaded.getNick());
+        assertEquals(player.getPassword(), loaded.getPassword());
+        assertNotNull(loaded.getCharacter());
+        assertEquals(player.getCharacter().getName(), loaded.getCharacter().getName());
+        assertEquals(player.getCharacter().getHealth(), loaded.getCharacter().getHealth());
     }
 
     @org.junit.jupiter.api.Test
-    void loadAdmin() {
-        DBManager db = new DBManager();
+    void registerAndLoadAdmin() {
+        DBManager testDB = new DBManager(testPlayersFile, testAdminsFile);
 
-        Admin admin = new Admin("Admin", "Admin1", "12345678");
-        db.registerAdmin(admin);
-        Admin cargado = db.loadAdmin(admin.getNick(), admin.getPassword());
+        Admin admin = new Admin("TestAdmin", "TestAdmin1", "12345678");
+        testDB.registerAdmin(admin);
+        Admin loaded = testDB.loadAdmin("TestAdmin1", "12345678");
 
-        assertNotNull(cargado);
-        assertEquals(admin.getPassword(), cargado.getPassword());
-        assertEquals(admin.getNick(), cargado.getNick());
-    }
-
-    @org.junit.jupiter.api.Test
-    void loadPlayers() {
-        DBManager db = new DBManager();
-        Player cargado = db.loadPlayer("Fulano1", "12345678");
-
-        assertNotNull(cargado);
-        assertEquals("12345678", cargado.getPassword());
-        assertEquals("Fulano1", cargado.getNick());
-        assertNotNull(cargado.getCharacter());
-    }
-
-    @org.junit.jupiter.api.Test
-    void loadCharacter() {
-//        AbstractCharacter original = new Vampire("Prueba", 3, 3, 100);
-//
-//        ObjectOutputStream oos = null;
-//        try {
-//            oos = new ObjectOutputStream(
-//                    new FileOutputStream("./config/characters.dat")
-//            );
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//        try {
-//            oos.writeObject(original);
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//        try {
-//            oos.close();
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//
-//        DBManager db = new DBManager();
-//        AbstractCharacter cargado = db.loadCharacter();
-//
-//        assertNotNull(cargado);
-//        assertEquals(original.getName(), cargado.getName());
-//        assertEquals(original.getHealth(), cargado.getHealth());
-    }
-
-    @org.junit.jupiter.api.Test
-    void loadCharacters() {
+        assertNotNull(loaded);
+        assertEquals(admin.getNick(), loaded.getNick());
+        assertEquals(admin.getPassword(), loaded.getPassword());
     }
 
     @org.junit.jupiter.api.Test
     void findPlayerByNick() {
+        DBManager testDB = new DBManager(testPlayersFile, testAdminsFile);
+
+        Player player = new Player("Prueba", "Prueba2", "12345678");
+        testDB.registerPlayer(player);
+        Player loaded = testDB.findPlayerByNick("Prueba2");
+
+        assertNotNull(loaded);
+        assertEquals(player.getNick(), loaded.getNick());
+        assertEquals(player.getPassword(), loaded.getPassword());
     }
 
     @org.junit.jupiter.api.Test
-    void writeData() {
+    void deletePlayer() {
+        DBManager testDB = new DBManager(testPlayersFile, testAdminsFile);
+
+        Player player = new Player("Prueba", "Prueba3", "12345678");
+        testDB.registerPlayer(player);
+
+        testDB.deletePlayer(player);
+
+        Player loaded = testDB.loadPlayer("Prueba3", "12345678");
+        assertNull(loaded);
     }
 
     @org.junit.jupiter.api.Test
-    void loadData() {
+    void loadPlayers() {
+        DBManager testDB = new DBManager(testPlayersFile, testAdminsFile);
+        Player player = new Player("Prueba", "Prueba4", "12345678");
+        testDB.registerPlayer(player);
+
+        DBManager testDB2 = new DBManager(testPlayersFile, testAdminsFile);
+        Player loaded = testDB2.loadPlayer("Prueba4", "12345678");
+
+        assertNotNull(loaded);
+        assertEquals(player.getNick(), loaded.getNick());
+        assertEquals(player.getPassword(), loaded.getPassword());
+    }
+
+    @org.junit.jupiter.api.Test
+    void loadAdmins() {
+        DBManager testDB = new DBManager(testPlayersFile, testAdminsFile);
+        Admin admin = new Admin("TestAdmin", "TestAdmin2", "12345678");
+        testDB.registerAdmin(admin);
+
+        DBManager testDB2 = new DBManager(testPlayersFile, testAdminsFile);
+        Admin loaded = testDB2.loadAdmin("TestAdmin2", "12345678");
+
+        assertNotNull(loaded);
+        assertEquals(admin.getNick(), loaded.getNick());
+        assertEquals(admin.getPassword(), loaded.getPassword());
+    }
+
+    @org.junit.jupiter.api.Test
+    void updatePlayersDB() {
+        DBManager testDB = new DBManager(testPlayersFile, testAdminsFile);
+
+        Player player = new Player("Prueba", "Prueba5", "12345678");
+        testDB.registerPlayer(player);
+
+        DBManager testDB2 = new DBManager(testPlayersFile, testAdminsFile);
+        Player loaded = testDB2.loadPlayer("Prueba5", "12345678");
+
+        assertNotNull(loaded);
+        assertEquals(player.getNick(), loaded.getNick());
+        assertEquals(player.getPassword(), loaded.getPassword());
+    }
+
+    @org.junit.jupiter.api.Test
+    void updateAdminsDB() {
+        DBManager testDB = new DBManager(testPlayersFile, testAdminsFile);
+
+        Admin admin = new Admin("TestAdmin", "TestAdmin3", "12345678");
+        testDB.registerAdmin(admin);
+
+        DBManager testDB2 = new DBManager(testPlayersFile, testAdminsFile);
+        Admin loaded = testDB2.loadAdmin("TestAdmin3", "12345678");
+
+        assertNotNull(loaded);
+        assertEquals(admin.getNick(), loaded.getNick());
+        assertEquals(admin.getPassword(), loaded.getPassword());
+    }
+
+    @org.junit.jupiter.api.Test
+    void updateRanking() {
     }
 }

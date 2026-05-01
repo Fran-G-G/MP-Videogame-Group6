@@ -1,6 +1,5 @@
 package DB;
 
-import Game.AbstractCharacter;
 import Game.Player;
 
 import java.util.ArrayList;

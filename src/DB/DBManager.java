@@ -4,16 +4,26 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
-import Game.AbstractCharacter;
 import Game.Admin;
 import Game.Player;
 
 public class DBManager {
 
+    private String playersFile;
+    private String adminsFile;
     private HashMap<String, Player> playersData = new HashMap<>();
     private HashMap<String, Admin> adminsData = new HashMap<>();
 
     public DBManager(){
+        playersFile = "./config/players.dat";
+        adminsFile = "./config/admins.dat";
+        loadPlayers();
+        loadAdmins();
+    }
+
+    public DBManager(String playersFile, String adminsFile){
+        this.playersFile = playersFile;
+        this.adminsFile = adminsFile;
         loadPlayers();
         loadAdmins();
     }
@@ -50,7 +60,7 @@ public class DBManager {
     }
 
     public void loadPlayers(){
-        File file = new File("./config/players.dat");
+        File file = new File(playersFile);
         if (!file.exists() || file.length() == 0) {
             playersData = new HashMap<>();
             return;
@@ -65,7 +75,7 @@ public class DBManager {
     }
 
     public void loadAdmins(){
-        File file = new File("./config/admins.dat");
+        File file = new File(adminsFile);
         if (!file.exists() || file.length() == 0) {
             adminsData = new HashMap<>();
             Admin admin = new Admin("Admin", "Admin1", "12345678");
@@ -94,7 +104,7 @@ public class DBManager {
         ObjectOutputStream oos = null;
         try {
             oos = new ObjectOutputStream(
-                    new FileOutputStream("./config/players.dat")
+                    new FileOutputStream(playersFile)
             );
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -115,7 +125,7 @@ public class DBManager {
         ObjectOutputStream oos = null;
         try {
             oos = new ObjectOutputStream(
-                    new FileOutputStream("./config/admins.dat")
+                    new FileOutputStream(adminsFile)
             );
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -145,5 +155,4 @@ public class DBManager {
 
         return ranking;
     }
-
 }
