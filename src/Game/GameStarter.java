@@ -37,6 +37,8 @@ public class GameStarter {
                 case 4 -> {
                     if (character != null) {
                         editCharacter(character);
+                    } else {
+                        System.out.println("Todavía no has creado ningún personaje");
                     }
                 }
                 case 5 -> challenge(p);

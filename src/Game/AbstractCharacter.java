@@ -46,7 +46,7 @@ public abstract class AbstractCharacter implements Serializable {
         this.name = name;
         this.health = health;
         this.power = power;
-        this.gold = 0;
+        this.gold = 100;
 
         this.weapons = new ArrayList<>();
         this.armours = new ArrayList<>();
