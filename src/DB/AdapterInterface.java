@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public interface AdapterInterface {
     public void registerPlayer(Player player);
+    public void deletePlayer(Player player);
     public Player findPlayerByNick(String nick);
     public Player loadPlayer(String nick, String password);
     public void updatePlayersDB();

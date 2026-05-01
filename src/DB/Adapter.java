@@ -16,6 +16,10 @@ public class Adapter implements AdapterInterface{
         adapter.registerPlayer(player);
     }
 
+    public void deletePlayer(Player player){
+        adapter.deletePlayer(player);
+    }
+
     public Player loadPlayer(String nick, String password){
         return adapter.loadPlayer(nick, password);
     }

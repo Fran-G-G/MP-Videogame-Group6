@@ -32,7 +32,7 @@ public class GameStarter {
 
             switch (option) {
                 case 1 -> play = logOut();
-                case 2 -> signOut();
+                case 2 -> play = signOut(p);
                 case 3 -> character = createCharacter(p);
                 case 4 -> {
                     if (character != null) {
@@ -85,8 +85,17 @@ public class GameStarter {
         return false;
     }
 
-    private void signOut() {
+    private boolean signOut(Player player) {
+        Singleton singleton = Singleton.getInstance();
 
+        boolean delete = ConsoleInput.readBoolean("¿Estás seguro de querer eliminar tu cuenta? ");
+
+        if (delete){
+            singleton.deletePlayer(player);
+            return false;
+        }else {
+            return true;
+        }
     }
 
 
