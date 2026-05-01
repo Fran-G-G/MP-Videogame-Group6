@@ -11,7 +11,7 @@ public class Human extends AbstractMinion implements Serializable {
         HIGH, NORMAL, LOW
     }
 
-    private final Loyalty loyalty;
+    private Loyalty loyalty;
 
     public Human(String name, int health, Loyalty loyalty) {
         super(name, health);
@@ -20,6 +20,22 @@ public class Human extends AbstractMinion implements Serializable {
 
     public Loyalty getLoyalty() {
         return loyalty;
+    }
+
+    public void upgradeLoyalty() {
+        if (loyalty == Loyalty.LOW) {
+            loyalty = Loyalty.NORMAL;
+        } else if (loyalty == Loyalty.NORMAL) {
+            loyalty = Loyalty.HIGH;
+        }
+    }
+
+    public void decreaseLoyalty() {
+        if (loyalty == Loyalty.HIGH) {
+            loyalty = Loyalty.NORMAL;
+        } else if (loyalty == Loyalty.NORMAL) {
+            loyalty = Loyalty.LOW;
+        }
     }
 
     @Override
