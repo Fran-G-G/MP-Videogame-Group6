@@ -142,16 +142,19 @@ public class GameStarter {
 
         // Start the process of editing a character characteristic.
         switch (option) {
-          case 1 -> {
-              String newName = ConsoleInput.readString("Introduzca el nuevo nombre para " + character.getName() + ": ");
-              character.setName(newName);
-              System.out.println("Nuevo nombre del personaje modificado correctamente.");
-          }
-          case 2 -> {
-              EquipmentManager eqManager = new EquipmentManager();
-              eqManager.manageEquipment(character);
-          }
-          //case 3 -> character.
+            case 1 -> {
+                  String newName = ConsoleInput.readString("Introduzca el nuevo nombre para " + character.getName() + ": ");
+                  character.setName(newName);
+                  System.out.println("Nuevo nombre del personaje modificado correctamente.");
+            }
+            case 2 -> {
+                  EquipmentManager eqManager = new EquipmentManager();
+                  eqManager.manageEquipment(character);
+              }
+            case 3 -> {
+                MinionManager minionManager = new MinionManager();
+                minionManager.editMinions(character);
+            }
         }
 
         System.out.println("\nFin del proceso de edición del personaje\n");

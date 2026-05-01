@@ -116,6 +116,16 @@ public abstract class AbstractCharacter implements Serializable {
         abstractMinions.add(minion);
     }
 
+    public void removeMinion(int index) {
+        if (index >= 0 && index < abstractMinions.size()) {
+            abstractMinions.remove(index);
+        }
+    }
+
+    public List<AbstractMinion> getAbstractMinions() {
+        return abstractMinions;
+    }
+
     /**
      * @param strength add a strength to the character.
      */

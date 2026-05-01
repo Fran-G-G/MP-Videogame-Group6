@@ -2,7 +2,6 @@ package Game;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Objects;
 
 /**
  * Base Factory for creating the common part of all types of characters.
@@ -31,7 +30,8 @@ public abstract class CharacterFactory implements AbstractFactory<AbstractCharac
         System.out.println("-----------------------------------------------------------------------------\n");
 
         // Creation of the minions for the character
-        manageMinionsCreation(character);
+        MinionManager minionManager = new MinionManager();
+        minionManager.addMinionsToCharacter(character);
     }
 
     private void manageWeaknessesCreation(AbstractCharacter character) {
@@ -74,41 +74,5 @@ public abstract class CharacterFactory implements AbstractFactory<AbstractCharac
         }
 
         System.out.println();
-    }
-
-    private void manageMinionsCreation(AbstractCharacter character) {
-        GhoulFactory ghoulFactory = new GhoulFactory(character, null);
-        HumanFactory humanFactory = new HumanFactory(character, null);
-        DemonFactory demonFactory = new DemonFactory(character, null, ghoulFactory, humanFactory);
-        boolean keepCreatingMinions = true;
-        int minionCount = 0;
-
-        while (keepCreatingMinions && minionCount < 5) {
-            System.out.println("Elige el tipo de esbirro que quieras crear, o pulsa 4 para terminar:");
-            System.out.println("1. Demonio | 2. Ghoul | 3. Humano | 4. Salir");
-            System.out.println("\nEsbirros actuales: " + minionCount + "/5");
-            int option = ConsoleInput.readInt(1, 4);
-
-            switch (option) {
-                case 1 -> { demonFactory.createProduct(); minionCount++; }
-                case 2 -> { ghoulFactory.createProduct(); minionCount++; }
-                case 3 -> { if (confirmNotVampire(character, humanFactory)) {minionCount++;} }
-                default -> keepCreatingMinions = false;
-            }
-        }
-
-        if (minionCount == 5) {
-            System.out.println("Se ha alcanzado el límite de 5 esbirros para " + character.getName() + ".");
-        }
-    }
-
-    private boolean confirmNotVampire(AbstractCharacter character, HumanFactory humanFactory) {
-        if (character.getClass().getSimpleName().equals("Vampire")) {
-            System.out.println("Los personajes de tipo vampiro no pueden tener esbirros humanos, ¡se los comerían!.");
-            return false;
-        } else {
-            humanFactory.createProduct();
-            return true;
-        }
     }
 }
