@@ -173,6 +173,8 @@ public class GameStarter {
             }
         }
 
+        Singleton singleton = Singleton.getInstance();
+        singleton.updatePlayersDB();
         System.out.println("\nFin del proceso de edición del personaje\n");
     }
 
