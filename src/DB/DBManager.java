@@ -23,6 +23,11 @@ public class DBManager {
         updatePlayersDB();
     }
 
+    public void deletePlayer(Player player){
+        playersData.remove(player.getNick());
+        updatePlayersDB();
+    }
+
     public void registerAdmin(Admin admin){
         adminsData.put(admin.getNick(), admin);
         updateAdminsDB();
@@ -131,7 +136,9 @@ public class DBManager {
         ArrayList<Player> ranking = new ArrayList<>();
 
         for (Player player : playersData.values()){
-            ranking.add(player);
+            if (player.getCharacter() != null){
+                ranking.add(player);
+            }
         }
 
         ranking.sort(Comparator.comparing(p -> p.getCharacter().getGold()));
