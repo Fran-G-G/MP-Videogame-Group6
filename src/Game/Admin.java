@@ -11,8 +11,4 @@ public class Admin extends User implements Serializable {
         super(name, nick, password);
     }
 
-    /**
-     * Validates a challenge (simplified version)
-     */
-
 }

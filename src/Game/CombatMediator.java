@@ -1,5 +1,4 @@
 package Game;
-
 import java.util.Random;
 import java.util.Scanner;
 
@@ -8,6 +7,7 @@ import java.util.Scanner;
  * Features high-quality custom ASCII art, side-by-side view,
  * manual round advance (ENTER), and animated attacks.
  */
+
 public class CombatMediator implements Mediator {
 
     private final Player player1;
@@ -26,7 +26,7 @@ public class CombatMediator implements Mediator {
     /**
      * Starts the combat loop with visual effects.
      */
-    public void start() {
+    public void start(Integer bet) {
         clearScreen();
         printIntro();
 
@@ -67,6 +67,10 @@ public class CombatMediator implements Mediator {
         Player winner = player1.getCharacter().isAlive() ? player1 : player2;
         Player loser = (winner == player1) ? player2 : player1;
         printVictoryScreen(winner, loser);
+
+        winner.getCharacter().addGold(bet);
+        loser.getCharacter().addGold(-bet);
+        System.out.println("\nEl ganador gano "+bet+ " monedas");
 
         originator.restore(memento);
         System.out.println("\nSalud y esbirros restaurados al estado previo al combate.");
@@ -411,6 +415,7 @@ public class CombatMediator implements Mediator {
             System.out.printf("%-80s  %s%n", leftLine, rightLine);
         }
         System.out.println("\n     🏆 GANADOR: " + winner.getNick() + "       💀 PERDEDOR: " + loser.getNick());
+
         waitMilliseconds(2000);
     }
 
