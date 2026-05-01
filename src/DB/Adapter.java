@@ -1,5 +1,6 @@
 package DB;
 
+import Game.Admin;
 import Game.Player;
 
 import java.util.ArrayList;
@@ -11,26 +12,42 @@ public class Adapter implements AdapterInterface{
         this.adapter = new DBManager();
     }
 
+    @Override
     public void registerPlayer(Player player){
         adapter.registerPlayer(player);
     }
 
+    @Override
     public void deletePlayer(Player player){
         adapter.deletePlayer(player);
     }
 
+    @Override
+    public void registerAdmin(Admin admin){
+        adapter.registerAdmin(admin);
+    }
+
+    @Override
     public Player loadPlayer(String nick, String password){
         return adapter.loadPlayer(nick, password);
     }
 
+    @Override
+    public Admin loadAdmin(String nick, String password) {
+        return adapter.loadAdmin(nick, password);
+    }
+
+    @Override
     public Player findPlayerByNick(String nick){
         return adapter.findPlayerByNick(nick);
     }
 
+    @Override
     public void updatePlayersDB(){
         adapter.updatePlayersDB();
     }
 
+    @Override
     public ArrayList<Player> updateRanking(){
         return adapter.updateRanking();
     }

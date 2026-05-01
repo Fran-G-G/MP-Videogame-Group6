@@ -1,5 +1,6 @@
 package DB;
 
+import Game.Admin;
 import Game.Player;
 
 import java.util.ArrayList;
@@ -23,8 +24,16 @@ public class Singleton {
         adapter.deletePlayer(player);
     }
 
+    public void registerAdmin(Admin admin){
+        adapter.registerAdmin(admin);
+    }
+
     public Player loadPlayer(String nick, String password){
         return adapter.loadPlayer(nick, password);
+    }
+
+    public Admin loadAdmin(String nick, String password) {
+        return adapter.loadAdmin(nick, password);
     }
 
     public Player findPlayerByNick(String nick){
