@@ -28,6 +28,11 @@ public class Adapter implements AdapterInterface{
     }
 
     @Override
+    public void deleteAdmin(Admin admin){
+        adapter.deleteAdmin(admin);
+    }
+
+    @Override
     public Player loadPlayer(String nick, String password){
         return adapter.loadPlayer(nick, password);
     }
@@ -45,6 +50,11 @@ public class Adapter implements AdapterInterface{
     @Override
     public void updatePlayersDB(){
         adapter.updatePlayersDB();
+    }
+
+    @Override
+    public void updateAdminsDB(){
+        adapter.updateAdminsDB();
     }
 
     @Override
