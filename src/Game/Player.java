@@ -12,6 +12,7 @@ public class Player extends User implements Serializable {
 
     private String registrationNumber;
     private AbstractCharacter character;
+    private boolean is_blocked;
 
     private List<Challenge> challengesReceived;
     private List<Challenge> challengesSent;
@@ -65,5 +66,15 @@ public class Player extends User implements Serializable {
 
     public List<Challenge> getChallengesReceived() {
         return challengesReceived;
+    }
+
+    public boolean isIs_blocked(){return is_blocked;}
+
+    public void blocked(){
+        is_blocked=true;
+    }
+
+    public void unblocked(){
+        is_blocked=false;
     }
 }

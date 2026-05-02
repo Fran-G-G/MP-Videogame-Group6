@@ -1,6 +1,6 @@
 package Game;
-import Game.*;
 import DB.Singleton;
+import Game.GameStarter;
 
 /**
  * Represents a challenge between two players.
@@ -21,11 +21,7 @@ public class ChallengeHandler {
             return;
         }
 
-        // Comprobar que ambos tienen personaje
-        if (challenger.getCharacter() == null || challenged.getCharacter() == null) {
-            System.out.println("Ambos jugadores deben tener un personaje para desafiar.");
-            return;
-        }
+
 
         // Check that both have an active equipment
         if (!challenger.getCharacter().hasActiveEquipment() ||
@@ -37,21 +33,7 @@ public class ChallengeHandler {
         System.out.println("================================================================================");
         System.out.println("Administrador, hay que validar un desafío");
         System.out.println("-----------------------------------------------------------------------------\n");
-        String pass="";
-        boolean cancel = false;
-        while (!pass.equals("12345678") && !cancel) {
-            pass= ConsoleInput.readString("Escribe la contraseña:");
-            if (!pass.equals("12345678")) {
-                System.out.println("Error en la contraseña");
-                System.out.println("1. Reintentar | 2. Cancelar");
-                cancel = (ConsoleInput.readInt(1, 2) == 2);
-            }
-        }
-
-        if (cancel){
-            System.out.println("Error al iniciar sesion");
-            return;
-        }
+        Admin admin = logInAdmin();
 
         Boolean validated = ConsoleInput.readBoolean("¿Deseas validar el desafio?");
 
@@ -69,4 +51,19 @@ public class ChallengeHandler {
         combatHandler.handle(challenge);
     }
 
+    public Admin logInAdmin() {
+        String nick = ConsoleInput.readString("Nick del administrador:");
+
+        String pass = ConsoleInput.readString("Contraseña:");
+
+        Admin admin = Singleton.getInstance().loadAdmin(nick,pass);
+
+        if (admin == null) {
+            System.out.println("No existe un administrador con ese nick.");
+            return null;
+        }
+
+        System.out.println("Inicio de sesión correcto. Bienvenido, " + admin.getNick());
+        return admin;
+    }
 }
