@@ -80,7 +80,7 @@ public class CombatMediator implements Mediator {
         return player1.getCharacter().isAlive() && player2.getCharacter().isAlive();
     }
 
-     void executeTurn(Player attacker, Player defender) {
+     public void executeTurn(Player attacker, Player defender) {
         AbstractCharacter attChar = attacker.getCharacter();
         AbstractCharacter defChar = defender.getCharacter();
 
@@ -131,7 +131,7 @@ public class CombatMediator implements Mediator {
     }
 
     // ---------- AI decision ----------
-     boolean shouldUseSkill(AbstractCharacter character) {
+    public boolean shouldUseSkill(AbstractCharacter character) {
         SpecialSkill skill = character.getSpecialSkill();
         if (skill == null) return false;
 
@@ -147,7 +147,7 @@ public class CombatMediator implements Mediator {
         return false;
     }
 
-     void applyDamage(Player defender) {
+     public void applyDamage(Player defender) {
         AbstractCharacter defChar = defender.getCharacter();
 
         int remainingDamage = defChar.applyDamageToMinions(1);
