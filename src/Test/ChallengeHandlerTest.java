@@ -8,11 +8,10 @@ class ChallengeHandlerTest {
 
     @Test
     void handler_rechazoAplicaPenalizacionCorrectamente() {
-        // Crear jugadores
+        // Create players
         Player challenger = new Player("Alice", "A", "12345678");
         Player challenged = new Player("Bob", "B", "12345678");
 
-        // Crear personajes reales
         Hunter c1 = new Hunter("Cazador1", 5, 3);
         Hunter c2 = new Hunter("Cazador2", 5, 3);
 
@@ -24,12 +23,12 @@ class ChallengeHandlerTest {
 
         ChallengeHandler handler = new ChallengeHandler();
 
-        // op = false → rechazo del desafío
+        // op = false → challenge rejection
         handler.handler(challenger, challenged, false, 100);
 
         int penalty = Calculator.calculateRejectionPenalty(100);
 
-        // Verificar que el oro se ha modificado correctamente
+        // Verify that the gold has been updated correctly
         assertEquals(goldChallengerBefore + penalty, c1.getGold());
         assertEquals(goldChallengedBefore - penalty, c2.getGold());
     }

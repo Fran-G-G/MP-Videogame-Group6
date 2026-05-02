@@ -180,7 +180,7 @@ public class GameStarter {
 
     private void challenge(Player challenger) {
         ChallengeHandler challengeHandler= new ChallengeHandler();
-        // Pedir nick del jugador objetivo
+        // Ask for the target player's nickname
 
         String nick = ConsoleInput.readString("¿A qué jugador quieres desafiar?");
 
@@ -195,7 +195,7 @@ public class GameStarter {
             System.out.println("No puedes desafiarte a ti mismo.");
             return;
         }
-        // Pedir apuesta
+        // Ask for the bet
         System.out.println("¿Cuánto oro quieres apostar?");
         int bet = ConsoleInput.readInt(0,challenger.getCharacter().getGold());
 
@@ -217,7 +217,7 @@ public class GameStarter {
         }
 
         System.out.println("-----------------------------------------------------------------------------\n");
-        Boolean op = ConsoleInput.readBoolean("¿Deseas aceptar el desafio?(s/n)");
+        Boolean op = ConsoleInput.readBoolean("¿Deseas aceptar el desafio?");
 
         challengeHandler.handler(challenger,challenged, op, bet);
 

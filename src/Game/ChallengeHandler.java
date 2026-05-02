@@ -1,5 +1,5 @@
 package Game;
-
+import Game.*;
 import DB.Singleton;
 
 /**
@@ -27,7 +27,7 @@ public class ChallengeHandler {
             return;
         }
 
-        // Comprobar que ambos tienen equipo activo
+        // Check that both have an active equipment
         if (!challenger.getCharacter().hasActiveEquipment() ||
                 !challenged.getCharacter().hasActiveEquipment()) {
             System.out.println("Ambos jugadores deben tener armas y armadura activas.");
@@ -53,7 +53,7 @@ public class ChallengeHandler {
             return;
         }
 
-        Boolean validated = ConsoleInput.readBoolean("¿Deseas validar el desafio?(s/n)");
+        Boolean validated = ConsoleInput.readBoolean("¿Deseas validar el desafio?");
 
         if (!validated){
             System.out.println("El administrador no ha validado este desafio");
