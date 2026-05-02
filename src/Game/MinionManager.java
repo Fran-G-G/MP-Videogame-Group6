@@ -47,7 +47,7 @@ public class MinionManager {
         }
 
         while (keepCreatingMinions && minionCount < 5) {
-            System.out.println("\nElige el tipo de esbirro que quieras añadir, o pulsa 4 para terminar:");
+            System.out.println("Elige el tipo de esbirro que quieras añadir, o pulsa 4 para terminar:");
             System.out.println("1. Demonio | 2. Ghoul | 3. Humano | 4. Salir");
             System.out.println("Esbirros actuales: " + minionCount + "/5");
             int option = ConsoleInput.readInt(1, 4);

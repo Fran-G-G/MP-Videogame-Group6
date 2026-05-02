@@ -9,18 +9,18 @@ public class EquipmentManager {
     public void manageEquipment(AbstractCharacter character) {
         EquipmentBuilder equipmentBuilder = new EquipmentBuilder();
 
-        // 1. Obtenemos el equipo que ya tiene el personaje (nada si es la primera vez)
+        // 1. Obtain the equipment that the character already has (nothing if it's the first time)
         List<Weapon> weapons = character.getWeapons();
         if (weapons == null) weapons = new ArrayList<>();
 
         List<Armour> armours = character.getArmours();
         if (armours == null) armours = new ArrayList<>();
 
-        // 2. Construimos el nuevo equipo y lo añadimos a lo que ya tenía (nada si es la primera vez)
+        // 2. Build the new equipment and add it to what we already had (nothing if it's the first time)
         weapons.addAll(equipmentBuilder.buildWeapons());
         armours.addAll(equipmentBuilder.buildArmours());
 
-        // 3. Elegimos que arma/s y armadura equipar
+        // 3. We choose which weapon(s) and armor to equip
         List<Weapon> selectedWeapons = new ArrayList<>();
         if (weapons.size() == 1) {
             System.out.println("Como tu personaje únicamente tiene un arma, es la que tendrá activa.\n");
@@ -30,10 +30,12 @@ public class EquipmentManager {
             System.out.print("De las armas que has creado, elige una como activa:\n");
             showAndSelectWeapon(weapons, selectedWeapons, false);
 
-            if (selectedWeapons.getFirst().getHands() == 1) {
-                System.out.print("Como has elegido un arma de una sola mano, puedes activar otra arma diferente de 1 mano:\n");
+            // If we choose a weapon, and it's one-handed, we try to choose the second hand.
+            if (!selectedWeapons.isEmpty() && selectedWeapons.getFirst().getHands() == 1) {
+                System.out.print("Como has elegido un arma de una sola mano, puedes activar una segunda arma de 1 mano (opcional):\n");
                 showAndSelectWeapon(weapons, selectedWeapons, true);
             }
+
         } else {
             System.out.println("Tu personaje no tiene armas de entre las que poder elegir.\n");
         }
@@ -58,37 +60,54 @@ public class EquipmentManager {
             System.out.println("Tu personaje no tiene armaduras de entre las que poder elegir.\n");
         }
 
-        // 4. Guardamos los cambios en el personaje
+        // 4. Save the changes to the character
         character.chooseActiveEquipment(weapons, armours, selectedWeapons, selectedArmour);
     }
 
     private void showAndSelectWeapon(List<Weapon> weapons, List<Weapon> selectedWeapons, boolean secondWeapon) {
-        List<Weapon> auxWeaponsArray = new ArrayList<>();
+        List<Weapon> availableOptions = new ArrayList<>();
 
-        for (int i = 0; i < weapons.size(); i++) {
-            Weapon w = weapons.get(i); // Index access
-
-            if (secondWeapon && (w.getHands() != 2) && (!Objects.equals(w.getName(), selectedWeapons.getFirst().getName()))) {
-                System.out.print("\t" + (auxWeaponsArray.size() + 1) + ". " + w.getName() + "\n");
-                auxWeaponsArray.add(w);
-            } else if (!secondWeapon) {
-                System.out.print("\t" + (i + 1) + ". " + w.getName() + ": " + w.getHands() + " mano/s\n");
-
+        // 1. Filtering valid options
+        if (secondWeapon) {
+            Weapon firstWeapon = selectedWeapons.getFirst();
+            for (Weapon w : weapons) {
+                // Only one-handed weapons, other than the one we already chose
+                if (w.getHands() == 1 && !Objects.equals(w.getName(), firstWeapon.getName())) {
+                    availableOptions.add(w);
+                }
             }
-        }
-
-        int selectedWeaponIndex;
-        Weapon selectedWeapon;
-        if (!secondWeapon) {
-            selectedWeaponIndex = ConsoleInput.readInt(1, weapons.size());
-
-            selectedWeapon = weapons.get(selectedWeaponIndex-1);
         } else {
-            selectedWeaponIndex = ConsoleInput.readInt(1, auxWeaponsArray.size());
-
-            selectedWeapon = auxWeaponsArray.get(selectedWeaponIndex-1);
+            availableOptions.addAll(weapons);
         }
 
-        selectedWeapons.add(selectedWeapon);
+        // 2. Security check
+        if (availableOptions.isEmpty()) {
+            if (secondWeapon) {
+                System.out.println("\tNo tienes más armas de 1 mano compatibles.");
+            } else {
+                System.out.println("\tNo tienes armas disponibles.");
+            }
+            return;
+        }
+
+        // 3. Show options
+        for (int i = 0; i < availableOptions.size(); i++) {
+            Weapon w = availableOptions.get(i);
+            System.out.print("\t" + (i + 1) + ". " + w.getName() + " (" + w.getHands() + " mano/s)\n");
+        }
+
+        // 4. Selection, with "Cancel" option if it's the second weapon
+        int selectedIndex;
+        if (secondWeapon) {
+            System.out.println("\t0. No equipar segunda arma");
+            selectedIndex = ConsoleInput.readInt(0, availableOptions.size());
+        } else {
+            selectedIndex = ConsoleInput.readInt(1, availableOptions.size());
+        }
+
+        // 5. Add to list only if you did not choose "0"
+        if (selectedIndex > 0) {
+            selectedWeapons.add(availableOptions.get(selectedIndex - 1));
+        }
     }
 }
