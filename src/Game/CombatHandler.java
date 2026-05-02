@@ -25,7 +25,7 @@ public class CombatHandler {
 
         // Create and start the combat mediator
         CombatMediator mediator = new CombatMediator(player1, player2);
-        mediator.start();
+        mediator.start(challenge.getGoldBet());
 
         // No next handler; combat is the end of the chain
     }
