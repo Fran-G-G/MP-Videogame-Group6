@@ -113,7 +113,7 @@ public class GameStarter {
         if (player.getCharacter() != null){
             System.out.println("Ya hay un personaje creado \n");
             return player.getCharacter();
-        }else {
+        } else {
             System.out.println("================================================================================");
             System.out.println("Comenzamos con la creación del personaje \n");
 
