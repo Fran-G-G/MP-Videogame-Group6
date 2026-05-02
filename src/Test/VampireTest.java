@@ -1,5 +1,7 @@
-package Game;
+package Test;
 
+import Game.Discipline;
+import Game.Vampire;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

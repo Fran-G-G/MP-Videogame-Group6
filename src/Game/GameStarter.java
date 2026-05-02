@@ -179,7 +179,9 @@ public class GameStarter {
     }
 
     private void challenge(Player challenger) {
-        // 1. Pedir nick del jugador objetivo
+        ChallengeHandler challengeHandler= new ChallengeHandler();
+        // Pedir nick del jugador objetivo
+
         String nick = ConsoleInput.readString("¿A qué jugador quieres desafiar?");
 
         Player challenged = Singleton.getInstance().findPlayerByNick(nick);
@@ -193,8 +195,7 @@ public class GameStarter {
             System.out.println("No puedes desafiarte a ti mismo.");
             return;
         }
-
-        // 2. Pedir apuesta
+        // Pedir apuesta
         System.out.println("¿Cuánto oro quieres apostar?");
         int bet = ConsoleInput.readInt(0,challenger.getCharacter().getGold());
 
@@ -203,25 +204,24 @@ public class GameStarter {
             return;
         }
 
-        // 3. Obtener admin disponible
-        Admin admin = new Admin("", "", ""); //Singleton.getInstance().getAvailableAdmin();
-        if (admin == null) {
-            System.out.println("No hay administradores disponibles.");
-            return;
-        }
-        // 4. Comprobar que ambos tienen personaje
-        if (challenger.getCharacter() == null || challenged.getCharacter() == null) {
-            System.out.println("Ambos jugadores deben tener un personaje para desafiar.");
+        System.out.println("================================================================================");
+        System.out.println("Jugador "+challenged.getNick()+ " has sido desafiado: Escriba su contraseña para aceptar o rechazar el desafío");
+        System.out.println("-----------------------------------------------------------------------------\n");
+
+
+        challenged= logIn();
+
+        if (challenged == null){
+            System.out.println("Error del desafiado al iniciar sesión");
             return;
         }
 
-        // 5. Comprobar que ambos tienen equipo activo
-        if (!challenger.getCharacter().hasActiveEquipment() ||
-                !challenged.getCharacter().hasActiveEquipment()) {
-            System.out.println("Ambos jugadores deben tener armas y armadura activas.");
-            return;
-        }
+        System.out.println("-----------------------------------------------------------------------------\n");
+        Boolean op = ConsoleInput.readBoolean("¿Deseas aceptar el desafio?(s/n)");
 
+        challengeHandler.handler(challenger,challenged, op, bet);
+
+        return;
     }
 
     private void seeRanking() {

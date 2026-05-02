@@ -1,60 +1,72 @@
 package Game;
 
+import DB.Singleton;
+
 /**
  * Represents a challenge between two players.
  * Implements the Handler interface for the Chain of Responsibility pattern.
  */
+
 public class ChallengeHandler {
 
-    public void handler (Player challenger){
+    Calculator calculator= new Calculator();
 
-        String targetNick = ConsoleInput.readString("Introduce el nick del jugador al que quieres desafiar:");
+    public void handler (Player challenger, Player challenged, Boolean op, Integer bet){
 
-        //Player challenged = DBManager.getInstance().findPlayerByNick(targetNick);
-        Player challenged= new Player("aleatorio", "aleatorio1", "1234567889");
-
-        if (challenged == null) {
-            System.out.println("No existe ningún jugador con ese nick.");
+        if (!op){
+            Integer penalty = calculator.calculateRejectionPenalty(bet);
+            System.out.println("El retado ha rechazado el desafio, el retador sera recompensado con "+ penalty+ " monedas");
+            challenged.getCharacter().addGold(-penalty);
+            challenger.getCharacter().addGold(penalty);
             return;
         }
 
-        // 3. Evitar que se desafíe a sí mismo
-        if (challenged.equals(challenger)) {
-            System.out.println("No puedes desafiarte a ti mismo.");
-            return;
-        }
-
-        System.out.println("================================================================================\n");
-        // AQUI VA EL PLAYER2 INICIANDO SESIÓN
-
-
-        // 4. Comprobar que ambos tienen personaje
+        // Comprobar que ambos tienen personaje
         if (challenger.getCharacter() == null || challenged.getCharacter() == null) {
             System.out.println("Ambos jugadores deben tener un personaje para desafiar.");
             return;
         }
 
-        // 5. Comprobar que ambos tienen equipo activo
+        // Comprobar que ambos tienen equipo activo
         if (!challenger.getCharacter().hasActiveEquipment() ||
                 !challenged.getCharacter().hasActiveEquipment()) {
             System.out.println("Ambos jugadores deben tener armas y armadura activas.");
             return;
         }
 
-        // 6. Pedir apuesta
-        System.out.println("¿Cuánto oro quieres apostar?");
-        int betGold = ConsoleInput.readInt(0,challenger.getCharacter().getGold());
+        System.out.println("================================================================================");
+        System.out.println("Administrador, hay que validar un desafío");
+        System.out.println("-----------------------------------------------------------------------------\n");
+        String pass="";
+        boolean cancel = false;
+        while (!pass.equals("12345678") && !cancel) {
+            pass= ConsoleInput.readString("Escribe la contraseña:");
+            if (!pass.equals("12345678")) {
+                System.out.println("Error en la contraseña");
+                System.out.println("1. Reintentar | 2. Cancelar");
+                cancel = (ConsoleInput.readInt(1, 2) == 2);
+            }
+        }
 
-        // Create and validate challenge
-        Challenge challenge = new Challenge(challenger, challenged, betGold);
+        if (cancel){
+            System.out.println("Error al iniciar sesion");
+            return;
+        }
 
-        CombatHandler combatHandler = new CombatHandler();
+        Boolean validated = ConsoleInput.readBoolean("¿Deseas validar el desafio?(s/n)");
 
-        System.out.println("\nDesafío aceptado. ¡Empieza el combate!\n");
+        if (!validated){
+            System.out.println("El administrador no ha validado este desafio");
+            return;
+        }
 
-        // Iniciar el proceso
+        System.out.println("================================================================================");
+        System.out.println("Desafio validado, comenzando Combate");
+
+        Challenge challenge= new Challenge(challenger,challenged,bet);
+
+        CombatHandler combatHandler= new CombatHandler();
         combatHandler.handle(challenge);
-
     }
 
 }

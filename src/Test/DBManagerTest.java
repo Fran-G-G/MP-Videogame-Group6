@@ -1,5 +1,6 @@
-package DB;
+package Test;
 
+import DB.DBManager;
 import Game.Admin;
 import Game.Player;
 import Game.Vampire;

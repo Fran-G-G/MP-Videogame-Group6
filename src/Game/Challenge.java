@@ -17,7 +17,7 @@ public class Challenge implements Serializable {
             this.challenged = var2;
             this.goldBet = goldBet;
             this.status = Challenge.Status.PENDING;
-            this.validated = false;
+            this.validated = true;
         }
     }
 

@@ -1,5 +1,6 @@
-package Game;
+package Test;
 
+import Game.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.io.ByteArrayInputStream;
@@ -78,7 +79,7 @@ class CombatMediatorTest {
 
         PrintStream originalOut = System.out;
         System.setOut(new PrintStream(new ByteArrayOutputStream()));
-        mediator.start();
+        mediator.start(10);
         System.setOut(originalOut);
 
         assertEquals(5, attacker.getCharacter().getHealth());

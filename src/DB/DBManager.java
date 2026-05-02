@@ -28,21 +28,52 @@ public class DBManager {
         loadAdmins();
     }
 
+    /**
+     * Registers a player in the database
+     * @param player
+     */
     public void registerPlayer(Player player){
         playersData.put(player.getNick(), player);
         updatePlayersDB();
     }
 
+    /**
+     * Deletes a player from the database
+     * @param player
+     */
     public void deletePlayer(Player player){
-        playersData.remove(player.getNick());
+        if (player != null){
+            playersData.remove(player.getNick());
+        }
         updatePlayersDB();
     }
 
+    /**
+     * Registers an administrator in the database
+     * @param admin
+     */
     public void registerAdmin(Admin admin){
         adminsData.put(admin.getNick(), admin);
         updateAdminsDB();
     }
 
+    /**
+     * Deletes an administrator from the database
+     * @param admin
+     */
+    public void deleteAdmin(Admin admin){
+        if (admin != null){
+            adminsData.remove(admin.getNick());
+        }
+        updateAdminsDB();
+    }
+
+    /**
+     * Loads a player from the database
+     * @param nick
+     * @param password
+     * @return player
+     */
     public Player loadPlayer(String nick, String password) {
         if (playersData.containsKey(nick) && playersData.get(nick).getPassword().equals(password)){
             return playersData.get(nick);
@@ -51,6 +82,12 @@ public class DBManager {
         }
     }
 
+    /**
+     * Loads an administrator from the database
+     * @param nick
+     * @param password
+     * @return admin
+     */
     public Admin loadAdmin(String nick, String password){
         if (adminsData.containsKey(nick) && adminsData.get(nick).getPassword().equals(password)){
             return adminsData.get(nick);
@@ -59,6 +96,9 @@ public class DBManager {
         }
     }
 
+    /**
+     * Loads all players data
+     */
     public void loadPlayers(){
         File file = new File(playersFile);
         if (!file.exists() || file.length() == 0) {
@@ -74,6 +114,9 @@ public class DBManager {
         }
     }
 
+    /**
+     * Loads all administrators data
+     */
     public void loadAdmins(){
         File file = new File(adminsFile);
         if (!file.exists() || file.length() == 0) {
@@ -92,6 +135,11 @@ public class DBManager {
         }
     }
 
+    /**
+     * Finds a player by its nick in the database
+     * @param nick
+     * @return player
+     */
     public Player findPlayerByNick(String nick){
         if (playersData.containsKey(nick)){
             return playersData.get(nick);
@@ -100,6 +148,9 @@ public class DBManager {
         }
     }
 
+    /**
+     * Updates the database with the current players data
+     */
     public void updatePlayersDB(){
         ObjectOutputStream oos = null;
         try {
@@ -121,6 +172,9 @@ public class DBManager {
         }
     }
 
+    /**
+     * Updates the database with the current administrators data
+     */
     public void updateAdminsDB(){
         ObjectOutputStream oos = null;
         try {
@@ -142,6 +196,10 @@ public class DBManager {
         }
     }
 
+    /**
+     * Updates the player ranking and returns it
+     * @return ranking
+     */
     public ArrayList<Player> updateRanking(){
         ArrayList<Player> ranking = new ArrayList<>();
 
