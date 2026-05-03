@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import Game.Admin;
 import Game.Player;
+import Game.Vampire;
 
 public class DBManager {
 
@@ -122,7 +123,12 @@ public class DBManager {
         if (!file.exists() || file.length() == 0) {
             adminsData = new HashMap<>();
             Admin admin = new Admin("Admin", "Admin1", "12345678");
+            Player adminPlayer = new Player("Admin", "Admin1", "12345678");
+            Vampire character = new Vampire("Drácula", 5, 3, 2500);
+            adminPlayer.setCharacter(character);
+            playersData.put("Admin1", adminPlayer);
             adminsData.put("Admin1", admin);
+            updatePlayersDB();
             updateAdminsDB();
             return;
         }
