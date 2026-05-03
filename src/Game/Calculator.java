@@ -3,24 +3,24 @@ package Game;
 public class Calculator {
 
     public static int calculateRejectionPenalty(int betGold) {
-        // 10% de la apuesta
+        // 10% of the bet
         return (int) Math.round(betGold * 0.1);
     }
 
     public static int calculateWinnerGoldGain(int betGold) {
-        // El ganador gana exactamente lo apostado por el desafiante
+        // Winner receives exactly the challenger’s stake
         return 2*betGold;
     }
 
     public static int calculateAttackMod(AbstractCharacter character) {
         int base = character.getPower();
 
-        // Habilidad especial
+        // Special Skill
         if (character.getSpecialSkill() != null) {
             base += character.getSpecialSkill().getAttackValue();
         }
 
-        // Equipo activo
+        // Active Equipment
         if (character.getActiveWeapons() != null) {
             base += character.getActiveWeapons().stream().mapToInt(w -> w.getAttackModifier()).sum();
         }
@@ -30,7 +30,7 @@ public class Calculator {
 
         base = getBase(character, base);
 
-        // Fortalezas / debilidades presentes
+        // Strengths / weaknesses
         base += character.getStrengthsTotalModifier();
         base -= character.getWeaknessesTotalModifier();
 
@@ -38,7 +38,7 @@ public class Calculator {
     }
 
     private static int getBase(AbstractCharacter character, int base) {
-        // Recursos específicos (sangre, rabia, voluntad)
+        // blood, rage, willpower
         base += getResourceAttackBonus(character);
         return base;
     }
@@ -48,10 +48,10 @@ public class Calculator {
             return (v.getBloodPoints() >= 5) ? 2 : 0;
         }
         if (character instanceof Werewolf w) {
-            return w.getRage(); // rabia actual
+            return w.getRage(); // rage
         }
         if (character instanceof Hunter h) {
-            return h.getWill(); // voluntad actual
+            return h.getWill(); // willpower
         }
         return 0;
     }

@@ -11,14 +11,14 @@ import static org.junit.jupiter.api.Assertions.*;
 class CalculatorTest {
 
     @Test
-    void calculateRejectionPenalty_debeCalcularEl10PorCientoRedondeado() {
+    void calculateRejectionPenalty_mustCalculateTheRounded10Percent() {
         assertEquals(10, Calculator.calculateRejectionPenalty(100));
         assertEquals(5, Calculator.calculateRejectionPenalty(50));
         assertEquals(0, Calculator.calculateRejectionPenalty(1)); // 0.1 → 0
     }
 
     @Test
-    void calculateWinnerGoldGain_debeDuplicarLaApuesta() {
+    void calculateWinnerGoldGain_mustDoubleTheBet() {
         assertEquals(200, Calculator.calculateWinnerGoldGain(100));
         assertEquals(0, Calculator.calculateWinnerGoldGain(0));
     }
@@ -26,14 +26,14 @@ class CalculatorTest {
     // ---------- calculateAttackMod con personajes reales ----------
 
     @Test
-    void calculateAttackMod_vampire_conSkillEquipoFortalezasYDebilidadesYBonusDeSangre() {
+    void calculateAttackMod_vampire_withTeamSkillStrengthsWeaknessesAndBloodBonus() {
         Vampire v = new Vampire("Dracula", 5, 3, 500);
 
-        // skill: +2 ataque
+        // skill: +2 attack
         SpecialSkill skill = new SpecialSkill("Disciplina básica", 2, 1) {};
         v.setSkill(skill);
 
-        // armas y armadura
+        // weapon
         Weapon espada = new Weapon("Espada", 3, 0, 1);
         Weapon daga = new Weapon("Daga", 1, 0, 1);
         Armour armadura = new Armour("Armadura ligera", 1, 1);
@@ -45,18 +45,18 @@ class CalculatorTest {
                 armadura
         );
 
-        // fortalezas y debilidades
+        // Strength and weakness
         v.addStrength(new Strength("Fuerza sobrenatural", 2));
         v.addWeakness(new Weakness("Luz solar", 1));
 
-        // blood por defecto = 10 → bonus +2
+        // blood = 10 → bonus +2
         int esperado =
                 v.getPower()      // 3
                         + skill.getAttackValue() // 2
                         + espada.getAttackModifier() // 3
                         + daga.getAttackModifier()   // 1
                         + armadura.getAttackModifier() // 1
-                        + 2 // bonus sangre (>=5)
+                        + 2 // bonus blood (>=5)
                         + 2 // strength
                         - 1; // weakness
 
@@ -65,7 +65,7 @@ class CalculatorTest {
     }
 
     @Test
-    void calculateAttackMod_werewolf_conRageComoBonus() {
+    void calculateAttackMod_werewolf_withRageBonus() {
         Werewolf w = new Werewolf("Lobo", 5, 4, 1.80, 80.0);
 
         // sin skill, sin equipo, sin fortalezas/debilidades
@@ -81,7 +81,7 @@ class CalculatorTest {
     }
 
     @Test
-    void calculateAttackMod_hunter_conVoluntadComoBonus() {
+    void calculateAttackMod_hunter_withVoluntadBonus() {
         Hunter h = new Hunter("Cazador", 5, 3);
 
         // sin skill, sin equipo, sin fortalezas/debilidades
@@ -93,7 +93,7 @@ class CalculatorTest {
     }
 
     @Test
-    void calculateAttackMod_hunter_conFortalezasYDebilidadesYSinVoluntad() {
+    void calculateAttackMod_hunter_withStrengthsAndWeaknessesAndWithoutWillpower() {
         Hunter h = new Hunter("Cazador", 5, 3);
 
         // bajamos la voluntad a 0

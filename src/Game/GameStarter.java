@@ -10,18 +10,28 @@ public class GameStarter {
         int option;
 
         Player p = null;
-        while (p == null) {
-            System.out.println("1. Registrarse | 2. Iniciar Sesión");
-            option = ConsoleInput.readInt(1, 2);
+
+        Admin a=null;
+        while (p == null && a==null) {
+            System.out.println("1. Registrarse | 2. Iniciar Sesión | 3. Iniciar como administrador");
+            option = ConsoleInput.readInt(1, 3);
 
             switch (option) {
                 case 1 -> p = signIn(); // Registrarse
                 case 2 -> p = logIn(); // Iniciar Sesión
+                case 3 -> a= logInAdmin();
             }
         }
 
+
+
         boolean play = true;
-//        Player p = createPlayer(0); // Habrá que quitarlo, es solo para que no salten errores.
+        if (a != null) {
+            AdminMenu menu = new AdminMenu(a);
+            menu.show();
+            play=false;
+        }
+
         AbstractCharacter character = null;
 
         while (play) {
@@ -48,6 +58,23 @@ public class GameStarter {
 
         System.out.println("\nHasta pronto :)\n");
     }
+
+    public Admin logInAdmin() {
+        String nick = ConsoleInput.readString("Nick del administrador:");
+
+        String pass = ConsoleInput.readString("Contraseña:");
+
+        Admin admin = Singleton.getInstance().loadAdmin(nick,pass);
+
+        if (admin == null) {
+            System.out.println("No existe un administrador con ese nick.");
+            return null;
+        }
+
+        System.out.println("Inicio de sesión correcto. Bienvenido, " + admin.getNick());
+        return admin;
+    }
+
 
     private Player signIn() {
         Singleton singleton = Singleton.getInstance();
@@ -82,6 +109,10 @@ public class GameStarter {
                 System.out.println("1. Reintentar | 2. Cancelar");
                 cancel = (ConsoleInput.readInt(1, 2) == 2);
             }
+        }
+        if (player !=null && player.isIs_blocked()){
+            System.out.println("Jugador bloqueado, no puede iniciar sesión");
+            player=null;
         }
 
         return player;
@@ -180,7 +211,7 @@ public class GameStarter {
 
     private void challenge(Player challenger) {
         ChallengeHandler challengeHandler= new ChallengeHandler();
-        // Pedir nick del jugador objetivo
+        // Ask for the target player's nickname
 
         String nick = ConsoleInput.readString("¿A qué jugador quieres desafiar?");
 
@@ -195,7 +226,13 @@ public class GameStarter {
             System.out.println("No puedes desafiarte a ti mismo.");
             return;
         }
-        // Pedir apuesta
+
+        if (challenger.getCharacter() == null || challenged.getCharacter() == null) {
+            System.out.println("Ambos jugadores deben tener un personaje para desafiar.");
+            return;
+        }
+
+        // Ask for the bet
         System.out.println("¿Cuánto oro quieres apostar?");
         int bet = ConsoleInput.readInt(0,challenger.getCharacter().getGold());
 
@@ -217,7 +254,7 @@ public class GameStarter {
         }
 
         System.out.println("-----------------------------------------------------------------------------\n");
-        Boolean op = ConsoleInput.readBoolean("¿Deseas aceptar el desafio?(s/n)");
+        Boolean op = ConsoleInput.readBoolean("¿Deseas aceptar el desafio?");
 
         challengeHandler.handler(challenger,challenged, op, bet);
 
