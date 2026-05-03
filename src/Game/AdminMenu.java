@@ -18,7 +18,7 @@ public class AdminMenu {
         do {
             System.out.println("\n===== MENÚ ADMINISTRADOR =====");
             System.out.println("1. Cerrar Sesión | 2. Cancelar Cuenta | 3. Bloquear jugador | 4. Desbloquear jugador | 5. Editar personajes \n");
-            option = ConsoleInput.readInt(1,3);
+            option = ConsoleInput.readInt(1,5);
 
             switch (option) {
                 case 1 -> play = logout();
@@ -110,7 +110,7 @@ public class AdminMenu {
      * Edit character
      */
     private void editCharacter() {
-        String nick = ConsoleInput.readString("Introduzca el nick del jugador cuyo personaje quiera editar");
+        String nick = ConsoleInput.readString("Introduzca el nick del jugador cuyo personaje quiera editar: ");
         Player playerByNick = Singleton.getInstance().findPlayerByNick(nick);
 
         if (playerByNick == null) {
@@ -171,12 +171,11 @@ public class AdminMenu {
                     case 3 -> {
                         System.out.println("Primero las debilidades: ");
                         weaknessManager.manageWeaknesses(character, false);
-                        System.out.println("Y ahora las fortalezas: ");
+                        System.out.println("\nY ahora las fortalezas: ");
                         strengthManager.manageStrengths(character, false);
                     }
                     default -> System.out.println("Opción no válida.");
                 }
-
             }
             case 8 -> {
                 return;

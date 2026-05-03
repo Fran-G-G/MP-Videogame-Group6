@@ -137,11 +137,31 @@ public abstract class AbstractCharacter implements Serializable {
         strengths.add(strength);
     }
 
+    public List<Strength> getStrengths() {
+        return strengths;
+    }
+
+    public void removeStrength(int index) {
+        if (index >= 0 && index < strengths.size()) {
+            strengths.remove(index);
+        }
+    }
+
     /**
      * @param weakness add a weakness to the character.
      */
     public void addWeakness(Weakness weakness) {
         weaknesses.add(weakness);
+    }
+
+    public List<Weakness> getWeaknesses() {
+        return weaknesses;
+    }
+
+    public void removeWeakness(int index) {
+        if (index >= 0 && index < weaknesses.size()) {
+            weaknesses.remove(index);
+        }
     }
 
     public int getHealth() {

@@ -3,7 +3,6 @@ package Game;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 public class StrengthManager {
 
@@ -13,7 +12,19 @@ public class StrengthManager {
         if (creation) {
             manageStrengthsCreation(character);
         } else {
-            ArrayList<Strength> possibleStrengths = getPossibleStrengths(character);
+            System.out.println("\n--- Gestión de Fortalezas ---");
+            System.out.println("¿Quiere (1) eliminar fortalezas o (2) añadir nuevas?");
+            int option = ConsoleInput.readInt(1, 2);
+            switch (option) {
+                case 1 -> removeActiveStrengths(character, character.getStrengths());
+                case 2 -> {
+                    // Load all possible ones from the file
+                    ArrayList<Strength> possibleStrengths = getPossibleStrengths(character);
+                    // Pass the current character list to filter
+                    showAndAddStrengths(character, possibleStrengths);
+                }
+                default -> System.out.println("Opción no válida.");
+            }
         }
     }
 
@@ -25,71 +36,86 @@ public class StrengthManager {
         );
     }
 
-    private void showActiveStrengths(AbstractCharacter character) {
-
+    private void showActiveStrengths(List<Strength> strengths) {
+        System.out.println("Fortalezas actuales:");
+        for (int i = 0; i < strengths.size(); i++) {
+            Strength s = strengths.get(i);
+            System.out.print("\t" + (i + 1) + ". " + s.getName() + " (Temple: " + s.getValue() + ")\n");
+        }
     }
 
     private void manageStrengthsCreation(AbstractCharacter character) {
-
         ArrayList<Strength> possibleStrengths = getPossibleStrengths(character);
-
         System.out.println("Se elegirán dos fortalezas al azar para tu personaje:");
 
         Collections.shuffle(possibleStrengths);
         for (int i = 0; i < numStrengths; i++) {
             Strength selectedStrength = possibleStrengths.get(i);
-            System.out.println("\t Nombre de la fortaleza: " + selectedStrength.getName() + ". Temple: " + selectedStrength.getValue());
-
+            System.out.println("\t - " + selectedStrength.getName() + " (Temple: " + selectedStrength.getValue() + ")");
             character.addStrength(selectedStrength);
         }
-
         System.out.println();
     }
 
-    private void showAndSelectWeaknesses(List<Weakness> selectedWeaknesses, List<Weakness> possibleWeaknesses, boolean firstWeakness) {
-        List<Weakness> availableOptions = new ArrayList<>();
-
-        // 1. Filtering valid options
-        if (!firstWeakness) {
-            Weakness previousWeakness = selectedWeaknesses.getFirst();
-            for (Weakness w : possibleWeaknesses) {
-                // Only one-handed weapons, other than the one we already chose
-                if (!Objects.equals(w.getName(), previousWeakness.getName())) {
-                    availableOptions.add(w);
-                }
-            }
-        } else {
-            availableOptions.addAll(possibleWeaknesses);
-        }
-
-        // 2. Security check
-        if (availableOptions.isEmpty()) {
-            if (!firstWeakness) {
-                System.out.println("\tNo hay más debilidades disponibles.\n");
-            } else {
-                System.out.println("\tNo hay debilidades disponibles.\n");
-            }
+    private void removeActiveStrengths(AbstractCharacter character, List<Strength> activeStrengths) {
+        if (activeStrengths.isEmpty()) {
+            System.out.println("No hay fortalezas para eliminar.");
             return;
         }
 
-        // 3. Show options
+        showActiveStrengths(activeStrengths);
+        System.out.println("\n¿Qué fortaleza deseas eliminar? (0 para cancelar):");
+        int option = ConsoleInput.readInt(0, activeStrengths.size());
+
+        if (option > 0) {
+            String removedName = activeStrengths.get(option - 1).getName();
+            character.removeStrength(option - 1);
+            System.out.println("Has eliminado: " + removedName + ".");
+        }
+    }
+
+    private void showAndAddStrengths(AbstractCharacter character, List<Strength> possibleStrengths) {
+        List<Strength> activeStrengths = character.getStrengths();
+
+        // 1. Validate limit
+        if (activeStrengths.size() >= numStrengths) {
+            System.out.println("El personaje ya tiene el máximo de fortalezas (" + numStrengths + "). Elimina una primero.");
+            return;
+        }
+
+        // 2. Filter options, showing only the options that the character does NOT already have
+        List<Strength> availableOptions = new ArrayList<>();
+        for (Strength p : possibleStrengths) {
+            boolean alreadyHasIt = false;
+            for (Strength a : activeStrengths) {
+                if (p.getName().equalsIgnoreCase(a.getName())) {
+                    alreadyHasIt = true;
+                    break;
+                }
+            }
+            if (!alreadyHasIt) {
+                availableOptions.add(p);
+            }
+        }
+
+        if (availableOptions.isEmpty()) {
+            System.out.println("No hay más fortalezas disponibles en la base de datos.");
+            return;
+        }
+
+        // 3. Show and select
+        System.out.println("Selecciona una nueva fortaleza (0 para cancelar):");
         for (int i = 0; i < availableOptions.size(); i++) {
-            Weakness w = availableOptions.get(i);
-            System.out.print("\t" + (i + 1) + ". " + w.getName() + " (" + w.getValue() + ")\n");
+            Strength s = availableOptions.get(i);
+            System.out.print("\t" + (i + 1) + ". " + s.getName() + " (" + s.getValue() + ")\n");
         }
 
-        // 4. Selection, with "Cancel" option if it's the second weapon
-        int selectedIndex;
-        if (firstWeakness) {
-            System.out.println("\t0. No equipar segunda arma");
-            selectedIndex = ConsoleInput.readInt(0, availableOptions.size());
-        } else {
-            selectedIndex = ConsoleInput.readInt(1, availableOptions.size());
-        }
+        int selectedIndex = ConsoleInput.readInt(0, availableOptions.size());
 
-        // 5. Add to list only if you did not choose "0"
         if (selectedIndex > 0) {
-            selectedWeaknesses.add(availableOptions.get(selectedIndex - 1));
+            Strength chosen = availableOptions.get(selectedIndex - 1);
+            character.addStrength(chosen);
+            System.out.println("Añadida: " + chosen.getName());
         }
     }
 }
