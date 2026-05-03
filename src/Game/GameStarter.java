@@ -41,8 +41,8 @@ public class GameStarter {
         while (play) {
             System.out.println("================================================================================\n");
             System.out.println("MENU PRINCIPAL");
-            System.out.println("1. Cerrar Sesión | 2. Cancelar Cuenta | 3. Crear nuevo personaje | 4. Editar personaje | 5. Desafiar | 6. Consultar ranking | 7. Consultar historial de oro | 8. Consultar historial de combates\n");
-            option = ConsoleInput.readInt(1, 8);
+            System.out.println("1. Cerrar Sesión | 2. Cancelar Cuenta | 3. Crear nuevo personaje | 4. Editar personaje | 5. Dar de baja personaje \n6. Desafiar | 7. Consultar ranking | 8. Consultar historial de oro | 9. Consultar historial de combates | \n");
+            option = ConsoleInput.readInt(1, 9);
 
             switch (option) {
                 case 1 -> play = logOut();
@@ -55,15 +55,20 @@ public class GameStarter {
                         System.out.println("Todavía no has creado ningún personaje");
                     }
                 }
-                case 5 -> challenge(p);
-                case 6 -> seeRanking();
-                case 7 -> seeGoldHistory(p);
-                case 8 -> seeCombatHistory(p);
+                case 5 -> deleteCharacter(p);
+                case 6 -> challenge(p);
+                case 7 -> seeRanking();
+                case 8 -> seeGoldHistory(p);
+                case 9 -> seeCombatHistory(p);
                 default -> System.out.println("Opción no válida.");
             }
         }
 
         System.out.println("\nHasta pronto :)\n");
+    }
+
+    private void deleteCharacter(Player p) {
+        p.deleteCharacter();
     }
 
     private void seeCombatHistory(Player p) {

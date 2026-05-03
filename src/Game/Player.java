@@ -76,4 +76,6 @@ public class Player extends User implements Serializable {
     public void unblocked(){
         is_blocked=false;
     }
+
+    public void deleteCharacter(){ character=null; }
 }
