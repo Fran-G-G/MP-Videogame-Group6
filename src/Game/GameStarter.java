@@ -98,7 +98,7 @@ public class GameStarter {
         }
     }
 
-    private Player logIn() {
+    public Player logIn() {
         Singleton singleton = Singleton.getInstance();
         boolean cancel = false;
 
