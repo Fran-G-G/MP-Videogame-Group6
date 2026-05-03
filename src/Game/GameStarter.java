@@ -262,7 +262,8 @@ public class GameStarter {
 
         challengeHandler.handler(challenger,challenged, op, bet);
 
-        return;
+        Singleton singleton = Singleton.getInstance();
+        singleton.updatePlayersDB();
     }
 
     private void seeRanking() {

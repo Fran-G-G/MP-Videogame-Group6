@@ -209,7 +209,10 @@ public class DBManager {
             }
         }
 
-        ranking.sort(Comparator.comparing(p -> p.getCharacter().getGold()));
+        ranking.sort(
+                Comparator.comparing((Player p) -> p.getCharacter().getGold())
+                        .reversed()
+        );
 
         return ranking;
     }
