@@ -91,6 +91,8 @@ public class EquipmentManager {
         }
 
         // 3. Show options
+        System.out.println("\t0. No equipar segunda arma");
+
         for (int i = 0; i < availableOptions.size(); i++) {
             Weapon w = availableOptions.get(i);
             System.out.print("\t" + (i + 1) + ". " + w.getName() + " (" + w.getHands() + " mano/s)\n");
@@ -99,7 +101,6 @@ public class EquipmentManager {
         // 4. Selection, with "Cancel" option if it's the second weapon
         int selectedIndex;
         if (secondWeapon) {
-            System.out.println("\t0. No equipar segunda arma");
             selectedIndex = ConsoleInput.readInt(0, availableOptions.size());
         } else {
             selectedIndex = ConsoleInput.readInt(1, availableOptions.size());

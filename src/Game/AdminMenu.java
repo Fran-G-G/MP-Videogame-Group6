@@ -161,7 +161,22 @@ public class AdminMenu {
                 skillManager.manageSpecialSkills(character);
             }
             case 7 -> {
-                return;
+                System.out.println("¿Quiere modificar las debilidades, las fortalezas o ambas?");
+                int selected = ConsoleInput.readInt(1,3);
+                WeaknessManager weaknessManager = new WeaknessManager();
+                StrengthManager strengthManager = new StrengthManager();
+                switch (selected) {
+                    case 1 -> weaknessManager.manageWeaknesses(character, false);
+                    case 2 -> strengthManager.manageStrengths(character, false);
+                    case 3 -> {
+                        System.out.println("Primero las debilidades: ");
+                        weaknessManager.manageWeaknesses(character, false);
+                        System.out.println("Y ahora las fortalezas: ");
+                        strengthManager.manageStrengths(character, false);
+                    }
+                    default -> System.out.println("Opción no válida.");
+                }
+
             }
             case 8 -> {
                 return;
