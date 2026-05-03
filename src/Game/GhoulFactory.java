@@ -28,10 +28,10 @@ public class GhoulFactory extends MinionFactory {
 
         if (minionOwner == null) {
             this.characterOwner.addMinion(ghoul);
-            System.out.println(name + " añadido como esbirro de " + this.characterOwner.getName() + " con éxito.");
+            System.out.println(name + " añadido como esbirro de " + this.characterOwner.getName() + " con éxito.\n");
         } else {
             this.minionOwner.addMinion(ghoul);
-            System.out.println(name + " añadido como esbirro del esbirro " + this.minionOwner.getName() + " con éxito.");
+            System.out.println(name + " añadido como esbirro del esbirro " + this.minionOwner.getName() + " con éxito.\n");
         }
 
         return ghoul;

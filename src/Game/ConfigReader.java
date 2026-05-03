@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.function.BiFunction;
 
 /**
@@ -58,5 +59,39 @@ public class ConfigReader {
         }
 
         return objectList;
+    }
+
+    /**
+     * Reads a text file and returns a random line.
+     * For demon pacts, random names, descriptions...
+     */
+    public static String getRandomLineFromFile(String fileName) {
+        Path path = Paths.get(FOLDER + fileName);
+
+        try {
+            List<String> lines = Files.readAllLines(path);
+            List<String> validLines = new ArrayList<>();
+
+            // Clean up the list to make sure we don't pick any blank lines.
+            for (String line : lines) {
+                if (!line.trim().isEmpty()) {
+                    validLines.add(line.trim());
+                }
+            }
+
+            // If the file has content, we choose a line at random.
+            if (!validLines.isEmpty()) {
+                Random random = new Random();
+                return validLines.get(random.nextInt(validLines.size()));
+            } else {
+                System.err.println("El archivo " + fileName + " está vacío");
+            }
+
+        } catch (IOException e) {
+            System.err.println("No se pudo leer el archivo: " + fileName);
+        }
+
+        // Default string in case the file does not exist or the read fails
+        return "Pacto desconocido";
     }
 }

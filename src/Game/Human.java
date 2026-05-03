@@ -42,4 +42,9 @@ public class Human extends AbstractMinion implements Serializable {
     public AbstractMinion copy() {
         return new Human(name, health, loyalty);
     }
+
+    @Override
+    public String getTypeName() {
+        return "Humano";
+    }
 }

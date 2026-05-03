@@ -38,4 +38,9 @@ public class Demon extends AbstractMinion implements Serializable {
         }
         return copy;
     }
+
+    @Override
+    public String getTypeName() {
+        return "Demonio";
+    }
 }

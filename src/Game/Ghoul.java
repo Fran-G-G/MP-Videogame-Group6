@@ -25,4 +25,9 @@ public class Ghoul extends AbstractMinion implements Serializable {
     public AbstractMinion copy() {
         return new Ghoul(name, health, dependency);
     }
+
+    @Override
+    public String getTypeName() {
+        return "Ghoul";
+    }
 }

@@ -101,7 +101,7 @@ public class MinionManager {
         int index = 1;
 
         for (AbstractMinion minion : minions) {
-            System.out.println(index + ". " + minion.getClass().getSimpleName() + " - " + minion.getName() + " (Salud: " + minion.getHealth() + ")");
+            System.out.println(index + ". " + minion.getTypeName() + " - " + minion.getName() + " (Salud: " + minion.getHealth() + ")");
             index++;
 
             // If it's a demon, we also show its minions
@@ -109,7 +109,7 @@ public class MinionManager {
                 if (demon.getMinions() != null && !demon.getMinions().isEmpty()) {
                     System.out.println("\t[Esbirros de " + demon.getName() + "]:");
                     for (AbstractMinion subMinion : demon.getMinions()) {
-                        System.out.println("\t  - " + subMinion.getClass().getSimpleName() + " - " + subMinion.getName());
+                        System.out.println("\t  - " + subMinion.getTypeName() + " - " + subMinion.getName());
                     }
                 }
             }

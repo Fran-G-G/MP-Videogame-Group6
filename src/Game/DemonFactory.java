@@ -1,5 +1,7 @@
 package Game;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 /**
@@ -27,16 +29,19 @@ public class DemonFactory extends MinionFactory {
 
         String name = ConsoleInput.readString("Ponle un nombre a tu esbirro demonio: ");
         int health = random.nextInt(3) + 1;
-        String pact = "Pacto a sacar al azar de un fichero de la BBDD";
+
+        String pact = ConfigReader.getRandomLineFromFile("DemonPacts.txt");
+        System.out.println("Este ha sido el pacto que has firmado con el demonio:");
+        System.out.println(pact + "\n");
 
         Demon demon = new Demon(name, health, pact);
 
         if (minionOwner == null) {
             this.characterOwner.addMinion(demon);
-            System.out.println(name + " añadido como esbirro de " + this.characterOwner.getName() + " con éxito.");
+            System.out.println(name + " añadido como esbirro de " + this.characterOwner.getName() + " con éxito.\n");
         } else {
             this.minionOwner.addMinion(demon);
-            System.out.println(name + " añadido como esbirro del esbirro " + this.minionOwner.getName() + " con éxito.");
+            System.out.println(name + " añadido como esbirro del esbirro " + this.minionOwner.getName() + " con éxito.\n");
         }
 
 
@@ -45,7 +50,7 @@ public class DemonFactory extends MinionFactory {
         if (depth < maxDepth) {
             manageMinionsCreation(demon);
         } else {
-            System.out.println("Este demonio ha alcanzado el nivel máximo de profundidad y no tendrá esbirros propios.");
+            System.out.println("Este demonio ha alcanzado el nivel máximo de profundidad y no tendrá esbirros propios.\n");
         }
 
         return demon;

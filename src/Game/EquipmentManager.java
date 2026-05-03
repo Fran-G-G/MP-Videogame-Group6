@@ -83,9 +83,9 @@ public class EquipmentManager {
         // 2. Security check
         if (availableOptions.isEmpty()) {
             if (secondWeapon) {
-                System.out.println("\tNo tienes más armas de 1 mano compatibles.");
+                System.out.println("\tNo tienes más armas de 1 mano compatibles.\n");
             } else {
-                System.out.println("\tNo tienes armas disponibles.");
+                System.out.println("\tNo tienes armas disponibles.\n");
             }
             return;
         }

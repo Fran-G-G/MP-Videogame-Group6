@@ -35,4 +35,6 @@ public abstract class AbstractMinion implements Serializable {
      * @return a new instance with the same attributes.
      */
     public abstract AbstractMinion copy();
+
+    public abstract String getTypeName();
 }
