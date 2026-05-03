@@ -66,10 +66,18 @@ public class CombatMediator implements Mediator {
 
         Player winner = player1.getCharacter().isAlive() ? player1 : player2;
         Player loser = (winner == player1) ? player2 : player1;
+
+        winner.addChallenge("Ganado contra: "+ loser.getNick());
+        winner.addGoldList(bet);
+
+        loser.addChallenge("Perdido contra: "+ winner.getNick());
+        loser.addGoldList(-bet);
+
         printVictoryScreen(winner, loser);
 
         winner.getCharacter().addGold(bet);
         loser.getCharacter().addGold(-bet);
+
         System.out.println("\nEl ganador gano "+bet+ " monedas");
 
         originator.restore(memento);

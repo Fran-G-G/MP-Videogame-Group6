@@ -18,10 +18,10 @@ public class ChallengeHandler {
             System.out.println("El retado ha rechazado el desafio, el retador sera recompensado con "+ penalty+ " monedas");
             challenged.getCharacter().addGold(-penalty);
             challenger.getCharacter().addGold(penalty);
+            challenger.addGoldList(penalty);
+            challenged.addGoldList(-penalty);
             return;
         }
-
-
 
         // Check that both have an active equipment
         if (!challenger.getCharacter().hasActiveEquipment() ||
