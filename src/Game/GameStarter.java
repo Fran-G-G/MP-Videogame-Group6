@@ -54,6 +54,7 @@ public class GameStarter {
                 }
                 case 5 -> challenge(p);
                 case 6 -> seeRanking();
+                default -> System.out.println("Opción no válida.");
             }
         }
 
@@ -211,6 +212,7 @@ public class GameStarter {
 
         Singleton singleton = Singleton.getInstance();
         singleton.updatePlayersDB();
+
         System.out.println("\nFin del proceso de edición del personaje\n");
     }
 

@@ -68,6 +68,10 @@ public abstract class AbstractCharacter implements Serializable {
         this.name = name;
     }
 
+    public void setPower(int power) {
+        this.power = power;
+    }
+
     /**
      * @param skill of the character.
      */
