@@ -60,18 +60,22 @@ public class GameStarter {
     }
 
     public Admin logInAdmin() {
-        String nick = ConsoleInput.readString("Nick del administrador:");
+        Singleton singleton = Singleton.getInstance();
+        boolean cancel = false;
 
-        String pass = ConsoleInput.readString("Contraseña:");
-
-        Admin admin = Singleton.getInstance().loadAdmin(nick,pass);
-
-        if (admin == null) {
-            System.out.println("No existe un administrador con ese nick.");
-            return null;
+        Admin admin = null;
+        while (admin == null && !cancel) {
+            System.out.println("Introduce tus datos: ");
+            String nick = ConsoleInput.readString("Nick: ");
+            String pass = ConsoleInput.readString("Password (8-12 chars): ");
+            admin = singleton.loadAdmin(nick, pass);
+            if (admin == null) {
+                System.out.println("Error en el nick o contraseña");
+                System.out.println("1. Reintentar | 2. Cancelar");
+                cancel = (ConsoleInput.readInt(1, 2) == 2);
+            }
         }
 
-        System.out.println("Inicio de sesión correcto. Bienvenido, " + admin.getNick());
         return admin;
     }
 
