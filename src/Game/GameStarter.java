@@ -10,29 +10,30 @@ public class GameStarter {
         int option;
 
         Player p = null;
+        Admin a = null;
 
-        Admin a=null;
-        while (p == null && a==null) {
+        while (p == null && a == null) {
             System.out.println("1. Registrarse | 2. Iniciar Sesión | 3. Iniciar como administrador");
             option = ConsoleInput.readInt(1, 3);
 
             switch (option) {
-                case 1 -> p = signIn(); // Registrarse
-                case 2 -> p = logIn(); // Iniciar Sesión
-                case 3 -> a= logInAdmin();
+                case 1 -> p = signIn(); // Register
+                case 2 -> p = logIn(); // Log in as player
+                case 3 -> a = logInAdmin(); // Log in as admin
             }
         }
-
-
 
         boolean play = true;
         if (a != null) {
             AdminMenu menu = new AdminMenu(a);
             menu.show();
-            play=false;
+            play = false;
         }
 
         AbstractCharacter character = null;
+        if (p != null && p.getCharacter() != null) {
+            character = p.getCharacter();
+        }
 
         while (play) {
             System.out.println("================================================================================\n");
