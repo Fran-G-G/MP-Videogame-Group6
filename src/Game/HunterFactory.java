@@ -1,6 +1,5 @@
 package Game;
 
-import java.util.Random;
 
 /**
  * Factory class that helps with the creation of hunter-type characters.
@@ -16,21 +15,13 @@ public class HunterFactory extends CharacterFactory {
         Hunter hunter = new Hunter(name, health, power);
 
         // Create the special skill for the hunter
-        createTalent(hunter);
+        SpecialSkillManager skillManager = new SpecialSkillManager();
+        skillManager.manageSpecialSkills(hunter);
 
         super.createCharacterExtras(hunter);
 
         return hunter;
     }
 
-    private void createTalent(Hunter hunter) {
-        Random random = new Random();
 
-        String name = ConsoleInput.readString("Nombre del talento del cazador: ");
-        int attack = random.nextInt(3) + 1;
-        int defense = random.nextInt(3) + 1;
-
-        Talent talent = new Talent(name, attack, defense);
-        hunter.setSkill(talent);
-    }
 }

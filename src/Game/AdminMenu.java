@@ -157,8 +157,8 @@ public class AdminMenu {
                 character.addGold(gold);
             }
             case 6 -> {
-                //character.setSkill();
-                return;
+                SpecialSkillManager skillManager = new SpecialSkillManager();
+                skillManager.manageSpecialSkills(character);
             }
             case 7 -> {
                 return;

@@ -1,6 +1,5 @@
 package Game;
 
-import java.util.Random;
 
 /**
  * Factory class that helps with the creation of werewolf-type characters.
@@ -20,22 +19,13 @@ public class WerewolfFactory extends CharacterFactory {
         Werewolf werewolf = new Werewolf(name, health, power, height, weight);
 
         // Create the special skill for the werewolf
-        createGift(werewolf);
+        SpecialSkillManager skillManager = new SpecialSkillManager();
+        skillManager.manageSpecialSkills(werewolf);
 
         super.createCharacterExtras(werewolf);
 
         return  werewolf;
     }
 
-    private void createGift(Werewolf werewolf) {
-        Random random = new Random();
 
-        String name = ConsoleInput.readString("Nombre del don del hombre lobo: ");
-        int attack = random.nextInt(3) + 1;
-        int defense = random.nextInt(3) + 1;
-        int rageCost = random.nextInt(3) + 1;
-
-        Gift gift = new Gift(name, attack, defense, rageCost);
-        werewolf.setSkill(gift);
-    }
 }

@@ -1,6 +1,5 @@
 package Game;
 
-import java.util.Random;
 
 /**
  * Factory class that helps with the creation of vampire-type characters.
@@ -18,22 +17,13 @@ public class VampireFactory extends CharacterFactory {
         Vampire vampire = new Vampire(name, health, power, age);
 
         // Create the special skill for the vampire
-        createDiscipline(vampire);
+        SpecialSkillManager skillManager = new SpecialSkillManager();
+        skillManager.manageSpecialSkills(vampire);
 
         super.createCharacterExtras(vampire);
 
         return vampire;
     }
 
-    private void createDiscipline(Vampire vampire) {
-        Random random = new Random();
 
-        String name = ConsoleInput.readString("Nombre de la disciplina del vampiro: ");
-        int attack = random.nextInt(3) + 1;
-        int defense = random.nextInt(3) + 1;
-        int bloodCost = random.nextInt(3) + 1;
-
-        Discipline discipline = new Discipline(name, attack, defense, bloodCost);
-        vampire.setSkill(discipline);
-    }
 }
