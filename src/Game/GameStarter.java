@@ -69,6 +69,7 @@ public class GameStarter {
 
     private void deleteCharacter(Player p) {
         p.deleteCharacter();
+        Singleton.getInstance().updatePlayersDB();
     }
 
     private void seeCombatHistory(Player p) {
