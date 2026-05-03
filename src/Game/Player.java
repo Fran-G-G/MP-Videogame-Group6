@@ -13,22 +13,20 @@ public class Player extends User implements Serializable {
     private String registrationNumber;
     private AbstractCharacter character;
     private boolean is_blocked;
+    private List<Integer> goldList;
 
-    private List<Challenge> challengesReceived;
-    private List<Challenge> challengesSent;
+    private List<String> challenges;
 
     public Player(String name, String nick, String password) {
         super(name, nick, password);
         this.registrationNumber = generateRegistration();
-        this.challengesReceived = new ArrayList<>();
-        this.challengesSent = new ArrayList<>();
+        this.challenges = new ArrayList<>();
     }
 
     public Player(String name, String nick, String password, String registrationNumber) {
         super(name, nick, password);
         this.registrationNumber = registrationNumber;
-        this.challengesReceived = new ArrayList<>();
-        this.challengesSent = new ArrayList<>();
+        this.challenges = new ArrayList<>();
     }
 
     /**
@@ -56,17 +54,18 @@ public class Player extends User implements Serializable {
         return character;
     }
 
-    public void addReceivedChallenge(Challenge c) {
-        challengesReceived.add(c);
+    public void addChallenge(String other) {
+        challenges.add(other);
     }
 
-    public void addSentChallenge(Challenge c) {
-        challengesSent.add(c);
+    public List<String> getChallenges() {
+        return challenges;
     }
 
-    public List<Challenge> getChallengesReceived() {
-        return challengesReceived;
-    }
+
+    public void addGoldList (Integer bet) { goldList.add(bet); }
+
+    public List<Integer> getGoldList() {return goldList; }
 
     public boolean isIs_blocked(){return is_blocked;}
 
