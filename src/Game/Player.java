@@ -12,7 +12,7 @@ public class Player extends User implements Serializable {
 
     private String registrationNumber;
     private AbstractCharacter character;
-    private boolean is_blocked;
+    private boolean blocked;
 
     /** Complete history of all combats (accepted challenges and rejections). */
     private List<CombatRecord> combatHistory;
@@ -21,12 +21,14 @@ public class Player extends User implements Serializable {
         super(name, nick, password);
         this.registrationNumber = generateRegistration();
         this.combatHistory = new ArrayList<>();
+        this.blocked = false;
     }
 
     public Player(String name, String nick, String password, String registrationNumber) {
         super(name, nick, password);
         this.registrationNumber = registrationNumber;
         this.combatHistory = new ArrayList<>();
+        this.blocked = false;
     }
 
     /**
@@ -68,16 +70,16 @@ public class Player extends User implements Serializable {
         return combatHistory;
     }
 
-    public boolean is_blocked() {
-        return is_blocked;
+    public void block() {
+        blocked = true;
     }
 
-    public void blocked() {
-        is_blocked = true;
+    public void unblock() {
+        blocked = false;
     }
 
-    public void unblocked() {
-        is_blocked = false;
+    public boolean isBlocked() {
+        return blocked;
     }
 
     /**

@@ -71,12 +71,12 @@ public class AdminMenu {
             return;
         }
 
-        if (player.is_blocked()) {
+        if (player.isBlocked()) {
             System.out.println("Ese jugador ya está bloqueado.");
             return;
         }
 
-        player.blocked();
+        player.block();
         Singleton.getInstance().updatePlayersDB();
 
         System.out.println("Jugador " + nick + " bloqueado correctamente.");
@@ -95,12 +95,12 @@ public class AdminMenu {
             return;
         }
 
-        if (!player.is_blocked()) {
+        if (!player.isBlocked()) {
             System.out.println("Ese jugador no está bloqueado.");
             return;
         }
 
-        player.unblocked();
+        player.unblock();
         Singleton.getInstance().updatePlayersDB();
 
         System.out.println("Jugador " + nick + " desbloqueado correctamente.");

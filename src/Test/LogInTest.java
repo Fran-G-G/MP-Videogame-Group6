@@ -1,24 +1,28 @@
 package Test;
 
-import DB.Singleton;
+import DB.DBManager;
 import Game.Player;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class LogInTest {
 
     @Test
     void loginFailsWhenPlayerIsBlocked() {
-        Player p = new Player("Alice", "alice", "12345678");
-        p.blocked();
+        DBManager testDB = new DBManager("./config/testPlayers.dat", "./config/testAdmins.dat");
 
-        Player result = p;
+        Player player = new Player("Alice", "Alice1", "12345678");
+        player.block();
 
-        if (result != null && result.is_blocked()) {
-            result = null;
-        }
+        testDB.registerPlayer(player);
+        Player loaded = testDB.loadPlayer("Alice1", "12345678");
 
-        assertNull(result);
+        assertEquals(loaded.isBlocked(), true);
+
+        player.unblock();
+        loaded = testDB.loadPlayer("Alice1", "12345678");
+
+        assertEquals(loaded.isBlocked(), false);
     }
 }

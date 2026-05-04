@@ -10,7 +10,7 @@ public abstract class User implements Serializable {
     protected String name;
     protected String nick;
     protected String password;
-    protected boolean blocked;
+//    protected boolean blocked;
 
     public User(String name, String nick, String password) {
         if (password.length() < 8 || password.length() > 12) {
@@ -23,7 +23,7 @@ public abstract class User implements Serializable {
          * Aqui deberia de haber una comprobación de la contraseña
          */
         this.password = password;
-        this.blocked = false;
+//        this.blocked = false;
     }
 
     public String getNick() {
@@ -34,15 +34,15 @@ public abstract class User implements Serializable {
         return password;
     }
 
-    public boolean isBlocked() {
-        return blocked;
-    }
+//    public boolean isBlocked() {
+//        return blocked;
+//    }
 
-    public void block() {
-        blocked = true;
-    }
+//    public void block() {
+//        blocked = true;
+//    }
 
-    public void unblock() {
-        blocked = false;
-    }
+//    public void unblock() {
+//        blocked = false;
+//    }
 }
