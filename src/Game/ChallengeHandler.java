@@ -60,7 +60,17 @@ public class ChallengeHandler {
             return;
         }
 
-        Boolean validated = ConsoleInput.readBoolean("¿Deseas validar el desafío?");
+        WeaknessManager weaknessManager = new WeaknessManager();
+        StrengthManager strengthManager = new StrengthManager();
+        System.out.println("Ahora, el administrador revisará las debilidades y fortalezas del jugador desafiante: ");
+        weaknessManager.manageWeaknesses(challenger.getCharacter(), false);
+        strengthManager.manageStrengths(challenger.getCharacter(), false);
+
+        System.out.println("\nAhora, el administrador revisará las debilidades y fortalezas del jugador desafiado: ");
+        weaknessManager.manageWeaknesses(challenged.getCharacter(), false);
+        strengthManager.manageStrengths(challenged.getCharacter(), false);
+
+        boolean validated = ConsoleInput.readBoolean("¿Deseas validar el desafío?");
         if (!validated) {
             System.out.println("El administrador no ha validado este desafío");
             return;

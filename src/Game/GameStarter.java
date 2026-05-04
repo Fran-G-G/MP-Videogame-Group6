@@ -306,12 +306,26 @@ public class GameStarter {
             return;
         }
 
-        // Ask for the bet
-        System.out.println("¿Cuánto oro quieres apostar?");
-        int bet = ConsoleInput.readInt(0,challenger.getCharacter().getGold());
+        int bet=-1;
+        boolean cancel = false;
 
-        if (bet <= 0 || bet > challenger.getCharacter().getGold()) {
-            System.out.println("Apuesta inválida.");
+        if (challenger.getCharacter().getGold()<=0) {
+            System.out.println("No tienes suficiente dinero para desafiar.");
+            return;
+        }
+
+        while ((bet <= 0 || bet > challenger.getCharacter().getGold() || bet >challenged.getCharacter().getGold()) && !cancel) {
+            System.out.println("¿Cuánto oro quieres apostar?");
+            bet = ConsoleInput.readInt(1, challenger.getCharacter().getGold());
+
+            if (bet <= 0 || bet > challenger.getCharacter().getGold() || bet >challenged.getCharacter().getGold()) {
+                System.out.println("Error al elegir la apuesta");
+                System.out.println("1. Reintentar | 2. Cancelar");
+                cancel = (ConsoleInput.readInt(1, 2) == 2);
+            }
+        }
+        if (cancel) {
+            System.out.println("Cancelando desafio");
             return;
         }
 

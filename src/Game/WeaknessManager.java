@@ -18,7 +18,7 @@ public class WeaknessManager {
 
             boolean editing = true;
             while (editing) {
-                System.out.println("¿Quiere (1) eliminar debilidades, (2) añadir nuevas o (3) cancelar?");
+                System.out.println("\n¿Quiere (1) eliminar debilidades, (2) añadir nuevas o (3) cancelar?");
                 int option = ConsoleInput.readInt(1, 3);
                 switch (option) {
                     case 1 -> removeActiveWeaknesses(character, character.getWeaknesses());
