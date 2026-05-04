@@ -39,3 +39,9 @@ cd tu-repositorio
 ```bash
 javac -d out -cp . $(find src -name "*.java" -not -path "*/Test/*")
 ```
+
+---
+
+## ¿Qué va a pedir el programa al usuario?
+
+- El programa únicamente pedirá que el usuario introduzca los datos por teclado.
