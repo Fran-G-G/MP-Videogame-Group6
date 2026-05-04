@@ -20,7 +20,7 @@ public class EquipmentManager {
         weapons.addAll(equipmentBuilder.buildWeapons());
         armours.addAll(equipmentBuilder.buildArmours());
 
-        // 3. We choose which weapon(s) and armor to equip
+        // 3.1. We choose which weapon(s) to equip
         List<Weapon> selectedWeapons = new ArrayList<>();
         if (weapons.size() == 1) {
             System.out.println("Como tu personaje únicamente tiene un arma, es la que tendrá activa.\n");
@@ -40,6 +40,7 @@ public class EquipmentManager {
             System.out.println("Tu personaje no tiene armas de entre las que poder elegir.\n");
         }
 
+        // 3.2. We choose which armor to equip
         Armour selectedArmour = null;
         if (armours.size() == 1) {
             System.out.println("Como tu personaje únicamente tiene una armadura, es la que tendrá activa.\n");
@@ -91,7 +92,9 @@ public class EquipmentManager {
         }
 
         // 3. Show options
-        System.out.println("\t0. No equipar segunda arma");
+        if (secondWeapon) {
+            System.out.println("\t0. No equipar segunda arma");
+        }
 
         for (int i = 0; i < availableOptions.size(); i++) {
             Weapon w = availableOptions.get(i);

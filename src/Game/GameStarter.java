@@ -15,7 +15,7 @@ public class GameStarter {
         Admin a = null;
 
         while (p == null && a == null) {
-            System.out.println("1. Registrarse | 2. Iniciar Sesión | 3. Registarse como administrador | 4. Iniciar como administrador");
+            System.out.println("1. Registrarse como jugador | 2. Iniciar Sesión como jugador | 3. Registarse como administrador | 4. Iniciar Sesión como administrador");
             option = ConsoleInput.readInt(1, 4);
 
             switch (option) {
