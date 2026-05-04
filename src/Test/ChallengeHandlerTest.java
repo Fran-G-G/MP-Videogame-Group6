@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ChallengeHandlerTest {
 
     @Test
-    void handler_rechazoAplicaPenalizacionCorrectamente() {
+    void handler_rejectionAppliesPenalty() {
         // Create players
         Player challenger = new Player("Alice", "A", "12345678");
         Player challenged = new Player("Bob", "B", "12345678");

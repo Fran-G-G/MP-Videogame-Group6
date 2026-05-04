@@ -8,7 +8,7 @@ class ChallengeTest {
 
 
     @Test
-    void constructorDebeCrearChallengeCorrectamente() {
+    void constructorCreatesChallengeCorrectly() {
         Player p1 = new Player("Alice", "Alice1", "12345678");
         Player p2 = new Player("Bob", "Bob1", "12345678");
 
@@ -22,7 +22,7 @@ class ChallengeTest {
     }
 
     @Test
-    void constructorDebeLanzarExcepcionSiApuestaNegativa() {
+    void constructorThrowsExceptionIfNegativeBet() {
         Player p1 = new Player("Alice", "Alice1", "12345678");
         Player p2 = new Player("Bob", "Bob1", "12345678");
 
@@ -32,7 +32,7 @@ class ChallengeTest {
     }
 
     @Test
-    void acceptDebeCambiarEstadoAaccepted() {
+    void acceptChangesStateToAccepted() {
         Player p1 = new Player("Alice", "Alice1", "12345678");
         Player p2 = new Player("Bob", "Bob1", "12345678");
 
@@ -43,7 +43,7 @@ class ChallengeTest {
     }
 
     @Test
-    void acceptDebeFallarSiNoEstaValidado() {
+    void acceptFailsIfNotValidated() {
         Player p1 = new Player("Alice", "Alice1", "12345678");
         Player p2 = new Player("Bob", "Bob1", "12345678");
 
@@ -63,7 +63,7 @@ class ChallengeTest {
     }
 
     @Test
-    void rejectDebeCambiarEstadoArejected() {
+    void rejectChangesStateToRejected() {
         Player p1 = new Player("Alice", "Alice1", "12345678");
         Player p2 = new Player("Bob", "Bob1", "12345678");
 

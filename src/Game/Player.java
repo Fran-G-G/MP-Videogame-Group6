@@ -69,7 +69,7 @@ public class Player extends User implements Serializable {
 
     public List<Integer> getGoldList() {return goldList; }
 
-    public boolean isIs_blocked(){return is_blocked;}
+    public boolean is_blocked(){return is_blocked;}
 
     public void blocked(){
         is_blocked=true;

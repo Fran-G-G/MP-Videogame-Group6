@@ -159,7 +159,7 @@ public class GameStarter {
                 cancel = (ConsoleInput.readInt(1, 2) == 2);
             }
         }
-        if (player !=null && player.isIs_blocked()){
+        if (player != null && player.is_blocked()){
             System.out.println("Jugador bloqueado, no puede iniciar sesión");
             player=null;
         }
