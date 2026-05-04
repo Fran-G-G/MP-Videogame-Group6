@@ -1,7 +1,6 @@
 package Game;
 
 import DB.Singleton;
-
 import java.util.List;
 
 /**
@@ -73,7 +72,7 @@ public class GameStarter {
     }
 
     private void seeCombatHistory(Player p) {
-        List<String> history = p.getChallenges();
+        List<CombatRecord> history = p.getCombatHistory();
 
         if (history == null || history.isEmpty()) {
             System.out.println("No tienes combates registrados.");
@@ -81,15 +80,14 @@ public class GameStarter {
         }
 
         System.out.println("\n===== HISTORIAL DE COMBATES =====");
-
         int i = 1;
-        for (String c : history) {
-            System.out.println(i++ + ". " + c);
+        for (CombatRecord record : history) {
+            System.out.println(i++ + ". " + record.toString());
         }
     }
 
     private void seeGoldHistory(Player p) {
-        List<Integer> history = p.getGoldList();
+        List<CombatRecord> history = p.getCombatHistory();
 
         if (history == null || history.isEmpty()) {
             System.out.println("No tienes historial de oro registrado.");
@@ -97,10 +95,18 @@ public class GameStarter {
         }
 
         System.out.println("\n===== HISTORIAL DE ORO =====");
-
         int i = 1;
-        for (Integer c : history) {
-            System.out.println(i++ + ". " + c);
+        for (CombatRecord record : history) {
+            String otherPlayer = record.getChallengedNick().equals(p.getNick())
+                    ? record.getChallengerNick()
+                    : record.getChallengedNick();
+
+            // If the player is the winner, the gold gain is positive; if loser, negative.
+            int goldChange = record.getWinnerNick().equals(p.getNick())
+                    ? record.getGoldBet()
+                    : -record.getGoldBet();
+
+            System.out.println(i++ + ". Contra " + otherPlayer + " → " + goldChange + " monedas");
         }
     }
 
@@ -120,7 +126,6 @@ public class GameStarter {
                 cancel = (ConsoleInput.readInt(1, 2) == 2);
             }
         }
-
         return admin;
     }
 
@@ -239,14 +244,14 @@ public class GameStarter {
         // Start the process of editing a character characteristic.
         switch (option) {
             case 1 -> {
-                  String newName = ConsoleInput.readString("Introduzca el nuevo nombre para " + character.getName() + ": ");
-                  character.setName(newName);
-                  System.out.println("Nuevo nombre del personaje modificado correctamente.");
+                String newName = ConsoleInput.readString("Introduzca el nuevo nombre para " + character.getName() + ": ");
+                character.setName(newName);
+                System.out.println("Nuevo nombre del personaje modificado correctamente.");
             }
             case 2 -> {
-                  EquipmentManager eqManager = new EquipmentManager();
-                  eqManager.manageEquipment(character);
-              }
+                EquipmentManager eqManager = new EquipmentManager();
+                eqManager.manageEquipment(character);
+            }
             case 3 -> {
                 MinionManager minionManager = new MinionManager();
                 minionManager.editMinions(character);

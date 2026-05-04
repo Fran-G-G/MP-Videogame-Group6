@@ -1,29 +1,50 @@
 package Game;
 import DB.Singleton;
-import Game.GameStarter;
+import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Represents a challenge between two players.
  * Implements the Handler interface for the Chain of Responsibility pattern.
  */
-
 public class ChallengeHandler {
 
-    Calculator calculator= new Calculator();
+    Calculator calculator = new Calculator();
 
-    public void handler (Player challenger, Player challenged, Boolean op, Integer bet){
+    /**
+     * Handles the result of a challenge (accept or reject).
+     *
+     * @param challenger player who started the challenge
+     * @param challenged player who received the challenge
+     * @param accepted   true if the challenge was accepted
+     * @param bet        the amount of gold bet
+     */
+    public void handler(Player challenger, Player challenged, Boolean accepted, Integer bet) {
+        if (!accepted) {
+            // Challenge rejected: apply 10% penalty to the challenged player
+            int penalty = calculator.calculateRejectionPenalty(bet);
+            System.out.println("El retado ha rechazado el desafío. Penalización de " + penalty + " monedas.");
 
-        if (!op){
-            Integer penalty = calculator.calculateRejectionPenalty(bet);
-            System.out.println("El retado ha rechazado el desafio, el retador sera recompensado con "+ penalty+ " monedas");
             challenged.getCharacter().addGold(-penalty);
             challenger.getCharacter().addGold(penalty);
-            challenger.addGoldList(penalty);
-            challenged.addGoldList(-penalty);
+
+            // Register the rejected challenge as a combat record with 0 rounds and no winner
+            CombatRecord rejectRecord = new CombatRecord(
+                    challenger.getNick(),
+                    challenged.getNick(),
+                    0,
+                    new Date(),
+                    "N/A (rechazado)",
+                    new ArrayList<>(),   // no minions alive data
+                    penalty
+            );
+            challenger.addCombatRecord(rejectRecord);
+            challenged.addCombatRecord(rejectRecord);
+
             return;
         }
 
-        // Check that both have an active equipment
+        // Challenge accepted: validate and start combat
         if (!challenger.getCharacter().hasActiveEquipment() ||
                 !challenged.getCharacter().hasActiveEquipment()) {
             System.out.println("Ambos jugadores deben tener armas y armadura activas.");
@@ -34,24 +55,23 @@ public class ChallengeHandler {
         System.out.println("Administrador, hay que validar un desafío");
         System.out.println("-----------------------------------------------------------------------------\n");
         Admin admin = logInAdmin();
-        if (admin==null){
-            System.out.println("Error al iniciar sesión del admnistrador, el desafío no ha sido validado");
+        if (admin == null) {
+            System.out.println("Error al iniciar sesión del administrador, el desafío no ha sido validado");
             return;
         }
 
-        Boolean validated = ConsoleInput.readBoolean("¿Deseas validar el desafio?");
-
-        if (!validated){
-            System.out.println("El administrador no ha validado este desafio");
+        Boolean validated = ConsoleInput.readBoolean("¿Deseas validar el desafío?");
+        if (!validated) {
+            System.out.println("El administrador no ha validado este desafío");
             return;
         }
 
         System.out.println("================================================================================");
-        System.out.println("Desafio validado, comenzando Combate");
+        System.out.println("Desafío validado, comenzando Combate");
 
-        Challenge challenge= new Challenge(challenger,challenged,bet);
+        Challenge challenge = new Challenge(challenger, challenged, bet);
 
-        CombatHandler combatHandler= new CombatHandler();
+        CombatHandler combatHandler = new CombatHandler();
         combatHandler.handle(challenge);
     }
 
@@ -71,7 +91,6 @@ public class ChallengeHandler {
                 cancel = (ConsoleInput.readInt(1, 2) == 2);
             }
         }
-
         return admin;
     }
 }
