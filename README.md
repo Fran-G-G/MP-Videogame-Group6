@@ -40,6 +40,13 @@ cd tu-repositorio
 javac -d out -cp . $(find src -name "*.java" -not -path "*/Test/*")
 ```
 
+```CMD
+javac -d out src\*.java src\DB\*.java src\Game\*.java
+java -cp out Main
+```
+
+Desde un IDE tipo IntelliJ: basta con colocarse en el main y ejecutar Run.
+
 ---
 
 ## ¿Qué va a pedir el programa al usuario?
