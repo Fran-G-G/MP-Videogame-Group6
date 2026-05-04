@@ -2,7 +2,7 @@
 
 # 🧛‍♂️ PELEAS EN ULLEWAND 🐺
 
-Videojuego de combate por turnos entre criaturas fantásticas, desarrollado en Java como proyecto de la asignatura **Metodología de la Programación** (URJC, curso 2023/2024).
+Videojuego de combate por turnos entre criaturas fantásticas, desarrollado en Java como proyecto de la asignatura **Metodología de la Programación** (URJC, curso 2025/2026).
 
 ---
 
