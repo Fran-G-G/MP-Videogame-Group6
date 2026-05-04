@@ -36,11 +36,12 @@ cd tu-repositorio
 
 ## Comando de ejecución
 
-```bash
+Bash:
+```
 javac -d out -cp . $(find src -name "*.java" -not -path "*/Test/*")
 ```
-
-```CMD
+CMD:
+```
 javac -d out src\*.java src\DB\*.java src\Game\*.java
 java -cp out Main
 ```
