@@ -6,59 +6,64 @@ import Game.Player;
 import java.util.ArrayList;
 
 public class Adapter implements AdapterInterface{
-    private DBManager adapter;
+    private DBManager DB;
 
     public Adapter(){
-        this.adapter = new DBManager();
+        this.DB = new DBManager();
     }
 
     @Override
     public void registerPlayer(Player player){
-        adapter.registerPlayer(player);
+        DB.registerPlayer(player);
     }
 
     @Override
     public void deletePlayer(Player player){
-        adapter.deletePlayer(player);
+        DB.deletePlayer(player);
     }
 
     @Override
     public void registerAdmin(Admin admin){
-        adapter.registerAdmin(admin);
+        DB.registerAdmin(admin);
     }
 
     @Override
     public void deleteAdmin(Admin admin){
-        adapter.deleteAdmin(admin);
+        DB.deleteAdmin(admin);
+    }
+
+    @Override
+    public boolean nickAvailable(String nick){
+        return DB.nickAvailable(nick);
     }
 
     @Override
     public Player loadPlayer(String nick, String password){
-        return adapter.loadPlayer(nick, password);
+        return DB.loadPlayer(nick, password);
     }
 
     @Override
     public Admin loadAdmin(String nick, String password) {
-        return adapter.loadAdmin(nick, password);
+        return DB.loadAdmin(nick, password);
     }
 
     @Override
     public Player findPlayerByNick(String nick){
-        return adapter.findPlayerByNick(nick);
+        return DB.findPlayerByNick(nick);
     }
 
     @Override
     public void updatePlayersDB(){
-        adapter.updatePlayersDB();
+        DB.updatePlayersDB();
     }
 
     @Override
     public void updateAdminsDB(){
-        adapter.updateAdminsDB();
+        DB.updateAdminsDB();
     }
 
     @Override
     public ArrayList<Player> updateRanking(){
-        return adapter.updateRanking();
+        return DB.updateRanking();
     }
 }

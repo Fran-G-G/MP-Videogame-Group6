@@ -70,6 +70,15 @@ public class DBManager {
     }
 
     /**
+     * Returns true if a nick is not in use or false if its already being used
+     * @param nick
+     * @return
+     */
+    public boolean nickAvailable(String nick){
+        return !playersData.containsKey(nick) && !adminsData.containsKey(nick);
+    }
+
+    /**
      * Loads a player from the database
      * @param nick
      * @param password
@@ -123,12 +132,7 @@ public class DBManager {
         if (!file.exists() || file.length() == 0) {
             adminsData = new HashMap<>();
             Admin admin = new Admin("Admin", "Admin1", "12345678");
-            Player adminPlayer = new Player("Admin", "Admin1", "12345678");
-            Vampire character = new Vampire("Drácula", 5, 3, 2500);
-            adminPlayer.setCharacter(character);
-            playersData.put("Admin1", adminPlayer);
             adminsData.put("Admin1", admin);
-            updatePlayersDB();
             updateAdminsDB();
             return;
         }
