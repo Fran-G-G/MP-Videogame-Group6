@@ -68,7 +68,7 @@ public class Player extends User implements Serializable {
         return combatHistory;
     }
 
-    public boolean isIs_blocked() {
+    public boolean is_blocked() {
         return is_blocked;
     }
 
