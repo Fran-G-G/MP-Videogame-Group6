@@ -16,13 +16,14 @@ public class GameStarter {
         Admin a = null;
 
         while (p == null && a == null) {
-            System.out.println("1. Registrarse | 2. Iniciar Sesión | 3. Iniciar como administrador");
-            option = ConsoleInput.readInt(1, 3);
+            System.out.println("1. Registrarse | 2. Iniciar Sesión | 3. Registarse como administrador | 4. Iniciar como administrador");
+            option = ConsoleInput.readInt(1, 4);
 
             switch (option) {
                 case 1 -> p = signIn(); // Register
                 case 2 -> p = logIn(); // Log in as player
-                case 3 -> a = logInAdmin(); // Log in as admin
+                case 3 -> a = signInAdmin(); // Register as admin
+                case 4 -> a = logInAdmin(); // Log in as admin
             }
         }
 
@@ -134,11 +135,29 @@ public class GameStarter {
         String pass = ConsoleInput.readString("Password (8-12 chars): ");
 
         Player player = new Player(name, nick, pass);
-        if (singleton.findPlayerByNick(nick) == null){
+        if (singleton.nickAvailable(nick)){
             singleton.registerPlayer(player);
             return player;
         }else {
-            System.out.println("Ese jugador ya existe, elige otro nick o inicia sesión");
+            System.out.println("Ese nick ya está en uso, elige otro o inicia sesión");
+            return null;
+        }
+    }
+
+    private Admin signInAdmin() {
+        Singleton singleton = Singleton.getInstance();
+
+        System.out.println("Nuevo Administrador: ");
+        String name = ConsoleInput.readString("Nombre: ");
+        String nick = ConsoleInput.readString("Nick: ");
+        String pass = ConsoleInput.readString("Password (8-12 chars): ");
+
+        Admin admin = new Admin(name, nick, pass);
+        if (singleton.nickAvailable(nick)){
+            singleton.registerAdmin(admin);
+            return admin;
+        }else {
+            System.out.println("Ese nick ya está en uso, elige otro o inicia sesión");
             return null;
         }
     }

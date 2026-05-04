@@ -31,6 +31,13 @@ public interface AdapterInterface {
     public void deleteAdmin(Admin admin);
 
     /**
+     * Returns true if a nick is not in use or false if its already being used
+     * @param nick
+     * @return
+     */
+    public boolean nickAvailable(String nick);
+
+    /**
      * Loads a player from the database
      * @param nick
      * @param password

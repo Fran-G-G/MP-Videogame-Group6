@@ -7,9 +7,10 @@ import java.util.ArrayList;
 
 public class Singleton {
     private static final Singleton instance = new Singleton();
-    private final Adapter adapter = new Adapter();
+    private final Adapter adapter;
 
     private Singleton(){
+        adapter = new Adapter();
     }
 
     /**
@@ -34,6 +35,10 @@ public class Singleton {
      */
     public void deletePlayer(Player player){
         adapter.deletePlayer(player);
+    }
+
+    public boolean nickAvailable(String nick){
+        return adapter.nickAvailable(nick);
     }
 
     /**
