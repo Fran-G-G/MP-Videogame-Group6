@@ -97,13 +97,24 @@ class DBManagerTest {
     }
 
     @org.junit.jupiter.api.Test
-    void loadPlayers() {
+    void nickAvailable() {
         DBManager testDB = new DBManager(testPlayersFile, testAdminsFile);
+
         Player player = new Player("Prueba", "Prueba4", "12345678");
         testDB.registerPlayer(player);
 
+        assertEquals(testDB.nickAvailable("Prueba4"), false);
+        assertEquals(testDB.nickAvailable("Prueba4.1"), true);
+    }
+
+    @org.junit.jupiter.api.Test
+    void loadPlayers() {
+        DBManager testDB = new DBManager(testPlayersFile, testAdminsFile);
+        Player player = new Player("Prueba", "Prueba5", "12345678");
+        testDB.registerPlayer(player);
+
         DBManager testDB2 = new DBManager(testPlayersFile, testAdminsFile);
-        Player loaded = testDB2.loadPlayer("Prueba4", "12345678");
+        Player loaded = testDB2.loadPlayer("Prueba5", "12345678");
 
         assertNotNull(loaded);
         assertEquals(player.getNick(), loaded.getNick());
@@ -128,11 +139,11 @@ class DBManagerTest {
     void updatePlayersDB() {
         DBManager testDB = new DBManager(testPlayersFile, testAdminsFile);
 
-        Player player = new Player("Prueba", "Prueba5", "12345678");
+        Player player = new Player("Prueba", "Prueba6", "12345678");
         testDB.registerPlayer(player);
 
         DBManager testDB2 = new DBManager(testPlayersFile, testAdminsFile);
-        Player loaded = testDB2.loadPlayer("Prueba5", "12345678");
+        Player loaded = testDB2.loadPlayer("Prueba6", "12345678");
 
         assertNotNull(loaded);
         assertEquals(player.getNick(), loaded.getNick());

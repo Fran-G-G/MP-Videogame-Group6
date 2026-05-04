@@ -21,7 +21,7 @@ class DiceTest {
 
     @Test
     void rollSuccesses_neverExceedsDiceCount() {
-        // Repetimos varias veces para estar seguros
+        // Repeat to be sure
         for (int i = 0; i < 100; i++) {
             int successes = Dice.rollSuccesses(5);
             assertTrue(successes >= 0 && successes <= 5);

@@ -49,8 +49,8 @@ class ChallengeTest {
 
         Challenge c = new Challenge(p1, p2, 50);
 
-        // Forzamos validated = false mediante reflexión o setter si existiera
-        // Aquí lo hacemos con reflexión porque no hay setter
+        // Set validated = false using reflection or setter if exists
+        // Here we use reflection because there is no setter
         try {
             var field = Challenge.class.getDeclaredField("validated");
             field.setAccessible(true);

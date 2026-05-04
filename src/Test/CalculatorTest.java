@@ -23,7 +23,7 @@ class CalculatorTest {
         assertEquals(0, Calculator.calculateWinnerGoldGain(0));
     }
 
-    // ---------- calculateAttackMod con personajes reales ----------
+    // ---------- calculateAttackMod with real characters ----------
 
     @Test
     void calculateAttackMod_vampire_withTeamSkillStrengthsWeaknessesAndBloodBonus() {
