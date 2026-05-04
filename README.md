@@ -19,6 +19,8 @@ Videojuego de combate por turnos entre criaturas fantásticas, desarrollado en J
 
 ### 1. Clonar el repositorio
 
+Se puede clonar desde GitHub.
+
 ```bash
 git clone https://github.com/tu-usuario/tu-repositorio.git
 cd tu-repositorio
@@ -36,6 +38,8 @@ cd tu-repositorio
 
 ## Comando de ejecución
 
+Desde un IDE tipo IntelliJ (opción recomendada): basta con colocarse en la clase Main de la carpeta src y ejecutar Run.
+
 Bash:
 ```
 javac -d out -cp . $(find src -name "*.java" -not -path "*/Test/*")
@@ -45,8 +49,6 @@ CMD:
 javac -d out src\*.java src\DB\*.java src\Game\*.java
 java -cp out Main
 ```
-
-Desde un IDE tipo IntelliJ: basta con colocarse en el main y ejecutar Run.
 
 ---
 
