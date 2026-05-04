@@ -1,4 +1,8 @@
 package Game;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -7,7 +11,6 @@ import java.util.Scanner;
  * Features high-quality custom ASCII art, side-by-side view,
  * manual round advance (ENTER), and animated attacks.
  */
-
 public class CombatMediator implements Mediator {
 
     private final Player player1;
@@ -25,8 +28,11 @@ public class CombatMediator implements Mediator {
 
     /**
      * Starts the combat loop with visual effects.
+     *
+     * @param bet gold bet amount
+     * @return a detailed record of the combat
      */
-    public void start(Integer bet) {
+    public CombatRecord start(Integer bet) {
         clearScreen();
         printIntro();
 
@@ -67,28 +73,38 @@ public class CombatMediator implements Mediator {
         Player winner = player1.getCharacter().isAlive() ? player1 : player2;
         Player loser = (winner == player1) ? player2 : player1;
 
-        winner.addChallenge("Ganado contra: "+ loser.getNick());
-        winner.addGoldList(bet);
+        // Record which players still have minions alive (before restoring)
+        List<String> playersWithMinions = new ArrayList<>();
+        if (player1.getCharacter().getTotalMinionHealth() > 0) {
+            playersWithMinions.add(player1.getNick());
+        }
+        if (player2.getCharacter().getTotalMinionHealth() > 0) {
+            playersWithMinions.add(player2.getNick());
+        }
 
-        loser.addChallenge("Perdido contra: "+ winner.getNick());
-        loser.addGoldList(-bet);
+        CombatRecord record = new CombatRecord(
+                player1.getNick(),          // challenger (assuming player1 is the challenger)
+                player2.getNick(),          // challenged
+                roundNumber - 1,            // rounds played
+                new Date(),                 // current date
+                winner.getNick(),
+                playersWithMinions,
+                bet
+        );
 
         printVictoryScreen(winner, loser);
 
-        winner.getCharacter().addGold(bet);
-        loser.getCharacter().addGold(-bet);
-
-        System.out.println("\nEl ganador gano "+bet+ " monedas");
-
         originator.restore(memento);
         System.out.println("\nSalud y esbirros restaurados al estado previo al combate.");
+
+        return record;
     }
 
     private boolean bothAlive() {
         return player1.getCharacter().isAlive() && player2.getCharacter().isAlive();
     }
 
-     public void executeTurn(Player attacker, Player defender) {
+    public void executeTurn(Player attacker, Player defender) {
         AbstractCharacter attChar = attacker.getCharacter();
         AbstractCharacter defChar = defender.getCharacter();
 
@@ -138,7 +154,6 @@ public class CombatMediator implements Mediator {
         printSideBySide(player1, player2);
     }
 
-    // ---------- AI decision ----------
     public boolean shouldUseSkill(AbstractCharacter character) {
         SpecialSkill skill = character.getSpecialSkill();
         if (skill == null) return false;
@@ -155,7 +170,7 @@ public class CombatMediator implements Mediator {
         return false;
     }
 
-     public void applyDamage(Player defender) {
+    public void applyDamage(Player defender) {
         AbstractCharacter defChar = defender.getCharacter();
 
         int remainingDamage = defChar.applyDamageToMinions(1);
@@ -187,7 +202,6 @@ public class CombatMediator implements Mediator {
         String[] leftArt = getCharacterArt(left);
         String[] rightArt = getCharacterArt(right);
 
-        // Stats for each side
         String leftStats1 = "❤️ Salud: " + bar(left.getHealth(), 5);
         String leftStats2 = "👹 Esbirros: " + bar(left.getMinionHealthPool(), left.getTotalMinionHealth());
         String leftStats3 = getResourceLine(left);
@@ -195,7 +209,6 @@ public class CombatMediator implements Mediator {
         String rightStats2 = "👹 Esbirros: " + bar(right.getMinionHealthPool(), right.getTotalMinionHealth());
         String rightStats3 = getResourceLine(right);
 
-        // Combine art + stats
         String[] leftBlock = combineArtAndStats(leftArt, leftStats1, leftStats2, leftStats3);
         String[] rightBlock = combineArtAndStats(rightArt, rightStats1, rightStats2, rightStats3);
 
@@ -249,12 +262,11 @@ public class CombatMediator implements Mediator {
             return VAMPIRE_ART;
         } else if (c instanceof Werewolf) {
             return WEREWOLF_ART;
-        } else { // Hunter
+        } else {
             return HUNTER_ART;
         }
     }
 
-    // ASCII art constants
     private static final String[] VAMPIRE_ART = {
             "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⡀⠀⠀⠀",
             "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣠⣤⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣦⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⡄⠀⠀",
@@ -357,7 +369,7 @@ public class CombatMediator implements Mediator {
 
     // =================================================================
     //                INTRO WITH CROSSED SWORDS
-    // =================================================================.
+    // =================================================================
 
     private void printIntro() {
         System.out.println();
@@ -398,14 +410,13 @@ public class CombatMediator implements Mediator {
         };
         for (String line : introArt) {
             System.out.println(line);
-            waitMilliseconds(50); // adjust speed as you like
+            waitMilliseconds(50);
         }
         System.out.println("\n======================================");
         System.out.println("        ⚔️  COMIENZA EL COMBATE  ⚔️");
         System.out.println("======================================\n");
         waitMilliseconds(1500);
     }
-
 
     // =================================================================
     //                 VICTORY SCREEN
@@ -423,7 +434,6 @@ public class CombatMediator implements Mediator {
             System.out.printf("%-80s  %s%n", leftLine, rightLine);
         }
         System.out.println("\n     🏆 GANADOR: " + winner.getNick() + "       💀 PERDEDOR: " + loser.getNick());
-
         waitMilliseconds(2000);
     }
 

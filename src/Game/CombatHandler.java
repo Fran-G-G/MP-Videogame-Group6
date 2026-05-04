@@ -8,25 +8,39 @@ public class CombatHandler {
     protected Player player1;
     protected Player player2;
 
-
-
-    public void handle(Challenge challenge) {
-
-        player1= challenge.getChallenger();
-        player2= challenge.getChallenged();
+    /**
+     * Executes the combat and returns the record.
+     *
+     * @param challenge the challenge containing the players and bet
+     * @return combat record with all details
+     */
+    public CombatRecord handle(Challenge challenge) {
+        player1 = challenge.getChallenger();
+        player2 = challenge.getChallenged();
 
         System.out.println("\n--- Fase de Combate ---");
 
-        // Ensure both players have characters with active equipment X2
         if (player1.getCharacter() == null || player2.getCharacter() == null) {
             System.out.println("Error: Ambos jugadores deben tener un personaje con equipo activo para luchar.");
-            return;
+            return null;
         }
 
-        // Create and start the combat mediator
         CombatMediator mediator = new CombatMediator(player1, player2);
-        mediator.start(challenge.getGoldBet());
+        CombatRecord record = mediator.start(challenge.getGoldBet());
 
-        // No next handler; combat is the end of the chain
+        // Transfer gold
+        if (record.getWinnerNick().equals(player1.getNick())) {
+            player1.getCharacter().addGold(challenge.getGoldBet());
+            player2.getCharacter().addGold(-challenge.getGoldBet());
+        } else {
+            player2.getCharacter().addGold(challenge.getGoldBet());
+            player1.getCharacter().addGold(-challenge.getGoldBet());
+        }
+
+        // Add record to both players
+        player1.addCombatRecord(record);
+        player2.addCombatRecord(record);
+
+        return record;
     }
 }
