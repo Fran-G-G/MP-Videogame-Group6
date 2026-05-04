@@ -21,12 +21,14 @@ public class Player extends User implements Serializable {
         super(name, nick, password);
         this.registrationNumber = generateRegistration();
         this.challenges = new ArrayList<>();
+        this.goldList = new ArrayList<>();
     }
 
     public Player(String name, String nick, String password, String registrationNumber) {
         super(name, nick, password);
         this.registrationNumber = registrationNumber;
         this.challenges = new ArrayList<>();
+        this.goldList = new ArrayList<>();
     }
 
     /**
