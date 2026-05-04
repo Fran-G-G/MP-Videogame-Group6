@@ -69,7 +69,7 @@ public class MinionManager {
 
     private boolean confirmNotVampire(AbstractCharacter character, HumanFactory humanFactory) {
         if (character.getClass().getSimpleName().equals("Vampire")) {
-            System.out.println("Los personajes de tipo vampiro no pueden tener esbirros humanos, ¡se los comerían!");
+            System.out.println("Los personajes de tipo vampiro no pueden tener esbirros humanos, ¡se los comerían!\n");
             return false;
         } else {
             humanFactory.createProduct();
@@ -96,20 +96,33 @@ public class MinionManager {
         }
     }
 
-    // Method for displaying the minions in a tree shape
+    // Method for displaying the minions in a tree shape, up to 3 levels
     private void showMinions(List<AbstractMinion> minions) {
         int index = 1;
 
         for (AbstractMinion minion : minions) {
+            // Level 1: Main minions of the character
             System.out.println(index + ". " + minion.getTypeName() + " - " + minion.getName() + " (Salud: " + minion.getHealth() + ")");
             index++;
 
-            // If it's a demon, we also show its minions
             if (minion instanceof Demon demon) {
                 if (demon.getMinions() != null && !demon.getMinions().isEmpty()) {
                     System.out.println("\t[Esbirros de " + demon.getName() + "]:");
+
                     for (AbstractMinion subMinion : demon.getMinions()) {
+                        // Level 2: Minions of the main demons
                         System.out.println("\t  - " + subMinion.getTypeName() + " - " + subMinion.getName());
+
+                        if (subMinion instanceof Demon subDemon) {
+                            if (subDemon.getMinions() != null && !subDemon.getMinions().isEmpty()) {
+                                System.out.println("\t\t[Esbirros de " + subDemon.getName() + "]:");
+
+                                for (AbstractMinion subSubMinion : subDemon.getMinions()) {
+                                    // Level 3: Minions of the sub-demon (last level)
+                                    System.out.println("\t\t  -- " + subSubMinion.getTypeName() + " - " + subSubMinion.getName());
+                                }
+                            }
+                        }
                     }
                 }
             }

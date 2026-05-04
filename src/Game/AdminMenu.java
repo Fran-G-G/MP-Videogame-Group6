@@ -71,7 +71,7 @@ public class AdminMenu {
             return;
         }
 
-        if (player.isIs_blocked()) {
+        if (player.is_blocked()) {
             System.out.println("Ese jugador ya está bloqueado.");
             return;
         }
@@ -95,7 +95,7 @@ public class AdminMenu {
             return;
         }
 
-        if (!player.isIs_blocked()) {
+        if (!player.is_blocked()) {
             System.out.println("Ese jugador no está bloqueado.");
             return;
         }
