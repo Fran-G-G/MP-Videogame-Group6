@@ -13,17 +13,24 @@ public class StrengthManager {
             manageStrengthsCreation(character);
         } else {
             System.out.println("\n--- Gestión de Fortalezas ---");
-            System.out.println("¿Quiere (1) eliminar fortalezas o (2) añadir nuevas?");
-            int option = ConsoleInput.readInt(1, 2);
-            switch (option) {
-                case 1 -> removeActiveStrengths(character, character.getStrengths());
-                case 2 -> {
-                    // Load all possible ones from the file
-                    ArrayList<Strength> possibleStrengths = getPossibleStrengths(character);
-                    // Pass the current character list to filter
-                    showAndAddStrengths(character, possibleStrengths);
+
+            showActiveStrengths(character.getStrengths());
+
+            boolean editing = true;
+            while (editing) {
+                System.out.println("¿Quiere (1) eliminar fortalezas, (2) añadir nuevas o (3) cancelar?");
+                int option = ConsoleInput.readInt(1, 3);
+                switch (option) {
+                    case 1 -> removeActiveStrengths(character, character.getStrengths());
+                    case 2 -> {
+                        // Load all possible ones from the file
+                        ArrayList<Strength> possibleStrengths = getPossibleStrengths(character);
+                        // Pass the current character list to filter
+                        showAndAddStrengths(character, possibleStrengths);
+                    }
+                    case 3 -> editing = false;
+                    default -> System.out.println("Opción no válida.");
                 }
-                default -> System.out.println("Opción no válida.");
             }
         }
     }

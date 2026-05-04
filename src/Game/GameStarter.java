@@ -263,7 +263,7 @@ public class GameStarter {
         ChallengeHandler challengeHandler= new ChallengeHandler();
         // Ask for the target player's nickname
 
-        String nick = ConsoleInput.readString("¿A qué jugador quieres desafiar?");
+        String nick = ConsoleInput.readString("¿A qué jugador quieres desafiar?: ");
 
         Player challenged = Singleton.getInstance().findPlayerByNick(nick);
 
@@ -292,7 +292,7 @@ public class GameStarter {
         }
 
         System.out.println("================================================================================");
-        System.out.println("Jugador "+challenged.getNick()+ " has sido desafiado: Escriba su contraseña para aceptar o rechazar el desafío");
+        System.out.println("Jugador "+challenged.getNick()+ ", has sido desafiado: Escriba su contraseña para aceptar o rechazar el desafío");
         System.out.println("-----------------------------------------------------------------------------\n");
 
 

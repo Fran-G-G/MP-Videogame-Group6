@@ -13,17 +13,24 @@ public class WeaknessManager {
             manageWeaknessesCreation(character);
         } else {
             System.out.println("\n--- Gestión de Debilidades ---");
-            System.out.println("¿Quiere (1) eliminar debilidades o (2) añadir nuevas?");
-            int option = ConsoleInput.readInt(1, 2);
-            switch (option) {
-                case 1 -> removeActiveWeaknesses(character, character.getWeaknesses());
-                case 2 -> {
-                    // Load all possible ones from the file
-                    ArrayList<Weakness> possibleWeaknesses = getPossibleWeaknesses(character);
-                    // Pass the current character list to filter
-                    showAndAddWeaknesses(character, possibleWeaknesses);
+
+            showActiveWeaknesses(character.getWeaknesses());
+
+            boolean editing = true;
+            while (editing) {
+                System.out.println("¿Quiere (1) eliminar debilidades, (2) añadir nuevas o (3) cancelar?");
+                int option = ConsoleInput.readInt(1, 3);
+                switch (option) {
+                    case 1 -> removeActiveWeaknesses(character, character.getWeaknesses());
+                    case 2 -> {
+                        // Load all possible ones from the file
+                        ArrayList<Weakness> possibleWeaknesses = getPossibleWeaknesses(character);
+                        // Pass the current character list to filter
+                        showAndAddWeaknesses(character, possibleWeaknesses);
+                    }
+                    case 3 -> editing = false;
+                    default -> System.out.println("Opción no válida.");
                 }
-                default -> System.out.println("Opción no válida.");
             }
         }
     }

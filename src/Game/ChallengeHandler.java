@@ -39,6 +39,19 @@ public class ChallengeHandler {
             return;
         }
 
+        WeaknessManager weaknessManager = new WeaknessManager();
+        StrengthManager strengthManager = new StrengthManager();
+
+        // Weaknesses and Strengths of the challenger
+        System.out.println("Debilidades y fortalezas del personaje del jugador que desafía");
+        weaknessManager.manageWeaknesses(challenger.getCharacter(), false);
+        strengthManager.manageStrengths(challenger.getCharacter(), false);
+        System.out.println("----------------------------------------------------------------------");
+        // Weaknesses and Strengths of the challenged
+        System.out.println("Debilidades y fortalezas del personaje del jugador que es desafiado");
+        weaknessManager.manageWeaknesses(challenged.getCharacter(), false);
+        strengthManager.manageStrengths(challenged.getCharacter(), false);
+
         Boolean validated = ConsoleInput.readBoolean("¿Deseas validar el desafio?");
 
         if (!validated){
