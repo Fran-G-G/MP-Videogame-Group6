@@ -24,7 +24,7 @@ git clone https://github.com/tu-usuario/tu-repositorio.git
 cd tu-repositorio
 ```
 
-## Estructira de proyecto
+## Estructura de proyecto
 
 ### MP-Videogame-Group6/
 - ├── config/               ← archivos de configuración (.txt, .dat)
