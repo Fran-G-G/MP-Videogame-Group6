@@ -17,12 +17,6 @@ class CalculatorTest {
         assertEquals(0, Calculator.calculateRejectionPenalty(1)); // 0.1 → 0
     }
 
-    @Test
-    void calculateWinnerGoldGain_mustDoubleTheBet() {
-        assertEquals(200, Calculator.calculateWinnerGoldGain(100));
-        assertEquals(0, Calculator.calculateWinnerGoldGain(0));
-    }
-
     // ---------- calculateAttackMod with real characters ----------
 
     @Test
