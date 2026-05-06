@@ -60,9 +60,9 @@ class MinionTest {
 
     @Test
     void getTypeName() {
-        assertEquals("Ghoul", ghoul.getName());
-        assertEquals("Human", human.getName());
-        assertEquals("Demon", demon.getName());
+        assertEquals("Ghoul", ghoul.getTypeName());
+        assertEquals("Human", human.getTypeName());
+        assertEquals("Demon", demon.getTypeName());
     }
 
 }
